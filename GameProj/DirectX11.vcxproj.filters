@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utilitys\FPS.cpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\Audio.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\OggDecoder.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\PCM.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\SoundEffect.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\SoundSource.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\WavDecoder.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Geometry.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Physics.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\RigidBody.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Camera.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Direct3D.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Material.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Mesh.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Model.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Particle.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Sprite.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\System.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Text.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\Direct_Input.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\Keyboard.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\Mouse.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\Pad.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\XInput.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{5f864b5e-af50-4bda-9cc9-6f83793bf98e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics">
+      <UniqueIdentifier>{6a262f5c-4cc8-4996-9d64-11d6287bc811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Inputs">
+      <UniqueIdentifier>{2d648b1e-9047-4054-9ede-1bf622590b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utilitys">
+      <UniqueIdentifier>{f9b3ab7b-331d-48e1-9907-d9cb23efb5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Sounds">
+      <UniqueIdentifier>{f6e67b56-8a41-428f-b6fe-c940eeb9cca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{d6780f38-b950-4052-a945-7cac1f78ddef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Console.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Counter.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Easing.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\FPS.h">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Randam.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\StringConverter.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Utility.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Vec.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Vertex.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\Audio.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\OggDecoder.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\PCM.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\SoundEffect.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\SoundSource.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\WavDecoder.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Geometry.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Physics.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\RigidBody.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Camera.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Direct3D.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Material.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Mesh.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Model.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Particle.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Sprite.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\System.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Text.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\Direct_Input.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\Keyboard.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\Mouse.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\Pad.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\XInput.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
