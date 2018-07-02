@@ -91,6 +91,8 @@ private:
 	LPDIRECTINPUTDEVICE8 pDIMouse;	//マウスデバイス
 	DIMOUSESTATE pMouseState;				//マウス状態
 	HWND pwnd;
+
+	int buttonCnt[2] = {0,0};
 public:
 	DxMouse();
 	~DxMouse();
@@ -98,9 +100,9 @@ public:
 	bool CreateMousenput(const HWND& hwnd);
 
 	void Run();
-	//押されている
-	bool LPush();
-	bool RPush();
+	//押されているフレーム数が返ってくる
+	int LPush();
+	int RPush();
 	//マウスのクライアント領域の座標を取得
 	POINT GetMousePosClient();
 	//マウスのクライアント領域の座標(0,0)を中心とした座標を取得

@@ -4,12 +4,12 @@
 #include "Engine/Graphics/Model.h"
 #include "Engine/Physics/Physics.h"
 #include "Engine/Graphics/Model.h"
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
 	ShowConsole();
 	//ゲームエンジン生成
 	Engine ge("DirectX11", 1280, 900, true);
-	
 	//カメラ生成
 	Camera camera3D;
 	camera3D.pos.z = -20;
@@ -23,8 +23,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	camera2D.SetDepthTest(false);
 	camera2D.SetOrthographic(1, 0.1f, 1000.0f);
 
-	Texture walltex("stonewall_diff.jpg");
-	Sprite cursor("Resource/cursor.png");
+	Texture walltex("Resource/Texture/stonewall_diff.jpg");
+	Sprite cursor("Resource/Texture/cursor.png");
 	PhysicsWorld phy;
 	Mesh ground;
 	ground.pos.y = -10;
@@ -40,12 +40,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	Shot shot[30];
 	for (auto& it : shot)
 	{
-		it.mesh.GetMaterial().Load("shot.hlsl");
+		it.mesh.GetMaterial().Load("Resource/Shader/shot.hlsl");
 		it.mesh.CreateCube();
 		it.mesh.GetMaterial().SetTexture(0, &walltex);
 		it.isActive = false;
 	}
-	int cnt = 0;
 	phy.AddGeometry(new StaticBox(Vec3(ground.pos), Vec3(ground.scale)));
 	while (ge.Run())
 	{
@@ -87,17 +86,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 			//camera3D.angle.x += Mouse::GetMousePosCenter().y * 0.3f;
 			//camera3D.angle.y += Mouse::GetMousePosCenter().x * 0.3f;
 
-			if (Mouse::L_On())
-			{
-				++cnt;
-			}
-			else
-			{
-				cnt = 0;
-			}
+			bool o = Mouse::L_On() % 8 == 1;
 			for (auto& i : shot)
 			{
-				if (cnt % 6 == 1 && !i.isActive)
+				if (o && !i.isActive)
 				{
 					i.mesh.pos = camera3D.pos;
 					i.mesh.pos.z += 5;
@@ -132,6 +124,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 			cursor.Draw();
 			Mouse::SetMousePos(0, 0);
 			Mouse::DrawCursor(false);
+			std::cout << Mouse::L_On() << std::endl;
 	}
 	//終了
 	return 0;
