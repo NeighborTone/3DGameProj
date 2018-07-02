@@ -82,11 +82,19 @@ float4 PS(Pixel pixel) : SV_TARGET
 	float3 lightColor = float3(1.0, 1.0, 1.0);
 	float4 diffuseColor = texture0.Sample(sampler0, pixel.uv);
 
+<<<<<<< HEAD
 	float3 viewDirection = normalize(float3(0.0, 2.0, -5.0));
 	float3 reflection = reflect(lightDirection, normal);
 
 	float3 diffuseIntensity = dot(-lightDirection, normal) * lightColor;
 	float3 ambientIntensity = lightColor * 0.6;
+=======
+	float3 viewDirection = normalize(float3(0.0, 3.0, -5.0));
+	float3 reflection = reflect(lightDirection, normal);
+
+	float3 diffuseIntensity = dot(-lightDirection, normal) * lightColor;
+	float3 ambientIntensity = lightColor * 0.2;
+>>>>>>> e00c25384089045ab7ba5b1a2ef4f1c54ec1560d
 	float3 specularIntensity = pow(max(dot(viewDirection, reflection), 0.0), 50.0) * 10.0 * lightColor;
 
 	return diffuseColor * float4(diffuseIntensity + ambientIntensity + specularIntensity, 1);

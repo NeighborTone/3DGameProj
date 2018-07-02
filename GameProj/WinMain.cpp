@@ -1,19 +1,31 @@
 #include "Engine/Engine.h"
 #include "Engine/Utilitys/Console.hpp"
+<<<<<<< HEAD
 #include "Engine/Graphics/Model.h"
 #include "Engine/Physics/Physics.h"
+=======
+
+>>>>>>> e00c25384089045ab7ba5b1a2ef4f1c54ec1560d
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
 	ShowConsole();
 	//ゲームエンジン生成
+<<<<<<< HEAD
 	Engine ge("DirectX11", 1280, 900, true);
+=======
+	Engine ge("DirectX11", 640, 450, true);
+>>>>>>> e00c25384089045ab7ba5b1a2ef4f1c54ec1560d
 	
 	//カメラ生成
 	Camera camera3D;
 	camera3D.pos.z = -20;
 	camera3D.pos.y = 5;
+<<<<<<< HEAD
 	camera3D.angle.x = 15;
+=======
+	camera3D.angle.x = 0;
+>>>>>>> e00c25384089045ab7ba5b1a2ef4f1c54ec1560d
 
 	camera3D.SetPerspective(45.0f, 1, 10000.0f);
 	camera3D.SetDepthTest(true);
@@ -21,6 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	Camera camera2D;
 	camera2D.SetDepthTest(false);
 	camera2D.SetOrthographic(1, 0.1f, 1000.0f);
+<<<<<<< HEAD
 
 	Texture walltex("stonewall_diff.jpg");
 	Sprite cursor("Resource/cursor.png");
@@ -50,11 +63,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	while (ge.Run())
 	{
 		phy.UpDate();
+=======
+	
+	while (ge.Run())
+	{
+>>>>>>> e00c25384089045ab7ba5b1a2ef4f1c54ec1560d
 		//===================================//
 		//==========3DRendering=================//
 		//===================================//
 		camera3D.Run(true);
 		
+<<<<<<< HEAD
 
 		if (KeyBoard::Down(KeyBoard::Key::KEY_ESCAPE) ||
 			DInput::Down(DInput::Button::PAD_START))
@@ -120,15 +139,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 		}
 		
 		ground.Draw();
+=======
+>>>>>>> e00c25384089045ab7ba5b1a2ef4f1c54ec1560d
 		//===================================//
 		//==========2DRendering=================//
 		//===================================//
 		camera2D.Run(false);
+<<<<<<< HEAD
 		cursor.Draw();
 		Mouse::SetMousePos(0, 0);
 		Mouse::DrawCursor(false);
 
 		
+=======
+>>>>>>> e00c25384089045ab7ba5b1a2ef4f1c54ec1560d
 		
 	}
 
