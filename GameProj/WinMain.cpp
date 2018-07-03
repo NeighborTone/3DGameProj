@@ -4,7 +4,18 @@
 #include "Engine/Graphics/Model.h"
 #include "Engine/Physics/Physics.h"
 #include "Engine/Graphics/Model.h"
+#include "Engine/Sounds/SoundSource.h"
+#include "Engine/Sounds/SoundEffect.h"
+#include "Engine/Graphics/Particle.h"
+bool HitBall(Vec3 &c1, Vec3& c2, float r, float r2)
+{
+	if ((c1.x - c2.x) * (c1.x - c2.x) + ((c1.y - c2.y) * (c1.y - c2.y)) + ((c1.z - c2.z) * (c1.z - c2.z)) <= (r + r) * (r2 + r2))
+	{
+		return true;
+	}
+	return false;
 
+}
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
 	ShowConsole();
@@ -14,7 +25,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	Camera camera3D;
 	camera3D.pos.z = -20;
 	camera3D.pos.y = 5;
-	camera3D.angle.x = 15;
 
 	camera3D.SetPerspective(45.0f, 1, 10000.0f);
 	camera3D.SetDepthTest(true);
@@ -32,16 +42,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	ground.scale.y = 5;
 	ground.CreateCube();
 	ground.GetMaterial().SetTexture(0,&walltex);
-	struct Shot
+	struct Obj
 	{
 		Mesh mesh;
 		bool isActive;
 	};
-	Shot shot[30];
+	SoundEngine::SoundSource sound;
+	SoundEngine::SoundEffect sEffect;
+	sEffect.limiter.Loudness = 1700;
+	Particle expro;
+	expro.Load("Resource/Effect/testEf.efk");
+	sound.Load("Resource/Sounds/se.ogg", true);
+	sEffect.AttachLimiter(sound);
+	Obj hoge;
+	hoge.mesh.GetMaterial().Load("Resource/Shader/hoge.hlsl");
+	hoge.mesh.CreateSphere(2,12);
+	hoge.mesh.GetMaterial().SetTexture(0,&walltex);
+	hoge.isActive = true;
+	hoge.mesh.pos.y = 10;
+	hoge.mesh.CreateSphere();
+	
+	Obj shot[30];
 	for (auto& it : shot)
 	{
 		it.mesh.GetMaterial().Load("Resource/Shader/shot.hlsl");
-		it.mesh.CreateCube();
+		it.mesh.CreateSphere();
 		it.mesh.GetMaterial().SetTexture(0, &walltex);
 		it.isActive = false;
 	}
@@ -93,7 +118,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 				{
 					i.mesh.pos = camera3D.pos;
 					i.mesh.pos.z += 5;
-					i.mesh.pos.y -= 2;
 					i.isActive = true;
 					break;
 				}
@@ -103,7 +127,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 					i.isActive = false;
 				}
 			}
-
+			for (auto& i : shot)
+			{
+				if (HitBall(hoge.mesh.pos, i.mesh.pos, 1, 0.5f)&&hoge.isActive)
+				{
+					expro.pos = hoge.mesh.pos;
+					expro.Play();
+					sound.PlaySE();
+					hoge.isActive = false;
+				}
+			}
+			
 			for (auto& i : shot)
 			{
 				if (i.isActive)
@@ -113,9 +147,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 
 				}
 			}
-	
+			
+			if (hoge.isActive)
+			{
+				hoge.mesh.Draw();
+			}
+			
 			ground.Draw();
-
+			expro.Draw(camera3D);
+			sound.UpDate3DSound(Vec3(hoge.mesh.pos),Vec3(camera3D.pos));
 			//===================================//
 			//==========2DRendering=================//
 			//===================================//
