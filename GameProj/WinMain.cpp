@@ -71,6 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 		it.isActive = false;
 	}
 	phy.AddGeometry(new StaticBox(Vec3(ground.pos), Vec3(ground.scale)));
+	Mouse::SetMousePos(0, 0);
 	while (ge.Run())
 	{
 		phy.UpDate();
@@ -108,8 +109,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 			{
 				camera3D.pos.z -= 0.6f;
 			}
-			//camera3D.angle.x += Mouse::GetMousePosCenter().y * 0.3f;
-			//camera3D.angle.y += Mouse::GetMousePosCenter().x * 0.3f;
+			camera3D.angle.x += Mouse::GetMousePosCenter().y * 0.3f;
+			camera3D.angle.y += Mouse::GetMousePosCenter().x * 0.3f;
 
 			bool o = Mouse::L_On() % 8 == 1;
 			for (auto& i : shot)
@@ -117,6 +118,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 				if (o && !i.isActive)
 				{
 					i.mesh.pos = camera3D.pos;
+				
 					i.mesh.pos.z += 5;
 					i.isActive = true;
 					break;
@@ -142,6 +144,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 			{
 				if (i.isActive)
 				{
+					i.mesh.pos.x += static_cast<float>(sinf((float)M_PI / 360.0f * camera3D.angle.y)) * 3;
+					i.mesh.pos.y -= static_cast<float>(sinf((float)M_PI / 360.0f * camera3D.angle.x)) * 3;
 					i.mesh.pos.z += 3;
 					i.mesh.Draw();
 
