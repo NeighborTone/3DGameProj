@@ -7,6 +7,8 @@
 #include "Engine/Sounds/SoundSource.h"
 #include "Engine/Sounds/SoundEffect.h"
 #include "Engine/Graphics/Particle.h"
+
+using namespace DirectX;
 bool HitBall(Vec3 &c1, Vec3& c2, float r, float r2)
 {
 	if ((c1.x - c2.x) * (c1.x - c2.x) + ((c1.y - c2.y) * (c1.y - c2.y)) + ((c1.z - c2.z) * (c1.z - c2.z)) <= (r + r) * (r2 + r2))
@@ -46,6 +48,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	{
 		Mesh mesh;
 		bool isActive;
+
+		float
+			dirX = 0, 
+			dirY = 0, 
+			dirZ = 0;
+		int dethTime = 0;
 	};
 	SoundEngine::SoundSource sound;
 	SoundEngine::SoundEffect sEffect;
@@ -62,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	hoge.mesh.pos.y = 10;
 	hoge.mesh.CreateSphere();
 	
-	Obj shot[30];
+	Obj shot[20];
 	for (auto& it : shot)
 	{
 		it.mesh.GetMaterial().Load("Resource/Shader/shot.hlsl");
@@ -118,24 +126,32 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 				if (o && !i.isActive)
 				{
 					i.mesh.pos = camera3D.pos;
+					
+					//90度ずれてしまうのでオフセットする
+					i.dirX = cosf(XMConvertToRadians(-camera3D.angle.y+90)) * cosf(XMConvertToRadians(-camera3D.angle.x)) * 3;
+					i.dirY = sinf(XMConvertToRadians(-camera3D.angle.x)) * 3;
+					i.dirZ = cosf(XMConvertToRadians(-camera3D.angle.x)) * sinf(XMConvertToRadians(-camera3D.angle.y+90)) * 3;
 				
-					i.mesh.pos.z += 5;
 					i.isActive = true;
 					break;
 				}
-				
-				if (i.mesh.pos.z > 200)
+			}
+			for (auto& i : shot)
+			{
+				if (i.dethTime > 100 && i.isActive)
 				{
+					i.dethTime = 0;
 					i.isActive = false;
 				}
 			}
 			for (auto& i : shot)
 			{
-				if (HitBall(hoge.mesh.pos, i.mesh.pos, 1, 0.5f)&&hoge.isActive)
+				if (HitBall(hoge.mesh.pos, i.mesh.pos, 1, 0.5f) && hoge.isActive)
 				{
 					expro.pos = hoge.mesh.pos;
 					expro.Play();
 					sound.PlaySE();
+					i.isActive = false;
 					hoge.isActive = false;
 				}
 			}
@@ -144,9 +160,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 			{
 				if (i.isActive)
 				{
-					i.mesh.pos.x += static_cast<float>(sinf((float)M_PI / 360.0f * camera3D.angle.y)) * 3;
-					i.mesh.pos.y -= static_cast<float>(sinf((float)M_PI / 360.0f * camera3D.angle.x)) * 3;
-					i.mesh.pos.z += 3;
+					i.mesh.pos.x += i.dirX;
+					i.mesh.pos.y += i.dirY;
+					i.mesh.pos.z += i.dirZ;
+					++i.dethTime;
 					i.mesh.Draw();
 
 				}
@@ -164,11 +181,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 			//==========2DRendering=================//
 			//===================================//
 			camera2D.Run(false);
-
+			--cursor.angle.z;
 			cursor.Draw();
 			Mouse::SetMousePos(0, 0);
 			Mouse::DrawCursor(false);
-			std::cout << Mouse::L_On() << std::endl;
+			std::cout << "X: "<< camera3D.angle.x << "Y: " << camera3D.angle.y << "Z: " << camera3D.angle.z << std::endl;
 	}
 	//終了
 	return 0;
