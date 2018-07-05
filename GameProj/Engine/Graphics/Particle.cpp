@@ -3,7 +3,7 @@
 
 Particle::Particle(const char* path)
 {
-	Init();
+	Initialize();
 	Create();
 	Load(path);
 
@@ -11,7 +11,7 @@ Particle::Particle(const char* path)
 
 Particle::Particle()
 {
-	Init();
+	Initialize();
 	Create();
 }
 
@@ -60,6 +60,12 @@ void Particle::Draw(const Camera& camera)
 	EffectDraw(camera);
 }
 
+void Particle::Draw(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj)
+{
+	Update();
+	EffectDraw(view,proj);
+}
+
 
 void Particle::Update()
 {
@@ -94,7 +100,34 @@ void Particle::EffectDraw(const Camera& camera)
 	renderer->EndRendering();
 }
 
-void Particle::Init()
+void Particle::EffectDraw(const DirectX::XMMATRIX& cmeraview, const DirectX::XMMATRIX& cameraproj)
+{
+	Effekseer::Matrix44 view;
+	Effekseer::Matrix44 projection;
+	for (int y = 0; y < 4; ++y)
+	{
+		for (int x = 0; x < 4; ++x)
+		{
+			view.Values[y][x] = cmeraview.r[y].m128_f32[x];
+			projection.Values[y][x] = cameraproj.r[y].m128_f32[x];
+		}
+	}
+	//=====重要===============
+	view.Transpose();
+	projection.Transpose();
+	//=======================
+
+	// 投影行列の更新
+	renderer->SetProjectionMatrix(projection);
+	// カメラ行列の更新
+	renderer->SetCameraMatrix(view);
+
+	renderer->BeginRendering();
+	manager->Draw();
+	renderer->EndRendering();
+}
+
+void Particle::Initialize()
 {
 	pos = 0;
 	scale = 1;

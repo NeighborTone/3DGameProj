@@ -1,9 +1,11 @@
 #pragma once
+#pragma warning (disable : 4100)	//エフェクト用に仮想関数を用意したため
 #include <bitset>
 #include <array>
 #include <memory>
 #include <vector>
-
+#include "../../Engine/Utilitys/Vec.hpp"
+#include "../../Engine/Engine.h"
 class Entity;
 class Component;
 
@@ -31,10 +33,13 @@ class Component
 public:
 	Entity* entity;
 
-	virtual void Init() = 0;
+	virtual void Initialize() = 0;
 	virtual void UpDate() = 0;
 	virtual void Draw3D() = 0;
 	virtual void Draw2D() = 0;
+
+	//エフェクト用
+	virtual void UpDate3DParticle(const Camera& camera) {};
 	virtual ~Component() {}
 };
 
@@ -46,9 +51,9 @@ private:
 	ComponentArray  componentArray;
 	ComponentBitSet componentBitSet;
 public:
-	void Init()
+	void Initialize()
 	{
-		for (auto& c : components) c->Init();
+		for (auto& c : components) c->Initialize();
 	}
 	void UpDate()
 	{
@@ -61,6 +66,10 @@ public:
 	void Draw2D()
 	{
 		for (auto& c : components) c->Draw2D();
+	}
+	void UpDate3DParticle(const Camera& camera)
+	{
+		for (auto& c : components) c->UpDate3DParticle(camera);
 	}
 	bool IsActive() const { return active; }
 	void Destroy() { active = false; }
@@ -86,7 +95,7 @@ public:
 		componentArray[GetComponentTypeID<T>()] = c;
 		componentBitSet[GetComponentTypeID<T>()] = true;
 
-		c->Init();
+		c->Initialize();
 		return *c;
 	}
 
@@ -104,9 +113,9 @@ private:
 	std::vector<std::unique_ptr<Entity>> entityes;
 
 public:
-	void Init()
+	void Initialize()
 	{
-		for (auto& e : entityes) e->Init();
+		for (auto& e : entityes) e->Initialize();
 	}
 	void UpDate()
 	{
@@ -120,7 +129,11 @@ public:
 	{
 		for (auto& e : entityes) e->Draw2D();
 	}
-	//登録してアクティブでないものを削除する
+	void UpDate3DParticle(const Camera& camera)
+	{
+		for (auto& e : entityes) e->UpDate3DParticle(camera);
+	}
+	//アクティブでないものを削除する
 	void Refresh()
 	{
 		entityes.erase(std::remove_if(std::begin(entityes), std::end(entityes),

@@ -8,6 +8,7 @@ private:
 	GameController controller;
 	void UpData();
 	void Draw();
+	bool Break();
 public:
 	GameMain(Engine& engine);
 	~GameMain();

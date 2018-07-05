@@ -1,16 +1,19 @@
-#pragma once
+﻿#pragma once
 #include "ECS.hpp"
 #include <Windows.h>
+#include <iostream>
 #include "../../Engine.h"
 #include "../../Engine/Graphics/Particle.h"
-//�������A��Ńt�@�C���𕪂���
+
+#define STUB override {}
+//仮処理、後でファイルを分ける
 class CameraComponent : public Component
 {
 private:
 	Camera camera3D;
 	Camera camera2D;
 public:
-	void Init() override
+	void Initialize() override
 	{
 		camera3D.pos.z = -20;
 		camera3D.pos.y = 5;
@@ -22,10 +25,8 @@ public:
 		camera2D.SetOrthographic(1, 0.1f, 1000.0f);
 	}
 
-	void UpDate() override
-	{
+	void UpDate() STUB
 
-	}
 	void Project3D()
 	{
 		camera3D.Run(true);
@@ -35,29 +36,24 @@ public:
 	{
 		camera2D.Run(false);
 	}
-	void Draw3D() override
-	{
-		
-	}
+	void Draw3D() STUB
 
-	void Draw2D() override
-	{
-	
-	}
-	Camera GetCamera3D() const
+	void Draw2D() STUB
+
+	const Camera& GetCamera3D() const
 	{
 		return camera3D;
 	}
 
 };
-//���\�[�X�m�ۂ̓��[�h���R���X�g���N�^
+//リソース確保はロードかコンストラクタ
 class SpriteComponent : public Component
 {
 private:
 	Sprite sp;
 public:
 
-	void Init() override
+	void Initialize() override
 	{
 		sp.pos = 0;
 		sp.angle = 0;
@@ -99,9 +95,11 @@ public:
 		mesh.GetMaterial().SetTexture(0, &tex);
 		
 	}
-	void Init() override
+	void Initialize() override
 	{
-
+		mesh.pos = 0;
+		mesh.angle = 0;
+		mesh.scale = 1;
 	}
 
 	void UpDate() override
@@ -115,18 +113,45 @@ public:
 		mesh.Draw();
 	}
 
-	void Draw2D() override
-	{
-
-	}
+	void Draw2D() STUB
 
 };
 
-class ParticleComponent : Component
+
+//パーティクル自体をstd::mapで管理するほうが良いかも
+class ParticleComponent : public Component
 {
 private:
 	Particle particle;
 public:
+	ParticleComponent(const char* path)
+	{
+		particle.Load(path);
+	}
+	void Initialize() override
+	{
+		particle.pos = 0;
+		particle.angle = 0;
+		particle.scale = 1;
+	}
+	void Play()
+	{
+		if(KeyBoard::Down(KeyBoard::Key::KEY_Z))
+		particle.Play();
+	}
+	void UpDate() STUB
 
+	//このメソッド消したい
+	void UpDate3DParticle(const Camera& camera) override
+	{
+		//↡この引数クッソ邪魔!!!
+		particle.Draw(camera);
+	}
+	void Draw3D() STUB
+	//{
+		//particle.Draw()	//これが理想
+	//}
+
+	void Draw2D() STUB
 
 };

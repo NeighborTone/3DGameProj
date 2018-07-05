@@ -25,7 +25,8 @@ private:
 	void Create();
 	void Update();
 	void EffectDraw(const Camera& camera);
-	void Init();
+	void EffectDraw(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj);
+	void Initialize();
 public:
 	Vec3 pos;
 	Vec3 scale;
@@ -37,5 +38,6 @@ public:
 	void Play();
 	void Stop();
 	void Draw(const Camera &camera);
+	void Draw(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj);
 };
 

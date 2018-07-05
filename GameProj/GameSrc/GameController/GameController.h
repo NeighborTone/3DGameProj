@@ -3,7 +3,7 @@
 class GameController
 {
 private:
-	EntityManager entMane;
+	EntityManager entityManager;
 	Entity& me;
 	Entity& cameraMan;
 public:

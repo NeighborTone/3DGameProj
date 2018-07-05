@@ -11,6 +11,15 @@ void GameMain::Draw()
 	controller.Draw2D();
 }
 
+bool GameMain::Break()
+{
+	if (KeyBoard::Down(KeyBoard::Key::KEY_ESCAPE))
+	{
+		return true;
+	}
+	return false;
+}
+
 GameMain::GameMain(Engine& engine):
 	pEngine(engine)
 {
@@ -30,7 +39,7 @@ void GameMain::Init()
 
 void GameMain::Run()
 {
-	while (pEngine.Run())
+	while (pEngine.Run() && !Break())
 	{
 		UpData();
 		Draw();
