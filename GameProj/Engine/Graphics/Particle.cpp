@@ -54,7 +54,7 @@ void Particle::Stop()
 	manager->StopEffect(handle);
 }
 
-void Particle::Draw(Camera& camera)
+void Particle::Draw(const Camera& camera)
 {
 	Update();
 	EffectDraw(camera);
@@ -67,7 +67,7 @@ void Particle::Update()
 	manager->Update();
 }
 
-void Particle::EffectDraw(Camera& camera)
+void Particle::EffectDraw(const Camera& camera)
 {
 	Effekseer::Matrix44 view;
 	Effekseer::Matrix44 projection;

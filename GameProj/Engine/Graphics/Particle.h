@@ -24,7 +24,7 @@ private:
 	Effekseer::Handle handle;
 	void Create();
 	void Update();
-	void EffectDraw(Camera& camera);
+	void EffectDraw(const Camera& camera);
 	void Init();
 public:
 	Vec3 pos;
@@ -36,6 +36,6 @@ public:
 	void Load(const char* path);
 	void Play();
 	void Stop();
-	void Draw(Camera &camera);
+	void Draw(const Camera &camera);
 };
 

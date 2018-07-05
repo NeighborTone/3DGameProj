@@ -80,6 +80,12 @@
     <ClCompile Include="Engine\Inputs\XInput.cpp">
       <Filter>Engine\Inputs</Filter>
     </ClCompile>
+    <ClCompile Include="GameSrc\GameMain.cpp">
+      <Filter>GameSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\GameController\GameController.cpp">
+      <Filter>GameSrc\GameController</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -99,6 +105,15 @@
     </Filter>
     <Filter Include="Engine\Physics">
       <UniqueIdentifier>{d6780f38-b950-4052-a945-7cac1f78ddef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc">
+      <UniqueIdentifier>{7ec74169-989e-42a2-8539-f2f66c9714b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS">
+      <UniqueIdentifier>{dffcd73e-8d0b-4b39-81fb-2f2b7e4231c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\GameController">
+      <UniqueIdentifier>{d4b02e9d-a98c-4831-b134-662a486a1d20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +218,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Inputs\XInput.h">
       <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ESC\ECS.hpp">
+      <Filter>GameSrc\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ESC\Component.hpp">
+      <Filter>GameSrc\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\GameMain.h">
+      <Filter>GameSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\GameController\GameController.h">
+      <Filter>GameSrc\GameController</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

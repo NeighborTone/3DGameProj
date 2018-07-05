@@ -45,6 +45,8 @@
     <ClCompile Include="Engine\Sounds\SoundSource.cpp" />
     <ClCompile Include="Engine\Sounds\WavDecoder.cpp" />
     <ClCompile Include="Engine\Utilitys\FPS.cpp" />
+    <ClCompile Include="GameSrc\GameController\GameController.cpp" />
+    <ClCompile Include="GameSrc\GameMain.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +84,10 @@
     <ClInclude Include="Engine\Utilitys\Utility.hpp" />
     <ClInclude Include="Engine\Utilitys\Vec.hpp" />
     <ClInclude Include="Engine\Utilitys\Vertex.hpp" />
+    <ClInclude Include="GameSrc\ESC\Component.hpp" />
+    <ClInclude Include="GameSrc\ESC\ECS.hpp" />
+    <ClInclude Include="GameSrc\GameController\GameController.h" />
+    <ClInclude Include="GameSrc\GameMain.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
