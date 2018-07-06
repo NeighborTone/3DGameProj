@@ -37,9 +37,6 @@ public:
 	virtual void UpDate() = 0;
 	virtual void Draw3D() = 0;
 	virtual void Draw2D() = 0;
-
-	//エフェクト用
-	virtual void UpDate3DParticle(const Camera& camera) {};
 	virtual ~Component() {}
 };
 
@@ -66,10 +63,6 @@ public:
 	void Draw2D()
 	{
 		for (auto& c : components) c->Draw2D();
-	}
-	void UpDate3DParticle(const Camera& camera)
-	{
-		for (auto& c : components) c->UpDate3DParticle(camera);
 	}
 	bool IsActive() const { return active; }
 	void Destroy() { active = false; }
@@ -128,10 +121,6 @@ public:
 	void Draw2D()
 	{
 		for (auto& e : entityes) e->Draw2D();
-	}
-	void UpDate3DParticle(const Camera& camera)
-	{
-		for (auto& e : entityes) e->UpDate3DParticle(camera);
 	}
 	//アクティブでないものを削除する
 	void Refresh()

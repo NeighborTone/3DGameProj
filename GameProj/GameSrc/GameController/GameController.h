@@ -4,8 +4,9 @@ class GameController
 {
 private:
 	EntityManager entityManager;
-	Entity& me;
 	Entity& cameraMan;
+	Texture  tex;
+	Mesh me;
 public:
 	//リソース確保はコンストラクタで行う。AddComponent等
 	GameController();

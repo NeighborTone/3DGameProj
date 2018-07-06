@@ -6,17 +6,86 @@
 #include "../../Engine/Graphics/Particle.h"
 
 #define STUB override {}
+
+class TransformComponent : public Component
+{
+
+public:
+	Vec3 pos;
+	Vec3 velocity;
+	Vec3 angle;
+	Vec3 scale;
+	TransformComponent() = default;
+	TransformComponent(Vec3&& pos,Vec3&& velocity,Vec3&& angle,Vec3&& scale):
+		pos(pos),
+		velocity(velocity),
+		angle(angle),
+		scale(scale)
+	{}
+	void Initialize() STUB
+
+	void UpDate() STUB
+
+	void Draw3D() STUB
+
+	void Draw2D() STUB
+
+};
+
+class InuputComponent : public Component
+{
+private:
+	TransformComponent* transform;
+public:
+
+	void Initialize() override
+	{
+		transform = &entity->GetComponent<TransformComponent>();
+	}
+	void UpDate() override
+	{
+		if (KeyBoard::On(KeyBoard::Key::KEY_UP))
+		{
+			transform->pos.z += 0.6f;
+		}
+		if (KeyBoard::On(KeyBoard::Key::KEY_DOWN))
+		{
+			transform->pos.z -= 0.6f;
+		}
+		if (KeyBoard::On(KeyBoard::Key::KEY_LEFT))
+		{
+			transform->pos.x -= 0.6f;
+		}
+		if (KeyBoard::On(KeyBoard::Key::KEY_RIGHT))
+		{
+			transform->pos.x += 0.6f;
+		}
+		transform->angle.x += Mouse::GetMousePosCenter().y * 0.3f;
+		transform->angle.y += Mouse::GetMousePosCenter().x * 0.3f;
+
+		Mouse::SetMousePos(0, 0);
+	}
+	void Draw3D() STUB
+	
+	void Draw2D() override
+	{
+		Mouse::DrawCursor(false);
+	}
+};
+
 //仮処理、後でファイルを分ける
 class CameraComponent : public Component
 {
 private:
+	TransformComponent* transform;
 	Camera camera3D;
 	Camera camera2D;
 public:
 	void Initialize() override
 	{
-		camera3D.pos.z = -20;
-		camera3D.pos.y = 5;
+		transform = &entity->GetComponent<TransformComponent>();
+		camera3D.pos.z = transform->pos.z;
+		camera3D.pos.y = transform->pos.y;
 
 		camera3D.SetPerspective(45.0f, 1, 10000.0f);
 		camera3D.SetDepthTest(true);
@@ -25,7 +94,13 @@ public:
 		camera2D.SetOrthographic(1, 0.1f, 1000.0f);
 	}
 
-	void UpDate() STUB
+	void UpDate() override
+	{
+		camera3D.pos.z = transform->pos.z;
+		camera3D.pos.x = transform->pos.x;
+		camera3D.angle.x = transform->angle.x;
+		camera3D.angle.y = transform->angle.y;
+	}
 
 	void Project3D()
 	{
@@ -44,114 +119,5 @@ public:
 	{
 		return camera3D;
 	}
-
-};
-//リソース確保はロードかコンストラクタ
-class SpriteComponent : public Component
-{
-private:
-	Sprite sp;
-public:
-
-	void Initialize() override
-	{
-		sp.pos = 0;
-		sp.angle = 0;
-		sp.scale = 1;
-	}
-	SpriteComponent(const char* const filePath)
-	{
-		sp.Load(filePath);
-	}
-	void UpDate() override
-	{
-		--sp.angle.z;
-	}
-	void Draw3D() override
-	{
-		sp.color = Float4(1, 0, 0, 1);
-		sp.scale = 1.0f / sp.GetSize().y;
-		sp.Draw();
-	}
-	void Draw2D() override
-	{
-		sp.color = Float4(1, 1, 1, 1);
-		sp.scale = 1;
-		sp.Draw();
-	}
-
-};
-
-class MeshComponent : public Component
-{
-private:
-	Mesh mesh;
-	Texture tex;
-public:
-	MeshComponent(const char* const filePath)
-	{
-		tex.Load(filePath);
-		mesh.CreateSphere();
-		mesh.GetMaterial().SetTexture(0, &tex);
-		
-	}
-	void Initialize() override
-	{
-		mesh.pos = 0;
-		mesh.angle = 0;
-		mesh.scale = 1;
-	}
-
-	void UpDate() override
-	{
-		++mesh.angle.x;
-	}
-
-	void Draw3D() override
-	{
-		mesh.pos.x = 2;
-		mesh.Draw();
-	}
-
-	void Draw2D() STUB
-
-};
-
-
-//パーティクル自体をstd::mapで管理するほうが良いかも
-class ParticleComponent : public Component
-{
-private:
-	Particle particle;
-public:
-	ParticleComponent(const char* path)
-	{
-		particle.Load(path);
-	}
-	void Initialize() override
-	{
-		particle.pos = 0;
-		particle.angle = 0;
-		particle.scale = 1;
-	}
-	void Play()
-	{
-		if(KeyBoard::Down(KeyBoard::Key::KEY_Z))
-		particle.Play();
-	}
-	void UpDate() STUB
-
-	//このメソッド消したい
-	void UpDate3DParticle(const Camera& camera) override
-	{
-		//↡この引数クッソ邪魔!!!
-		particle.Draw(camera);
-	}
-	void Draw3D() STUB
-	//{
-		//particle.Draw()	//これが理想
-	//}
-
-	void Draw2D() STUB
 
 };
