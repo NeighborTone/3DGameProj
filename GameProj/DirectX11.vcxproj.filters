@@ -219,17 +219,17 @@
     <ClInclude Include="Engine\Inputs\XInput.h">
       <Filter>Engine\Inputs</Filter>
     </ClInclude>
-    <ClInclude Include="GameSrc\ESC\ECS.hpp">
-      <Filter>GameSrc\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ESC\Component.hpp">
-      <Filter>GameSrc\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="GameSrc\GameMain.h">
       <Filter>GameSrc</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\GameController\GameController.h">
       <Filter>GameSrc\GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\ECS.hpp">
+      <Filter>GameSrc\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Component.hpp">
+      <Filter>GameSrc\ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

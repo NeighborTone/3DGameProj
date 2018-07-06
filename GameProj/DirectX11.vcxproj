@@ -84,8 +84,8 @@
     <ClInclude Include="Engine\Utilitys\Utility.hpp" />
     <ClInclude Include="Engine\Utilitys\Vec.hpp" />
     <ClInclude Include="Engine\Utilitys\Vertex.hpp" />
-    <ClInclude Include="GameSrc\ESC\Component.hpp" />
-    <ClInclude Include="GameSrc\ESC\ECS.hpp" />
+    <ClInclude Include="GameSrc\ECS\Component.hpp" />
+    <ClInclude Include="GameSrc\ECS\ECS.hpp" />
     <ClInclude Include="GameSrc\GameController\GameController.h" />
     <ClInclude Include="GameSrc\GameMain.h" />
   </ItemGroup>

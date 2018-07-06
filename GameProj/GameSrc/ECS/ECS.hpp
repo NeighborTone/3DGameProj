@@ -1,11 +1,9 @@
 #pragma once
-#pragma warning (disable : 4100)	//エフェクト用に仮想関数を用意したため
 #include <bitset>
 #include <array>
 #include <memory>
 #include <vector>
-#include "../../Engine/Utilitys/Vec.hpp"
-#include "../../Engine/Engine.h"
+
 class Entity;
 class Component;
 
@@ -92,6 +90,7 @@ public:
 		return *c;
 	}
 
+	//登録したコンポーネントを取得する
 	template<typename T> T& GetComponent() const
 	{
 		auto ptr(componentArray[GetComponentTypeID<T>()]);
@@ -100,6 +99,7 @@ public:
 
 };
 
+//Entity統括クラス。このクラスはUnityで例えるとHierarchyに当たる部分
 class EntityManager
 {
 private:
@@ -133,6 +133,7 @@ public:
 			std::end(entityes));
 	}
 
+	//Entityを生成しそのポインタを返すファクトリメソッド
 	Entity& AddEntity()
 	{
 		Entity* e = new Entity();

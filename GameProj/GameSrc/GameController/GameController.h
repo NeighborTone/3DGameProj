@@ -1,16 +1,15 @@
 #pragma once
-#include "../ESC/Component.hpp"
+#include "../ECS/Component.hpp"
+
 class GameController
 {
 private:
 	EntityManager entityManager;
-	Entity& cameraMan;
-	Texture  tex;
-	Mesh me;
+	Entity& Player;
+	Entity& ground;
+
 public:
-	//リソース確保はコンストラクタで行う。AddComponent等
 	GameController();
-	//解放はデストラクタ
 	~GameController();
 	void Init();
 	void UpDate();

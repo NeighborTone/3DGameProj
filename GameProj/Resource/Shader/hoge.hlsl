@@ -35,7 +35,7 @@ float4 PS(Pixel pixel) : SV_TARGET	//レンダリングターゲットに出力
 {
     float3 normal = normalize(pixel.normal);
     float3 lightDirection = normalize(float3(0.25, -1.0, 0.5));			//ライトの向き
-    float3 lightColor = float3(0.0, 0.0, 1.0);							//ライトの色
+    float3 lightColor = float3(0.0, 1.0, 0.4);							//ライトの色
     float4 diffuseColor = texture0.Sample(sampler0, pixel.uv);			//拡散光
     float3 diffuseIntensity = dot(-lightDirection, normal) * lightColor;	//拡散光の強さ
     float3 ambientIntensity = lightColor * 1;							//環境光の強さ
