@@ -86,6 +86,15 @@
     <ClCompile Include="GameSrc\GameController\GameController.cpp">
       <Filter>GameSrc\GameController</Filter>
     </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\MeshComponent.cpp">
+      <Filter>GameSrc\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\CameraComponent.cpp">
+      <Filter>GameSrc\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\InuputMoveComponent.cpp">
+      <Filter>GameSrc\ECS\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -114,6 +123,9 @@
     </Filter>
     <Filter Include="GameSrc\GameController">
       <UniqueIdentifier>{d4b02e9d-a98c-4831-b134-662a486a1d20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components">
+      <UniqueIdentifier>{4a276301-6a79-4f78-ab81-e9927cedf6df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -228,8 +240,20 @@
     <ClInclude Include="GameSrc\ECS\ECS.hpp">
       <Filter>GameSrc\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Component.hpp">
-      <Filter>GameSrc\ECS</Filter>
+    <ClInclude Include="GameSrc\ECS\Components\InuputMoveComponent.h">
+      <Filter>GameSrc\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\MeshComponent.h">
+      <Filter>GameSrc\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\Transform.hpp">
+      <Filter>GameSrc\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\CameraComponent.h">
+      <Filter>GameSrc\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\GroundComponent.hpp">
+      <Filter>GameSrc\ECS\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

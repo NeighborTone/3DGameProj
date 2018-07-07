@@ -67,7 +67,7 @@ public:
 
 	template <typename T> bool HasComponent() const
 	{
-		return componentBitSet[GetComponentTypeID<T>];
+		return componentBitSet[GetComponentTypeID<T>()];
 	}
 
 	//コンポーネントの追加メソッド
