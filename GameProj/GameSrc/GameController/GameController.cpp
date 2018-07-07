@@ -2,19 +2,29 @@
 #include "../ECS/Components/CameraComponent.h"
 #include "../ECS/Components/InuputMoveComponent.h"
 #include "../ECS/Components/GroundComponent.hpp"
-
+#include "../ECS/Components/ShotComponent.h"
+#include "../ECS/Components/InputShotComponent.h"
 
 GameController::GameController():
-	Player(entityManager.AddEntity()),
-	ground(entityManager.AddEntity())
+	player(entityManager.AddEntity()),
+	ground(entityManager.AddEntity()),
+	shot(entityManager.AddEntity())
 {
-	Player.AddComponent<TransformComponent>(Pos(0, 5, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
-	Player.AddComponent<InuputMoveComponent>(0.1f);
-	Player.AddComponent<CameraComponent>();
+	player.AddComponent<TransformComponent>(Pos(0, 5, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
+	player.AddComponent<InuputMoveComponent>(0.1f);
+	player.AddComponent<CameraComponent>();
 
-	ground.AddComponent<GroundComponent>(Pos(0, 0, 0), Angles(0, 0, 0), Scale(30, 2, 30));
 
-	Mouse::SetMousePos(0, 0);
+	shot.AddComponent<TransformComponent>();
+	shot.AddComponent<InputShotComponent>(5.0f);
+	shot.AddComponent<ShotComponent>();
+	
+	
+
+	ground.AddComponent<GroundComponent>(Pos(0, 0, 0), Angles(0, 0, 0), Scale(80, 2, 80));
+
+	
+
 }
 
 GameController::~GameController()
@@ -31,17 +41,20 @@ void GameController::UpDate()
 {
 	entityManager.Refresh();
 	entityManager.UpDate();
+	shot.GetComponent<InputShotComponent>().Shot(
+		Pos(player.GetComponent<TransformComponent>().pos),
+		Angles(player.GetComponent<TransformComponent>().angle));
 }
 
 void GameController::Draw3D()
 {
-	Player.GetComponent<CameraComponent>().Project3D();
+	player.GetComponent<CameraComponent>().Project3D();
 	entityManager.Draw3D();
 }
 
 void GameController::Draw2D()
 {
-	Player.GetComponent<CameraComponent>().Project2D();
+	player.GetComponent<CameraComponent>().Project2D();
 	entityManager.Draw2D();
 }
 

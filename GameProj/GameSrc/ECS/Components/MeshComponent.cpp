@@ -1,5 +1,15 @@
 #include "MeshComponent.h"
 
+void MeshComponent::LoadTexture(const char * Texturepath)
+{
+	tex.Load(Texturepath);
+}
+
+void MeshComponent::LoadShader(const char * shaderPath)
+{
+	mesh.GetMaterial().Load(shaderPath);
+}
+
 MeshComponent::MeshComponent(const char* Texturepath)
 {
 	tex.Load(Texturepath);
@@ -8,6 +18,18 @@ MeshComponent::MeshComponent(const char* Texturepath, const char* shaderPath)
 {
 	tex.Load(Texturepath);
 	mesh.GetMaterial().Load(shaderPath);
+}
+void MeshComponent::SetMaterial(const char * Texturepath, const char * shaderPath)
+{
+	LoadTexture(Texturepath);
+	LoadShader(shaderPath);
+}
+void MeshComponent::SetTransform(Pos && pos, Velocity && velocity, Angles && angle, Scale && scale)
+{
+	if (!entity->HasComponent<TransformComponent>())
+	{
+		entity->AddComponent<TransformComponent>(Pos(pos), Velocity(velocity), Angles(angle), Scale(scale));
+	}
 }
 bool MeshComponent::CreateCube(bool shouldClear)
 {
@@ -34,10 +56,20 @@ bool MeshComponent::CreateSphere(float radius, int tessellation, bool shouldClea
 void MeshComponent::Initialize()
 {
 	isCreate = false;
-	transform = &entity->GetComponent<TransformComponent>();
-	mesh.pos = transform->pos;
-	mesh.angle = transform->angle;
-	mesh.scale = transform->scale;
+	if (entity->HasComponent<TransformComponent>())
+	{
+		transform = &entity->GetComponent<TransformComponent>();
+		mesh.pos = transform->pos;
+		mesh.angle = transform->angle;
+		mesh.scale = transform->scale;
+	}
+	else
+	{
+		mesh.pos = 0;
+		mesh.angle = 0;
+		mesh.scale = 1;
+	}
+
 }
 void MeshComponent::UpDate()
 {

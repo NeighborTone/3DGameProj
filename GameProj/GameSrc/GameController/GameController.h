@@ -5,9 +5,9 @@ class GameController
 {
 private:
 	EntityManager entityManager;
-	Entity& Player;
+	Entity& player;
 	Entity& ground;
-
+	Entity& shot;
 public:
 	GameController();
 	~GameController();

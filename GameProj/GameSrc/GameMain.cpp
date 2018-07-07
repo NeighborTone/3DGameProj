@@ -23,8 +23,7 @@ bool GameMain::Break()
 GameMain::GameMain(Engine& engine):
 	pEngine(engine)
 {
-	
-
+	Mouse::SetMousePos(0, 0);
 }
 
 GameMain::~GameMain()

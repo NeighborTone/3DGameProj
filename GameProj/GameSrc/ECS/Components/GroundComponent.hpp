@@ -7,7 +7,7 @@
 class GroundComponent : public Component
 {
 private:
-	TransformComponent * trans;
+	TransformComponent* trans;
 	MeshComponent* mesh;
 	Pos pos;
 	Angles angle;
