@@ -8,11 +8,11 @@ private:
 	GameController controller;
 	void UpData();
 	void Draw();
-	bool Break();
+	bool PushEscape();
 public:
 	GameMain(Engine& engine);
 	~GameMain();
-	void Init();
+	void Initialize();
 	void Run();
 	void Finalize();
 };

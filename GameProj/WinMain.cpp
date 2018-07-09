@@ -9,7 +9,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ƒGƒ“ƒWƒ“¶¬
 	Engine ge("a", 1280, 900, true);
 	GameMain main(ge);
-	main.Init();
+	main.Initialize();
 	main.Run();
 	main.Finalize();
 	return 0;

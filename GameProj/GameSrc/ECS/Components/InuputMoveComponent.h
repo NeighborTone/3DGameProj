@@ -9,7 +9,7 @@ private:
 	float speed_;
 	TransformComponent* transform;
 public:
-	//カメラの旋回速度を引数に指定
+	//旋回速度を引数に指定
 	InuputMoveComponent(const float angleSpeed);
 	void Initialize() override;
 

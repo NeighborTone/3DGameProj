@@ -6,12 +6,16 @@ InuputMoveComponent::InuputMoveComponent(const float speed)
 }
 void InuputMoveComponent::Initialize()
 {
+	if (!entity->HasComponent<TransformComponent>())
+	{
+		return;
+	}
 	transform = &entity->GetComponent<TransformComponent>();
 }
 void InuputMoveComponent::UpDate()
 {
 	if (KeyBoard::On(KeyBoard::Key::KEY_UP))
-	{
+	{	
 		transform->pos.z += transform->velocity.z;
 	}
 	if (KeyBoard::On(KeyBoard::Key::KEY_DOWN))

@@ -6,10 +6,14 @@
 
 class Entity;
 class Component;
+class EntityManager;
+
 
 using ComponentID = std::size_t;
+using Group = std::size_t;
 
-inline ComponentID GetComponentTypeID()
+
+inline ComponentID GetNewComponentTypeID()
 {
 	static ComponentID lastID = 0;
 	return ++lastID;
@@ -17,20 +21,22 @@ inline ComponentID GetComponentTypeID()
 
 template <typename T> inline ComponentID GetComponentTypeID() noexcept
 {
-	static ComponentID typeID = GetComponentTypeID();
+	static ComponentID typeID = GetNewComponentTypeID();
 	return typeID;
 }
 
 constexpr std::size_t MaxComponents = 32;
+constexpr std::size_t MaxGroups = 32;
 
 using ComponentBitSet = std::bitset<MaxComponents>;
 using ComponentArray = std::array<Component*, MaxComponents>;
+using GroupBitSet = std::bitset<MaxGroups>;
 
 class Component
 {
 public:
+	
 	Entity* entity;
-
 	virtual void Initialize() = 0;
 	virtual void UpDate() = 0;
 	virtual void Draw3D() = 0;
@@ -41,11 +47,16 @@ public:
 class Entity
 {
 private:
+	EntityManager & manager_;
 	bool active = true;
 	std::vector<std::unique_ptr<Component>> components;
 	ComponentArray  componentArray;
 	ComponentBitSet componentBitSet;
+	GroupBitSet groupBitSet;
 public:
+
+	Entity(EntityManager& manager) : manager_(manager) {}
+
 	void Initialize()
 	{
 		for (auto& c : components) c->Initialize();
@@ -63,7 +74,20 @@ public:
 		for (auto& c : components) c->Draw2D();
 	}
 	bool IsActive() const { return active; }
+
 	void Destroy() { active = false; }
+
+	bool HasGroup(Group group)
+	{
+		return groupBitSet[group];
+	}
+
+	void AddGroup(Group group);
+
+	void DeleteGroup(Group group)
+	{
+		groupBitSet[group] = false;
+	}
 
 	template <typename T> bool HasComponent() const
 	{
@@ -104,6 +128,7 @@ class EntityManager
 {
 private:
 	std::vector<std::unique_ptr<Entity>> entityes;
+	std::array<std::vector<Entity*>, MaxGroups> groupedEntities;
 
 public:
 	void Initialize()
@@ -131,12 +156,29 @@ public:
 			return !pEntity->IsActive();
 		}),
 			std::end(entityes));
+
+		entityes.erase(std::remove_if(std::begin(entityes), std::end(entityes),
+			[](const std::unique_ptr<Entity> &pEntity)
+		{
+			return !pEntity->IsActive();
+		}),
+			std::end(entityes));
+	}
+
+	std::vector<Entity*>& GetGroup(Group group)
+	{
+		return groupedEntities[group];
+	}
+
+	void AddGroup(Entity* pEntity, Group group)
+	{
+		groupedEntities[group].emplace_back(pEntity);
 	}
 
 	//Entityを生成しそのポインタを返すファクトリメソッド
 	Entity& AddEntity()
 	{
-		Entity* e = new Entity();
+		Entity* e = new Entity(*this);
 		std::unique_ptr<Entity> uPtr(e);
 		entityes.emplace_back(std::move(uPtr));
 		return *e;

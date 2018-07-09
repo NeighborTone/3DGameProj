@@ -1,6 +1,6 @@
 #pragma once
 #include"../ECS/ECS.hpp"
-
+#include "Helper.hpp"
 class GameController
 {
 private:
@@ -8,10 +8,11 @@ private:
 	Entity& player;
 	Entity& ground;
 	Entity& shot;
+
 public:
 	GameController();
 	~GameController();
-	void Init();
+	void Initialize();
 	void UpDate();
 	void Draw3D();
 	void Draw2D();

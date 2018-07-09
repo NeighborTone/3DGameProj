@@ -1,7 +1,17 @@
 #include "CameraComponent.h"
 
+CameraComponent::CameraComponent()
+{
+	sprite.Load("Resource/Texture/cursor.png");
+}
+
 void CameraComponent::Initialize()
 {
+	if (!entity->HasComponent<TransformComponent>())
+	{
+		entity->AddComponent<TransformComponent>();
+	}
+
 	transform = &entity->GetComponent<TransformComponent>();
 	camera3D.pos = transform->pos;
 
@@ -14,6 +24,7 @@ void CameraComponent::Initialize()
 
 void CameraComponent::UpDate()
 {
+	
 	camera3D.pos = transform->pos;
 	camera3D.angle = transform->angle;
 }
@@ -26,6 +37,21 @@ void CameraComponent::Project3D()
 void CameraComponent::Project2D()
 {
 	camera2D.Run(false);
+}
+
+void CameraComponent::Draw2D()
+{
+	DrawCenterCursor(true);
+}
+
+void CameraComponent::DrawCenterCursor(bool enable)
+{
+	if (!enable)
+	{
+		return;
+	}
+	--sprite.angle.z;
+	sprite.Draw();
 }
 
 const Camera& CameraComponent::GetCamera3D() const

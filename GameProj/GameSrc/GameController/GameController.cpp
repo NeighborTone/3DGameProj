@@ -14,17 +14,12 @@ GameController::GameController():
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
 
-
-	shot.AddComponent<TransformComponent>();
 	shot.AddComponent<InputShotComponent>(5.0f);
 	shot.AddComponent<ShotComponent>();
 	
 	
 
 	ground.AddComponent<GroundComponent>(Pos(0, 0, 0), Angles(0, 0, 0), Scale(80, 2, 80));
-
-	
-
 }
 
 GameController::~GameController()
@@ -32,7 +27,7 @@ GameController::~GameController()
 
 }
 
-void GameController::Init()
+void GameController::Initialize()
 {
 	entityManager.Initialize();
 }
@@ -41,9 +36,8 @@ void GameController::UpDate()
 {
 	entityManager.Refresh();
 	entityManager.UpDate();
-	shot.GetComponent<InputShotComponent>().Shot(
-		Pos(player.GetComponent<TransformComponent>().pos),
-		Angles(player.GetComponent<TransformComponent>().angle));
+
+	shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
 }
 
 void GameController::Draw3D()

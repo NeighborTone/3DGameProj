@@ -11,7 +11,7 @@ void GameMain::Draw()
 	controller.Draw2D();
 }
 
-bool GameMain::Break()
+bool GameMain::PushEscape()
 {
 	if (KeyBoard::Down(KeyBoard::Key::KEY_ESCAPE))
 	{
@@ -31,14 +31,14 @@ GameMain::~GameMain()
 
 }
 
-void GameMain::Init()
+void GameMain::Initialize()
 {
-	controller.Init();
+	controller.Initialize();
 }
 
 void GameMain::Run()
 {
-	while (pEngine.Run() && !Break())
+	while (pEngine.Run() && !PushEscape())
 	{
 		UpData();
 		Draw();

@@ -50,6 +50,7 @@
     <ClCompile Include="GameSrc\ECS\Components\InuputMoveComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\MeshComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\ShotComponent.cpp" />
+    <ClCompile Include="GameSrc\ECS\ECS.cpp" />
     <ClCompile Include="GameSrc\GameController\GameController.cpp" />
     <ClCompile Include="GameSrc\GameMain.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="GameSrc\ECS\Components\Transform.hpp" />
     <ClInclude Include="GameSrc\ECS\ECS.hpp" />
     <ClInclude Include="GameSrc\GameController\GameController.h" />
+    <ClInclude Include="GameSrc\GameController\Helper.hpp" />
     <ClInclude Include="GameSrc\GameMain.h" />
   </ItemGroup>
   <ItemGroup>
