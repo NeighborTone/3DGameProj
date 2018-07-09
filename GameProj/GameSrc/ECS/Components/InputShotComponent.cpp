@@ -1,57 +1,73 @@
 #include"InputShotComponent.h"
+#include "../../GameController/Helper.hpp"
 
-InputShotComponent::InputShotComponent(const float speed) :
-	speed_(speed),
-	isActive(false),
-	deathTime(0)
-{}
+InputShotComponent::InputShotComponent(const float speed, int maxNum) :
+	speed_(speed)
+{
+	tex.Load("Resource/Texture/stonewall_diff.jpg");
+	shots.resize(maxNum);
+	for (auto& it : shots)
+	{
+		it.mesh.GetMaterial().Load("Resource/Shader/shot.hlsl");
+		it.mesh.GetMaterial().SetTexture(0, &tex);
+		it.mesh.CreateSphere();
+	}
+}
 
 void InputShotComponent::Initialize()
 {
-	deathTime = 0;
-	if (!entity->HasComponent<TransformComponent>())
+	for (auto& it : shots)
 	{
-		entity->AddComponent<TransformComponent>();
+		it.deathTime = 0;
+		it.isActive = false;
 	}
-	transform = &entity->GetComponent<TransformComponent>();
 }
 
 void InputShotComponent::UpDate()
 {
-	if (isActive)
+	for (auto& it : shots)
 	{
-		transform->pos += transform->velocity;
-		++deathTime;
-	}
-
-	if (deathTime > 80 && isActive)
-	{
-		deathTime = 0;
-		isActive = false;
+		if (it.isActive)
+		{
+			it.mesh.pos += it.velocity;
+			++it.deathTime;
+		}
+		if (it.deathTime > 100 && it.isActive)
+		{
+			it.deathTime = 0;
+			it.isActive = false;
+		}
 	}
 }
 
-bool InputShotComponent::IsActive()
+void InputShotComponent::Draw3D()
 {
-	return isActive;
+	for (auto& it : shots)
+	{
+		if (it.isActive)
+		{
+			it.mesh.Draw();
+		}
+	}
 }
 
 void InputShotComponent::Shot(TransformComponent&& trans)
 {
-	if (isActive)
-	{
-		return;
-	}
 	bool isShot = Mouse::L_On() % 8 == 1;
-	if (isShot && !isActive)
-	{
-		transform->pos = trans.pos;
 
-		transform->velocity.x = cosf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
-		transform->velocity.y = sinf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
-		transform->velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * speed_;
-		transform->pos += transform->velocity;
-		isActive = true;
+	for (auto& it : shots)
+	{
+		if (isShot && !it.isActive)
+		{
+			//いったんセット
+			it.mesh.pos = trans.pos;
+			//弾の射出方向を決める。90度ずれてしまうのでオフセットする
+			it.velocity.x = cosf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
+			it.velocity.y = sinf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
+			it.velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * speed_;
+			it.isActive = true;
+			break;
+		}
 	}
 }
 

@@ -104,6 +104,9 @@
     <ClCompile Include="GameSrc\ECS\ECS.cpp">
       <Filter>GameSrc\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\SkyBoxComponent.cpp">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -282,10 +285,8 @@
     <ClInclude Include="GameSrc\GameController\Helper.hpp">
       <Filter>GameSrc\GameController</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="MoveMemo.txt">
-      <Filter>GameSrc\ECS\Components\MoveComponents</Filter>
-    </Text>
+    <ClInclude Include="GameSrc\ECS\Components\SkyBoxComponent.h">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

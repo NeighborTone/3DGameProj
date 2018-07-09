@@ -35,8 +35,3 @@ void InuputMoveComponent::UpDate()
 
 	Mouse::SetMousePos(0, 0);
 }
-
-void InuputMoveComponent::Draw2D() 
-{
-	Mouse::DrawCursor(false);
-}

@@ -6,9 +6,8 @@ class GameController
 private:
 	EntityManager entityManager;
 	Entity& player;
-	Entity& ground;
 	Entity& shot;
-
+	Entity& skyBox;
 public:
 	GameController();
 	~GameController();

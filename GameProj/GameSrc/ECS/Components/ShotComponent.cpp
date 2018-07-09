@@ -22,10 +22,8 @@ void ShotComponent::UpDate()
 
 void ShotComponent::Draw3D()
 {
-	if (shotMove->IsActive())
-	{
-		mesh.Draw();
-	}
+	
+	mesh.Draw();
 
 }
 

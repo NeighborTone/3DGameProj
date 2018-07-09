@@ -17,6 +17,6 @@ public:
 	
 	void Draw3D() STUB
 
-	void Draw2D() override;
+	void Draw2D() STUB
 
 };
