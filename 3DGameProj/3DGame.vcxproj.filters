@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utilitys\FPS.cpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\Audio.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\OggDecoder.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\PCM.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\SoundEffect.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\SoundSource.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sounds\WavDecoder.cpp">
+      <Filter>Engine\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Geometry.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Physics.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\RigidBody.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Camera.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Direct3D.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Material.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Mesh.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Model.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Particle.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Sprite.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\System.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Text.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\Direct_Input.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\Keyboard.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\Mouse.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\Pad.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inputs\XInput.cpp">
+      <Filter>Engine\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\GameMain.cpp">
+      <Filter>GameSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\GameController\GameController.cpp">
+      <Filter>GameSrc\GameController</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\InputShotComponent.cpp">
+      <Filter>GameSrc\ECS\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\InuputMoveComponent.cpp">
+      <Filter>GameSrc\ECS\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\MeshComponent.cpp">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\CameraComponent.cpp">
+      <Filter>GameSrc\ECS\Components\Upward</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\ECS.cpp">
+      <Filter>GameSrc\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\SkyBoxComponent.cpp">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\ComponentData\Collision.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\ColliderComponent.cpp">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{5f864b5e-af50-4bda-9cc9-6f83793bf98e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics">
+      <UniqueIdentifier>{6a262f5c-4cc8-4996-9d64-11d6287bc811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Inputs">
+      <UniqueIdentifier>{2d648b1e-9047-4054-9ede-1bf622590b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utilitys">
+      <UniqueIdentifier>{f9b3ab7b-331d-48e1-9907-d9cb23efb5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Sounds">
+      <UniqueIdentifier>{f6e67b56-8a41-428f-b6fe-c940eeb9cca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{d6780f38-b950-4052-a945-7cac1f78ddef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc">
+      <UniqueIdentifier>{7ec74169-989e-42a2-8539-f2f66c9714b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS">
+      <UniqueIdentifier>{dffcd73e-8d0b-4b39-81fb-2f2b7e4231c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\GameController">
+      <UniqueIdentifier>{d4b02e9d-a98c-4831-b134-662a486a1d20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components">
+      <UniqueIdentifier>{4a276301-6a79-4f78-ab81-e9927cedf6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components\MoveComponents">
+      <UniqueIdentifier>{acc400ba-c5e7-4e0f-948a-f23363e34845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components\Upward">
+      <UniqueIdentifier>{23eba02d-c0a7-4ea8-8cc7-296da4442702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components\Lower">
+      <UniqueIdentifier>{3bdc396c-88c1-49e2-875e-d303cbb1f997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components\ComponentsData">
+      <UniqueIdentifier>{9c4219a8-0487-4f9a-9c34-b2f71aacf2ca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Console.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Counter.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Easing.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\FPS.h">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Randam.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\StringConverter.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Utility.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Vec.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utilitys\Vertex.hpp">
+      <Filter>Engine\Utilitys</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\Audio.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\OggDecoder.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\PCM.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\SoundEffect.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\SoundSource.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sounds\WavDecoder.h">
+      <Filter>Engine\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Geometry.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Physics.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\RigidBody.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Camera.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Direct3D.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Material.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Mesh.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Model.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Particle.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Sprite.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\System.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Text.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\Direct_Input.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\Keyboard.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\Mouse.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\Pad.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inputs\XInput.h">
+      <Filter>Engine\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\GameMain.h">
+      <Filter>GameSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\GameController\GameController.h">
+      <Filter>GameSrc\GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\ECS.hpp">
+      <Filter>GameSrc\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\InputShotComponent.h">
+      <Filter>GameSrc\ECS\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\InuputMoveComponent.h">
+      <Filter>GameSrc\ECS\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\Transform.hpp">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\GroundComponent.hpp">
+      <Filter>GameSrc\ECS\Components\Upward</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\MeshComponent.h">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\CameraComponent.h">
+      <Filter>GameSrc\ECS\Components\Upward</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\GameController\Helper.hpp">
+      <Filter>GameSrc\GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\SkyBoxComponent.h">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\ComponentData\Sphere.hpp">
+      <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\ComponentData\Box.hpp">
+      <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\ComponentData\Collision.h">
+      <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\ColliderComponent.h">
+      <Filter>GameSrc\ECS\Components\Lower</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
