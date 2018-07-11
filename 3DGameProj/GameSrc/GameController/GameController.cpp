@@ -32,9 +32,9 @@ GameController::~GameController()
 
 }
 
-void GameController::CollisionCheck()
+void GameController::CollisionEvent()
 {
-	if (shot.GetComponent<InputShotComponent>().IsHit(Sphere(ComAssist::GetPos(hoge), 0.5f)))
+	if (shot.GetComponent<InputShotComponent>().IsHit(Sphere(ComAssist::GetPos(hoge), 0.7f)))
 	{
 		//TestÉRÅ[Éh
 		ef.pos = ComAssist::GetPos(hoge);
@@ -55,7 +55,7 @@ void GameController::UpDate()
 	entityManager.Refresh();
 	entityManager.UpDate();
 	shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
-	CollisionCheck();
+	CollisionEvent();
 
 	
 }

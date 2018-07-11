@@ -22,7 +22,7 @@ private:
 public:
 	GameController();
 	~GameController();
-	void CollisionCheck();
+	void CollisionEvent();
 	void Initialize();
 	void UpDate();
 	void Draw3D();

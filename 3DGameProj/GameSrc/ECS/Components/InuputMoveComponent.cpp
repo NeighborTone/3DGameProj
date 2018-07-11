@@ -25,18 +25,6 @@ void InuputMoveComponent::UpDate()
 	{
 		transform->pos -= dir;
 	}
-	/*if (KeyBoard::On(KeyBoard::Key::KEY_DOWN))
-	{
-		transform->pos.z -= transform->velocity.z;
-	}
-	if (KeyBoard::On(KeyBoard::Key::KEY_LEFT))
-	{
-		transform->pos.x -= transform->velocity.x;
-	}
-	if (KeyBoard::On(KeyBoard::Key::KEY_RIGHT))
-	{
-		transform->pos.x += transform->velocity.x;
-	}*/
 	transform->angle.x += Mouse::GetMousePosCenter().y * speed_;
 	transform->angle.y += Mouse::GetMousePosCenter().x * speed_;
 

@@ -68,7 +68,7 @@ void InputShotComponent::Shot(TransformComponent&& trans)
 			it.velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * speed_;
 			it.isActive = true;
 			//ƒJƒƒ‰‚Æ‚©‚Ô‚é‚Ì‚Å‚¿‚å‚Á‚Æ‘O‚Éo‚·
-			it.mesh.pos += (it.velocity  / 2);
+			it.mesh.pos += (it.velocity  * 1.2f);
 			break;
 		}
 	}
