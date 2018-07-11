@@ -107,9 +107,6 @@
     <ClCompile Include="GameSrc\ECS\Components\ComponentData\Collision.cpp">
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
     </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\ColliderComponent.cpp">
-      <Filter>GameSrc\ECS\Components\Lower</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -299,9 +296,6 @@
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Collision.h">
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\ColliderComponent.h">
-      <Filter>GameSrc\ECS\Components\Lower</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

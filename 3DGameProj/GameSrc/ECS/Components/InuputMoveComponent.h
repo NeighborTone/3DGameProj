@@ -8,6 +8,7 @@ class InuputMoveComponent : public Component
 private:
 	float speed_;
 	TransformComponent* transform;
+	Vec3 dir;
 public:
 	//ù‰ñ‘¬“x‚ğˆø”‚Éw’è
 	InuputMoveComponent(const float angleSpeed);

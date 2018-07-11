@@ -5,35 +5,32 @@
 class Box
 {
 private:
-	float
-		//ç¿ïW
-		x,
-		y,
-		z,
-		//îºåa
-		width,
-		height,
-		depth;
+	Pos pos;
+	Scale scale;
+
 public:
-	Box() :x(0), y(0), z(0), width(0), height(0), depth(0) {}
-	Box Create(const Pos&& pos, const Scale&& scale)
+	Box(const Pos&& pos_, const Scale&& scale_)
 	{
-		x = pos.x;
-		y = pos.y;
-		z = pos.z;
-		width = scale.x / 2;
-		height = scale.y / 2;
-		depth = scale.z / 2;
+		Create(Pos(pos_), Scale(scale_));
+	}
+	Box Create(const Pos&& pos_, const Scale&& scale_)
+	{
+		pos.x = pos_.x;
+		pos.y = pos_.y;
+		pos.z = pos_.z;
+		scale.x = scale_.x / 2;
+		scale.y = scale_.y / 2;
+		scale.z = scale_.z / 2;
 
 		return *this;
 	}
 	const Pos& GetPos()const
 	{
-		return Pos(x, y, z);
+		return pos;
 	}
 	const Scale& GetScale()const
 	{
-		return Scale(width, height, depth);
+		return scale;
 	}
 };
 

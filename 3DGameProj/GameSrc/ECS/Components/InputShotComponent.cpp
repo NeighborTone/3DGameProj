@@ -1,6 +1,6 @@
 #include"InputShotComponent.h"
 #include "../../GameController/Helper.hpp"
-
+#include <iostream>
 InputShotComponent::InputShotComponent(const float speed, const int maxNum, const float radius) :
 	speed_(speed)
 {
@@ -10,8 +10,8 @@ InputShotComponent::InputShotComponent(const float speed, const int maxNum, cons
 	{
 		it.mesh.GetMaterial().Load("Resource/Shader/shot.hlsl");
 		it.mesh.GetMaterial().SetTexture(0, &tex);
-		it.radius_ = radius;
-		it.mesh.CreateSphere(it.radius_*2);
+		it.radius = radius;
+		it.mesh.CreateSphere(it.radius*2);
 	}
 }
 
@@ -67,10 +67,30 @@ void InputShotComponent::Shot(TransformComponent&& trans)
 			it.velocity.y = sinf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
 			it.velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * speed_;
 			it.isActive = true;
-			it.mesh.pos += it.velocity;
+			//ÉJÉÅÉâÇ∆Ç©Ç‘ÇÈÇÃÇ≈ÇøÇÂÇ¡Ç∆ëOÇ…èoÇ∑
+			it.mesh.pos += (it.velocity  / 2);
 			break;
 		}
 	}
+}
+
+bool InputShotComponent::IsHit(Sphere&& sphere)
+{
+	for (auto& it : shots)
+	{
+		if (!it.isActive)
+		{
+			continue;
+		}
+		if (Collison::SphereCollision(Sphere(Pos(it.mesh.pos), it.radius), Sphere(sphere)))
+		{
+			it.deathTime = 0;
+			it.isActive = false;
+			std::cout << "aaa";
+			return true;
+		}
+	}
+	return false;
 }
 
 const std::vector<InputShotComponent::Shots>& InputShotComponent::GetShots() const

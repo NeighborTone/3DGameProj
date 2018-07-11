@@ -12,20 +12,37 @@ GameController::GameController():
 	skyBox(entityManager.AddEntity()),
 	hoge(entityManager.AddEntity())
 {
-	player.AddComponent<TransformComponent>(Pos(0, 5, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
+	player.AddComponent<TransformComponent>(Pos(0, 0, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
 
-	shot.AddComponent<InputShotComponent>(5.0f,30,0.5f);
+	shot.AddComponent<InputShotComponent>(2.0f,30,0.5f);
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky.png");
 
+	//Testコード
 	hoge.AddComponent<MeshComponent>("Resource/Texture/stonewall_diff.jpg", "Resource/Shader/hoge.hlsl").CreateSphere();
+	hoge.GetComponent<TransformComponent>().pos.z = 10;
+	ef.Load("Resource/Effect/testEf.efk");
+	sound.Load("Resource/Sounds/se.ogg",true);
 }
 
 GameController::~GameController()
 {
 
+}
+
+void GameController::CollisionCheck()
+{
+	if (shot.GetComponent<InputShotComponent>().IsHit(Sphere(ComAssist::GetPos(hoge), 0.5f)))
+	{
+		//Testコード
+		ef.pos = ComAssist::GetPos(hoge);
+		ef.Play();
+		sound.UpDate3DSound(ComAssist::GetPos(hoge), ComAssist::GetPos(player));
+		sound.PlaySE();
+		
+	}
 }
 
 void GameController::Initialize()
@@ -38,20 +55,8 @@ void GameController::UpDate()
 	entityManager.Refresh();
 	entityManager.UpDate();
 	shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
+	CollisionCheck();
 
-	for (const auto& it : shot.GetComponent<InputShotComponent>().GetShots())
-	{
-		if (!it.isActive)
-		{
-			continue;
-		}
-		if (Collison::SphereCollision(Sphere(Pos(it.mesh.pos), it.radius_), Sphere(ComAssist::GetPos(hoge), 0.5f)))
-		{
-			static int a = 0;
-			++a;
-			std::cout << "hoge!!!!!!!!!!!!!!!!!!!!!" << a << std::endl;
-		}
-	}
 	
 }
 
@@ -59,6 +64,8 @@ void GameController::Draw3D()
 {
 	player.GetComponent<CameraComponent>().Project3D();
 	entityManager.Draw3D();
+	//Testコード
+	ef.Draw(player.GetComponent<CameraComponent>().GetCamera3D());
 }
 
 void GameController::Draw2D()

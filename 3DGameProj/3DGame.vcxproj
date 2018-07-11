@@ -46,7 +46,6 @@
     <ClCompile Include="Engine\Sounds\WavDecoder.cpp" />
     <ClCompile Include="Engine\Utilitys\FPS.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\CameraComponent.cpp" />
-    <ClCompile Include="GameSrc\ECS\Components\ColliderComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\ComponentData\Collision.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\InputShotComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\InuputMoveComponent.cpp" />
@@ -93,7 +92,6 @@
     <ClInclude Include="Engine\Utilitys\Vec.hpp" />
     <ClInclude Include="Engine\Utilitys\Vertex.hpp" />
     <ClInclude Include="GameSrc\ECS\Components\CameraComponent.h" />
-    <ClInclude Include="GameSrc\ECS\Components\ColliderComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Box.hpp" />
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Collision.h" />
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Sphere.hpp" />

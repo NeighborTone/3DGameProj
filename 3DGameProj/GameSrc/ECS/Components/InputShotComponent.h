@@ -1,5 +1,6 @@
 #pragma once
 #include "Transform.hpp"
+#include "ComponentData/Collision.h"
 #include <vector>
 
 //コンストラクタ(速度,最大個数,半径)
@@ -11,7 +12,7 @@ private:
  {
 	 bool isActive;
 	 int deathTime;
-	 float radius_;
+	 float radius;
 	 Mesh mesh;
 	 Velocity velocity;	//向きや移動量を格納
  };
@@ -24,6 +25,7 @@ public:
   void Draw3D() override;
   void Draw2D() STUB
   void Shot(TransformComponent&& trans);
+  bool IsHit(Sphere&& sphere);
   const std::vector<Shots>& GetShots() const;
 
 };

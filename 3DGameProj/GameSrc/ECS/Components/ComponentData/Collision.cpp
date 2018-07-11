@@ -1,6 +1,6 @@
 #include "Collision.h"
 
-bool Collison::BoxCollision(Box& a, Box& b)
+bool Collison::BoxCollision(Box&& a, Box&& b)
 {
 	Vec3 Min, Min2;
 	Vec3 Max, Max2;

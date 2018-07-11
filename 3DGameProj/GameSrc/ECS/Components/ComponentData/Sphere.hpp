@@ -20,6 +20,10 @@ public:
 		pos_ = pos;
 		return *this;
 	}
+	void SetPos(const Pos&& pos)
+	{
+		pos_ = pos;
+	}
 	const Pos& GetPos() const
 	{
 		return pos_;
