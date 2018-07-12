@@ -1,17 +1,8 @@
 #include "Particle.h"
 #include "../Engine.h"
-
-Particle::Particle(const char* path)
-{
-	Initialize();
-	Create();
-	Load(path);
-
-}
-
+#include <iostream>
 Particle::Particle()
 {
-	Initialize();
 	Create();
 }
 
@@ -37,43 +28,80 @@ void Particle::Create()
 	manager->SetTextureLoader(renderer->CreateTextureLoader());
 }
 
-void Particle::Play()
+
+void Particle::SetMatrix(Camera& camera)
 {
-	handle = manager->Play(effect, pos.x, pos.y, pos.z);
-	manager->SetScale(handle, scale.x, scale.y, scale.z);
-	manager->SetRotation(
-		handle, 
-		DirectX::XMConvertToRadians(angle.x), 
-		DirectX::XMConvertToRadians(angle.y), 
-		DirectX::XMConvertToRadians(angle.z)
-	);
+	pCamera = &camera;
 }
 
-void Particle::Stop()
+void Particle::AddEffect(const std::string name, const char * filePass)
+{
+	try
+	{
+		//名前の重複防止
+		if (effects.find(name) != effects.end())
+		{
+			throw name + "は既に登録されています";
+		}
+	}
+	catch(const std::string str)
+	{
+		std::cerr << str;
+		return;
+	}
+
+	EFK_CHAR pass[64];
+	Effekseer::ConvertUtf8ToUtf16((int16_t*)pass, 64, (const int8_t*)filePass);
+	Effekseer::Effect* efk = Effekseer::Effect::Create(manager, pass);
+	if (efk == nullptr) 
+	{
+		return;
+	}
+	//リストへ登録
+	effects[name] = efk;
+}
+
+void Particle::DeleteEffect(const char* name)
+{
+	if (effects.find(name) == effects.end() || !effects[name]) 
+	{
+		return;
+	}
+	effects[name]->Release();
+	effects.erase(name);
+}
+
+Effekseer::Handle Particle::Play(const std::string & name, Vec3 pos)
+{
+	//リストにその名前があってインスタンスもあるものが対象
+	if (effects.find(name) == effects.end() || !effects[name]) 
+	{
+		return -1;
+	}
+
+	return manager->Play(this->effects[name], pos.x, pos.y, pos.z);
+}
+
+void Particle::Stop(Effekseer::Handle handle)
 {
 	manager->StopEffect(handle);
 }
 
-void Particle::Draw(const Camera& camera)
+void Particle::StopRoot(Effekseer::Handle handle)
 {
-	Update();
-	EffectDraw(camera);
-}
-
-void Particle::Draw(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj)
-{
-	Update();
-	EffectDraw(view,proj);
+	manager->StopRoot(handle);
 }
 
 
-void Particle::Update()
+void Particle::UpDate(Camera&& camera)
 {
 	// 全てのエフェクトの更新
 	manager->Update();
+	SetMatrix(camera);
+	EffectDraw();
 }
 
-void Particle::EffectDraw(const Camera& camera)
+void Particle::EffectDraw()
 {
 	Effekseer::Matrix44 view;
 	Effekseer::Matrix44 projection;
@@ -81,8 +109,8 @@ void Particle::EffectDraw(const Camera& camera)
 	{
 		for (int x = 0; x < 4; ++x)
 		{
-			view.Values[y][x] = camera.constant.view.r[y].m128_f32[x];
-			projection.Values[y][x] = camera.constant.projection.r[y].m128_f32[x];
+			view.Values[y][x] = pCamera->constant.view.r[y].m128_f32[x];
+			projection.Values[y][x] = pCamera->constant.projection.r[y].m128_f32[x];
 		}
 	}
 	//=====重要===============
@@ -98,51 +126,23 @@ void Particle::EffectDraw(const Camera& camera)
 	renderer->BeginRendering();
 	manager->Draw();
 	renderer->EndRendering();
-}
 
-void Particle::EffectDraw(const DirectX::XMMATRIX& cmeraview, const DirectX::XMMATRIX& cameraproj)
-{
-	Effekseer::Matrix44 view;
-	Effekseer::Matrix44 projection;
-	for (int y = 0; y < 4; ++y)
-	{
-		for (int x = 0; x < 4; ++x)
-		{
-			view.Values[y][x] = cmeraview.r[y].m128_f32[x];
-			projection.Values[y][x] = cameraproj.r[y].m128_f32[x];
-		}
-	}
-	//=====重要===============
-	view.Transpose();
-	projection.Transpose();
-	//=======================
-
-	// 投影行列の更新
-	renderer->SetProjectionMatrix(projection);
-	// カメラ行列の更新
-	renderer->SetCameraMatrix(view);
-
-	renderer->BeginRendering();
-	manager->Draw();
-	renderer->EndRendering();
-}
-
-void Particle::Initialize()
-{
-	pos = 0;
-	scale = 1;
-	angle = 0;
-	renderer = nullptr;
-	manager = nullptr;
-	effect = nullptr;
-	handle = 0;
 }
 
 Particle::~Particle()
 {
+	manager->StopAllEffects();
+	for (auto& it : effects)
+	{
+		if (it.second == nullptr) 
+		{
+			continue;
+		}
+		it.second->Release();
+		it.second = nullptr;
+	}
+	effects.clear();
 
-	// エフェクトを解放します。再生中の場合は、再生が終了した後、自動的に解放されます。
-	ES_SAFE_RELEASE(effect);
 	// エフェクト管理用インスタンスを破棄
 	manager->Destroy();
 	// サウンド用インスタンスを破棄
@@ -150,12 +150,3 @@ Particle::~Particle()
 	// 描画用インスタンスを破棄
 	renderer->Destroy();
 }
-
-void Particle::Load(const char* path)
-{
-	// エフェクトの読込
-	EFK_CHAR pass[64];
-	Effekseer::ConvertUtf8ToUtf16((int16_t*)pass, 64, (const int8_t*)path);
-	effect = Effekseer::Effect::Create(manager, pass);
-}
-

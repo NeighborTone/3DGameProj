@@ -5,6 +5,8 @@
 #include "EffekseerRendererDX11.h"
 #include "EffekseerSoundXAudio2.h"
 #include "Camera.h"
+#include <string>
+#include <unordered_map>
 #if defined(_DEBUG)
 #pragma comment(lib, "Effekseer.Debug.lib" )
 #pragma comment(lib, "EffekseerRendererDX11.Debug.lib" )
@@ -21,23 +23,24 @@ private:
 	EffekseerRenderer::Renderer* renderer;
 	Effekseer::Manager* manager;
 	Effekseer::Effect* effect;
-	Effekseer::Handle handle;
+	std::unordered_map<std::string, Effekseer::Effect*> effects;
 	void Create();
-	void Update();
-	void EffectDraw(const Camera& camera);
-	void EffectDraw(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj);
-	void Initialize();
+	void SetMatrix(Camera& camera);
+	Camera* pCamera;
+	void EffectDraw();
 public:
-	Vec3 pos;
-	Vec3 scale;
-	Vec3 angle;
-	Particle(const char* path);
+	void UpDate(Camera&& camera);
+	
+	void AddEffect(const std::string name, const char* filePass);
+	void DeleteEffect(const char* name);
+	//エフェクトを走査するハンドル番号が返る
+	Effekseer::Handle Play(const std::string& name, Vec3 pos);
+	//明示的に停止、呼んだ瞬間にすぐ消える
+	void Stop(Effekseer::Handle handle);
+	//明示的に停止、ただしエフェクトの生成をやめるだけなのでしばらく残る
+	void StopRoot(Effekseer::Handle handle);
 	Particle();
 	~Particle();
-	void Load(const char* path);
-	void Play();
-	void Stop();
-	void Draw(const Camera &camera);
-	void Draw(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj);
+
 };
 

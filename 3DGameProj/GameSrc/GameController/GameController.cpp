@@ -23,7 +23,7 @@ GameController::GameController():
 	//Testコード
 	hoge.AddComponent<MeshComponent>("Resource/Texture/stonewall_diff.jpg", "Resource/Shader/hoge.hlsl").CreateSphere();
 	hoge.GetComponent<TransformComponent>().pos.z = 10;
-	ef.Load("Resource/Effect/testEf.efk");
+	ef.AddEffect("test","Resource/Effect/testEf.efk");
 	sound.Load("Resource/Sounds/se.ogg",true);
 }
 
@@ -37,8 +37,7 @@ void GameController::CollisionEvent()
 	if (shot.GetComponent<InputShotComponent>().IsHit(Sphere(ComAssist::GetPos(hoge), 0.7f)))
 	{
 		//Testコード
-		ef.pos = ComAssist::GetPos(hoge);
-		ef.Play();
+		ef.Play("test", ComAssist::GetPos(hoge));
 		sound.UpDate3DSound(ComAssist::GetPos(hoge), ComAssist::GetPos(player));
 		sound.PlaySE();
 		
@@ -57,7 +56,6 @@ void GameController::UpDate()
 	shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
 	CollisionEvent();
 
-	
 }
 
 void GameController::Draw3D()
@@ -65,7 +63,7 @@ void GameController::Draw3D()
 	player.GetComponent<CameraComponent>().Project3D();
 	entityManager.Draw3D();
 	//Testコード
-	ef.Draw(player.GetComponent<CameraComponent>().GetCamera3D());
+	ef.UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
 }
 
 void GameController::Draw2D()
