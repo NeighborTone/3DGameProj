@@ -54,7 +54,7 @@ void InputShotComponent::Draw3D()
 
 void InputShotComponent::Shot(TransformComponent&& trans)
 {
-	bool isShot = Mouse::L_On() % 8 == 1;
+	bool isShot = Mouse::L_On() % 6 == 1;
 
 	for (auto& it : shots)
 	{
@@ -86,7 +86,6 @@ bool InputShotComponent::IsHit(Sphere&& sphere)
 		{
 			it.deathTime = 0;
 			it.isActive = false;
-			std::cout << "aaa";
 			return true;
 		}
 	}
@@ -97,4 +96,3 @@ const std::vector<InputShotComponent::Shots>& InputShotComponent::GetShots() con
 {
 	return shots;
 }
-

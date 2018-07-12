@@ -9,6 +9,13 @@ private:
 	float speed_;
 	TransformComponent* transform;
 	Vec3 dir;
+	float eyeHeight;
+	void MoveForwardAndBack();
+	void MoveLeftAndRight();
+	void FixedMovableAngle();
+	void ManipulationOfView();
+	void ForwardAndBackwardDirection();
+	void LeftAndRightDirection();
 public:
 	//ù‰ñ‘¬“x‚ğˆø”‚Éw’è
 	InuputMoveComponent(const float angleSpeed);

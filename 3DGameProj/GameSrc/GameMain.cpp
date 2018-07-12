@@ -1,5 +1,6 @@
 #include "GameMain.h"
 #include "../Engine/Utilitys/Utility.hpp"
+#include <iostream>
 void GameMain::UpData()
 {
 	controller.UpDate();
@@ -42,6 +43,7 @@ void GameMain::Run()
 	{
 		UpData();
 		Draw();
+		std::cout << Engine::GetFps().GetFrameRate() << std::endl;
 	}
 }
 

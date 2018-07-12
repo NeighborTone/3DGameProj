@@ -16,7 +16,7 @@ GameController::GameController():
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
 
-	shot.AddComponent<InputShotComponent>(2.0f,30,0.5f);
+	shot.AddComponent<InputShotComponent>(2.2f,30,0.3f);
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 
@@ -43,7 +43,7 @@ GameController::~GameController()
 
 void GameController::CollisionEvent()
 {
-	if (shot.GetComponent<InputShotComponent>().IsHit(Sphere(ComAssist::GetPos(hoge), 0.7f)))
+	if (shot.GetComponent<InputShotComponent>().IsHit(Sphere(ComAssist::GetPos(hoge), 0.8f)))
 	{
 		//TestÉRÅ[Éh
 		ef.Play("test", ComAssist::GetPos(hoge));
@@ -67,7 +67,7 @@ void GameController::UpDate()
 	//Test
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
 	ef.SetPos(handle, Vec3(ComAssist::GetPos(player)));
-	std::cout << sound.GetCurrentSampleTime() << std::endl;
+
 }
 
 void GameController::Draw3D()
