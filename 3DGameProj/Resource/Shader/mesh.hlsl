@@ -38,6 +38,6 @@ float4 PS(Pixel pixel) : SV_TARGET	//レンダリングターゲットに出力
     float3 lightColor = float3(1.0, 1.0, 1.0);							//ライトの色
     float4 diffuseColor = texture0.Sample(sampler0, pixel.uv);			//拡散光
     float3 diffuseIntensity = dot(-lightDirection, normal) * lightColor;	//拡散光の強さ
-    float3 ambientIntensity = lightColor * 0.5;							//環境光の強さ
+    float3 ambientIntensity = lightColor * 1;							//環境光の強さ
     return diffuseColor * float4(diffuseIntensity + ambientIntensity, 1);	
 }

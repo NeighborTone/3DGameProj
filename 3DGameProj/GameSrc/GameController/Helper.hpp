@@ -24,5 +24,6 @@ public:
 		return e.GetComponent<T>();
 	}
 
+
 };
 

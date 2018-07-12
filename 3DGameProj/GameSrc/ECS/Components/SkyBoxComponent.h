@@ -11,6 +11,7 @@ private:
 	Texture tex;
 public:
 	SkyBoxComponent(std::string texturePath);
+	void SetPos(Pos&& pos);
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() override;

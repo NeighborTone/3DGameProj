@@ -42,7 +42,7 @@ namespace SoundEngine
 		void UpDate3DSound(Vec3&& pos, Vec3&& listenerPos);
 		void ExitLoop() const;
 		void Destroy();
-		long long GetCurrentSampleTime();
+		UINT64 GetCurrentSampleTime();
 		IXAudio2SourceVoice* GetSource();
 		WORD GetChannels();
 	};

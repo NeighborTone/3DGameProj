@@ -65,7 +65,8 @@ void Camera::Run(bool clearBack)
 		)
 	);
 
-	Engine::GetDXContext3D().UpdateSubresource(constantBuffer, 0, nullptr, &constant, 0, 0);
+	//シェーダーで必要なビューとプロジェクションの情報をGPUに送る
+	Engine::GetDXContext3D().UpdateSubresource(constantBuffer, 0, nullptr, &constant, 0, 0);	
 	Engine::GetDXContext3D().VSSetConstantBuffers(0, 1, &constantBuffer.p);
 	Engine::GetDXContext3D().HSSetConstantBuffers(0, 1, &constantBuffer.p);
 	Engine::GetDXContext3D().DSSetConstantBuffers(0, 1, &constantBuffer.p);

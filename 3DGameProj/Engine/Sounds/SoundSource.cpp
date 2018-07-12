@@ -262,15 +262,10 @@ namespace SoundEngine
 		}
 	}
 
-	long long SoundSource::GetCurrentSampleTime()
+	UINT64 SoundSource::GetCurrentSampleTime()
 	{
 		GetState();
-		long long currentTime = -1;
-		if (data->xstate.BuffersQueued > 0)
-		{
-			currentTime = (long long)data->xstate.SamplesPlayed;
-		}
-		return currentTime;
+		return data->xstate.SamplesPlayed / pcm->GetSample();
 	}
 
 	IXAudio2SourceVoice* SoundSource::GetSource()

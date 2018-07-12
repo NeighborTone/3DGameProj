@@ -32,13 +32,17 @@ public:
 	void UpDate(Camera&& camera);
 	
 	void AddEffect(const std::string name, const char* filePass);
+
 	void DeleteEffect(const char* name);
 	//エフェクトを走査するハンドル番号が返る
-	Effekseer::Handle Play(const std::string& name, Vec3 pos);
+	Effekseer::Handle Play(const std::string& name, Vec3&& pos);
 	//明示的に停止、呼んだ瞬間にすぐ消える
 	void Stop(Effekseer::Handle handle);
 	//明示的に停止、ただしエフェクトの生成をやめるだけなのでしばらく残る
 	void StopRoot(Effekseer::Handle handle);
+
+	void SetPos(Effekseer::Handle handle, Vec3&& pos);
+
 	Particle();
 	~Particle();
 

@@ -71,7 +71,7 @@ void Particle::DeleteEffect(const char* name)
 	effects.erase(name);
 }
 
-Effekseer::Handle Particle::Play(const std::string & name, Vec3 pos)
+Effekseer::Handle Particle::Play(const std::string & name, Vec3&& pos)
 {
 	//リストにその名前があってインスタンスもあるものが対象
 	if (effects.find(name) == effects.end() || !effects[name]) 
@@ -79,7 +79,7 @@ Effekseer::Handle Particle::Play(const std::string & name, Vec3 pos)
 		return -1;
 	}
 
-	return manager->Play(this->effects[name], pos.x, pos.y, pos.z);
+	return manager->Play(effects[name], pos.x, pos.y, pos.z);
 }
 
 void Particle::Stop(Effekseer::Handle handle)
@@ -90,6 +90,11 @@ void Particle::Stop(Effekseer::Handle handle)
 void Particle::StopRoot(Effekseer::Handle handle)
 {
 	manager->StopRoot(handle);
+}
+
+void Particle::SetPos(Effekseer::Handle handle, Vec3 && pos)
+{
+	manager->SetLocation(handle, pos.x, pos.y, pos.z);
 }
 
 

@@ -17,11 +17,11 @@ void InuputMoveComponent::UpDate()
 	dir.x = cosf(DirectX::XMConvertToRadians(-transform->angle.y + 90)) * cosf(DirectX::XMConvertToRadians(-transform->angle.x)) * transform->velocity.x;
 	dir.y = sinf(DirectX::XMConvertToRadians(-transform->angle.x)) * transform->velocity.y;
 	dir.z = cosf(DirectX::XMConvertToRadians(-transform->angle.x)) * sinf(DirectX::XMConvertToRadians(-transform->angle.y + 90)) * transform->velocity.z;
-	if (KeyBoard::On(KeyBoard::Key::KEY_UP))
+	if (KeyBoard::On(KeyBoard::Key::KEY_W))
 	{	
 		transform->pos += dir;
 	}
-	if (KeyBoard::On(KeyBoard::Key::KEY_DOWN))
+	if (KeyBoard::On(KeyBoard::Key::KEY_S))
 	{
 		transform->pos -= dir;
 	}

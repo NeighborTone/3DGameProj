@@ -17,6 +17,10 @@ private:
 	//‰¼
 	Entity& hoge;
 	Particle ef;
+	Texture t;
+	Mesh ground;
+
+	int handle;
 	SoundEngine::SoundSource sound;
 	//
 public:
