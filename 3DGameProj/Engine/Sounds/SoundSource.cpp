@@ -265,7 +265,7 @@ namespace SoundEngine
 	UINT64 SoundSource::GetCurrentSampleTime()
 	{
 		GetState();
-		return data->xstate.SamplesPlayed / pcm->GetSample();
+		return data->xstate.SamplesPlayed;
 	}
 
 	IXAudio2SourceVoice* SoundSource::GetSource()
