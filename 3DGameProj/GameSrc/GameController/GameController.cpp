@@ -16,7 +16,7 @@ GameController::GameController():
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
 
-	shot.AddComponent<InputShotComponent>(2.2f,30,0.3f);
+	shot.AddComponent<InputShotComponent>(5.2f,30,0.3f);
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 
@@ -27,6 +27,7 @@ GameController::GameController():
 	ground.scale = 1000;
 	ground.scale.y = 1;
 	hoge.AddComponent<MeshComponent>("Resource/Texture/stonewall_diff.jpg", "Resource/Shader/hoge.hlsl").CreateSphere();
+	hoge.GetComponent<TransformComponent>().scale = 1;
 	hoge.GetComponent<TransformComponent>().pos.y = 10;
 	hoge.GetComponent<TransformComponent>().pos.z = 10;
 
@@ -43,7 +44,7 @@ GameController::~GameController()
 
 void GameController::CollisionEvent()
 {
-	if (shot.GetComponent<InputShotComponent>().IsHit(Sphere(ComAssist::GetPos(hoge), 0.8f)))
+	if (shot.GetComponent<InputShotComponent>().IsHit(AABB(ComAssist::GetPos(hoge), Scale(ComAssist::GetRadius(hoge)))))
 	{
 		//TestÉRÅ[Éh
 		ef.Play("test", ComAssist::GetPos(hoge));

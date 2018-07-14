@@ -92,7 +92,7 @@
     <ClInclude Include="Engine\Utilitys\Vec.hpp" />
     <ClInclude Include="Engine\Utilitys\Vertex.hpp" />
     <ClInclude Include="GameSrc\ECS\Components\CameraComponent.h" />
-    <ClInclude Include="GameSrc\ECS\Components\ComponentData\Box.hpp" />
+    <ClInclude Include="GameSrc\ECS\Components\ComponentData\AABB.hpp" />
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Collision.h" />
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Sphere.hpp" />
     <ClInclude Include="GameSrc\ECS\Components\GroundComponent.hpp" />

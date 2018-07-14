@@ -1,5 +1,6 @@
 #pragma once
 #pragma warning (disable : 4458)	//thisを使うため消す
+#pragma warning (disable : 4715)	//不正な値の場合落とすため
 #include <DirectXMath.h>
 template <typename T>
 /*! @class Vec2
@@ -220,6 +221,14 @@ public:
 		return *this;
 	}
 
+	const T operator()(const int idx) const
+	{
+		if (idx == 0) return x;
+		if (idx == 1) return y;
+
+		assert(0);
+	}
+
 	bool operator==(const TemplateVec2 &v) const
 	{
 		return x == v.x && y == v.y;
@@ -290,7 +299,7 @@ public:
 	* @brief 内積を返します
 	* @return float
 	*/
-	float Dot(TemplateVec3& v)
+	float Dot(TemplateVec3&& v)
 	{
 		return x * v.x + y * v.y + z * v.z;
 	}
@@ -299,7 +308,7 @@ public:
 	* @brief 外積を返します
 	* @return Vec3
 	*/
-	TemplateVec3 Cross(TemplateVec3& v)
+	TemplateVec3 Cross(TemplateVec3&& v)
 	{
 		TemplateVec3 result;
 		result.x = y * v.z - z * v.y;
@@ -400,7 +409,7 @@ public:
 		return ret;
 	}
 
-	TemplateVec3 operator*(const T& t)
+	const TemplateVec3 operator*(const T& t) const
 	{
 		TemplateVec3 ret(*this);
 		ret *= t;
@@ -483,6 +492,14 @@ public:
 		y /= v;
 		z /= v;
 		return *this;
+	}
+
+	const T operator()(const int idx) const
+	{
+		if (idx == 0) return x;
+		if (idx == 1) return y;
+		if (idx == 2) return z;
+		assert(0);
 	}
 
 	bool	operator==(const TemplateVec3 &v) const

@@ -74,7 +74,7 @@ void InputShotComponent::Shot(TransformComponent&& trans)
 	}
 }
 
-bool InputShotComponent::IsHit(Sphere&& sphere)
+bool InputShotComponent::IsHit(AABB&& sphere)
 {
 	for (auto& it : shots)
 	{
@@ -82,12 +82,13 @@ bool InputShotComponent::IsHit(Sphere&& sphere)
 		{
 			continue;
 		}
-		if (Collison::SphereCollision(Sphere(Pos(it.mesh.pos), it.radius), Sphere(sphere)))
+		if (Collison::SegmentAABBCollision(Vec3(it.mesh.pos), Vec3(it.mesh.pos + it.velocity), AABB(sphere)))
 		{
 			it.deathTime = 0;
 			it.isActive = false;
 			return true;
 		}
+	
 	}
 	return false;
 }

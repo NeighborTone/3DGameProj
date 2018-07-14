@@ -25,7 +25,7 @@ public:
   void Draw3D() override;
   void Draw2D() STUB
   void Shot(TransformComponent&& trans);
-  bool IsHit(Sphere&& sphere);
+  bool IsHit(AABB&& sphere);
   const std::vector<Shots>& GetShots() const;
 
 };

@@ -17,6 +17,18 @@ public:
 	{
 		return Angles(e.GetComponent<T>().angles);
 	}
+	//大きさ取得
+	template<typename T = TransformComponent>
+	static Scale GetScale(Entity& e)
+	{
+		return Scale(e.GetComponent<T>().scale);
+	}
+	//半径を取得
+	template<typename T = TransformComponent>
+	static Scale GetRadius(Entity& e)
+	{
+		return Scale(e.GetComponent<T>().scale / 2);
+	}
 	//トランスコンポーネントごと取得
 	template<typename T = TransformComponent>
 	static T GetTransform(Entity& e)

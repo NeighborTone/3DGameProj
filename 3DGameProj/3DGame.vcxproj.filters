@@ -291,10 +291,10 @@
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Sphere.hpp">
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
     </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\ComponentData\Box.hpp">
+    <ClInclude Include="GameSrc\ECS\Components\ComponentData\Collision.h">
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
     </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\ComponentData\Collision.h">
+    <ClInclude Include="GameSrc\ECS\Components\ComponentData\AABB.hpp">
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
     </ClInclude>
   </ItemGroup>
