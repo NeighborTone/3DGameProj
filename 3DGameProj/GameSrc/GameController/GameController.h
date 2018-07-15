@@ -10,15 +10,22 @@
 class GameController
 {
 private:
+	enum class GameGroup : std::size_t
+	{
+		TITLE,
+		GAME,
+		END
+	};
+
 	EntityManager entityManager;
 	Entity& player;
 	Entity& shot;
 	Entity& skyBox;
+	Entity& enemy;
+	Entity& field;
 	//‰¼
 	Entity& hoge;
 	Particle ef;
-	Texture t;
-	Mesh ground;
 
 	int handle;
 	SoundEngine::SoundSource sound;
