@@ -4,7 +4,7 @@ FieldComponent::FieldComponent()
 {
 	tex.Load("Resource/Texture/w.png");
 	mesh.GetMaterial().SetTexture(0, &tex);
-	mesh.CreateSphere();
+	mesh.CreateSphere(1,26);
 }
 
 void FieldComponent::Initialize()

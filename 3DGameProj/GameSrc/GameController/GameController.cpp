@@ -8,14 +8,22 @@
 #include "../ECS/Components/ThiefComponent.h"
 #include <iostream>
 
+Particle& GameController::GetParticle()
+{
+	static std::unique_ptr<Particle> ef = std::make_unique<Particle>();
+	return *ef;
+}
+
 GameController::GameController() :
 	player(entityManager.AddEntity()),
 	shot(entityManager.AddEntity()),
 	skyBox(entityManager.AddEntity()),
-	enemy(entityManager.AddEntity()),
-	hoge(entityManager.AddEntity()),
+	thief(entityManager.AddEntity()),
 	field(entityManager.AddEntity())
 {
+	GetParticle().AddEffect("expro", "Resource/Effect/testEf.efk");
+	GetParticle().AddEffect("sky", "Resource/Effect/stars.efk");
+	GetParticle().AddEffect("app", "Resource/Effect/Appear.efk");
 	player.AddComponent<TransformComponent>(Pos(0, 10, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
@@ -24,13 +32,10 @@ GameController::GameController() :
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
-	enemy.AddComponent<ThiefComponent>(1, 2.5f);
+	thief.AddComponent<ThiefComponent>(2.5f);
 	//Testコード
-
-	ef.AddEffect("test", "Resource/Effect/testEf.efk");
-	ef.AddEffect("sky", "Resource/Effect/stars.efk");
 	sound.Load("Resource/Sounds/se.ogg", true);
-	handle = ef.Play("sky", Vec3(0, 0, 0));
+	
 }
 
 GameController::~GameController()
@@ -40,7 +45,7 @@ GameController::~GameController()
 
 void GameController::CollisionEvent()
 {
-	for (auto& it : enemy.GetComponent<ThiefComponent>().Get())
+	for (auto& it : thief.GetComponent<ThiefComponent>().Get())
 	{
 		if (!it->isActive)
 		{
@@ -53,9 +58,10 @@ void GameController::CollisionEvent()
 		)
 		{
 			//Testコード
-			ef.Play("test", Pos(it->mesh.pos));
+			GetParticle().Play("expro", Pos(it->mesh.pos));
 			sound.UpDate3DSound(Pos(it->mesh.pos), ComAssist::GetPos(player));
 			sound.PlaySE();
+			//これは今後エネミーの内部で行う
 			--it->life;
 		}
 	}
@@ -68,22 +74,26 @@ void GameController::Initialize()
 
 void GameController::UpDate()
 {
+	//Test
+	if (KeyBoard::Down(KeyBoard::Key::KEY_X))
+	{
+		entityManager.Initialize();
+	}
+	//
 	entityManager.Refresh();
 	entityManager.UpDate();
 	shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
 	CollisionEvent();
 	//Test
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
-	ef.SetPos(handle, Vec3(ComAssist::GetPos(player)));
-
+	thief.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
 }
 
 void GameController::Draw3D()
 {
 	player.GetComponent<CameraComponent>().Project3D();
 	entityManager.Draw3D();
-	//Testコード
-	ef.UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
+	GetParticle().UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
 }
 
 void GameController::Draw2D()

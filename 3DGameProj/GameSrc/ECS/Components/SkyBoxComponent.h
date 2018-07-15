@@ -9,6 +9,7 @@ private:
 	TransformComponent* trans;
 	Mesh sky;
 	Texture tex;
+	int skyHandle;
 public:
 	SkyBoxComponent(std::string texturePath);
 	void SetPos(Pos&& pos);

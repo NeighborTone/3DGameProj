@@ -21,16 +21,14 @@ private:
 	Entity& player;
 	Entity& shot;
 	Entity& skyBox;
-	Entity& enemy;
+	Entity& thief;
 	Entity& field;
 	//‰¼
-	Entity& hoge;
-	Particle ef;
-
-	int handle;
 	SoundEngine::SoundSource sound;
 	//
 public:
+	static Particle& GetParticle();
+	
 	GameController();
 	~GameController();
 	void CollisionEvent();

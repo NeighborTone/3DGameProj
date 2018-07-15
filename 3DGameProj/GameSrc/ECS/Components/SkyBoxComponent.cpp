@@ -1,13 +1,15 @@
 #include "SkyBoxComponent.h"
-
+#include "../../GameController/GameController.h"
 SkyBoxComponent::SkyBoxComponent(std::string texturePath)
 {
 	tex.Load(texturePath);
+	skyHandle = GameController::GetParticle().Play("sky", Vec3(0, 0, 0));
 }
 
 void SkyBoxComponent::SetPos(Pos&& pos)
 {
 	trans->pos = pos;
+	GameController::GetParticle().SetPos(skyHandle,Pos(trans->pos));
 }
 
 void SkyBoxComponent::Initialize()
@@ -17,10 +19,11 @@ void SkyBoxComponent::Initialize()
 		entity->AddComponent<TransformComponent>();
 	}
 	trans = &entity->GetComponent<TransformComponent>();
+	
 	sky.GetMaterial().Load("Resource/Shader/Sky.hlsl");
 	sky.GetMaterial().SetTexture(0, &tex);
 	sky.CreateSphere(1,24);
-	sky.scale = 1000;
+	sky.scale = 10000;
 }
 
 void SkyBoxComponent::UpDate()
