@@ -1,7 +1,7 @@
 #include "GameMain.h"
 #include "../Engine/Utilitys/Utility.hpp"
 #include <iostream>
-void GameMain::UpData()
+void GameMain::UpDate()
 {
 	controller.UpDate();
 }
@@ -41,7 +41,7 @@ void GameMain::Run()
 {
 	while (pEngine.Run() && !PushEscape())
 	{
-		UpData();
+		UpDate();
 		Draw();
 		std::cout << Engine::GetFps().GetFrameRate() << std::endl;
 	}

@@ -27,7 +27,7 @@ public:
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() override;
-	void Draw2D() override;
+	void Draw2D() STUB
 	//“G‚Ìî•ñ‚ğ“¾‚é
 	const std::vector<std::unique_ptr<EnemyData>>& Get() const;
 };

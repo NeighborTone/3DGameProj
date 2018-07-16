@@ -18,12 +18,10 @@ void ThiefComponent::LifeCheck()
 
 void ThiefComponent::Create()
 {
-	
 	//Test
 	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
 	//
 	{
-	
 		data.emplace_back(AddEnemy());
 		Random rand;
 		
@@ -99,7 +97,6 @@ void ThiefComponent::UpDate()
 			it->mesh.pos.z -= it->velocity.z;
 		}
 	}
-
 	//
 	Executioners();
 }
@@ -117,11 +114,6 @@ void ThiefComponent::Draw3D()
 			it->mesh.Draw();
 		}
 	}
-}
-
-void ThiefComponent::Draw2D()
-{
-
 }
 
 const std::vector<std::unique_ptr<EnemyData>>& ThiefComponent::Get() const

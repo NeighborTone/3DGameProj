@@ -6,7 +6,7 @@ class GameMain
 private:
 	Engine& pEngine;
 	GameController controller;
-	void UpData();
+	void UpDate();
 	void Draw();
 	bool PushEscape();
 public:

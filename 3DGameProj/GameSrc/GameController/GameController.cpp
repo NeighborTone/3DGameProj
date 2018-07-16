@@ -53,8 +53,7 @@ void GameController::CollisionEvent()
 		}
 		if (shot.GetComponent<InputShotComponent>().IsHit
 		(
-			AABB(Pos(it->mesh.pos),
-			Scale(it->mesh.scale /2)))
+			AABB(Pos(it->mesh.pos),Scale(it->mesh.scale /2)))
 		)
 		{
 			//TestÉRÅ[Éh
@@ -79,12 +78,11 @@ void GameController::UpDate()
 	{
 		entityManager.Initialize();
 	}
-	//
 	entityManager.Refresh();
 	entityManager.UpDate();
-	shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
 	CollisionEvent();
 	//Test
+	shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
 	thief.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
 }

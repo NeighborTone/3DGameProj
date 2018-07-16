@@ -208,7 +208,7 @@ namespace SoundEngine
 			data->dsp.pMatrixCoefficients = new FLOAT32[data->dsp.SrcChannelCount * data->dsp.DstChannelCount];
 			memset(data->dsp.pMatrixCoefficients, 0, sizeof(FLOAT32) * (data->dsp.SrcChannelCount * data->dsp.DstChannelCount));
 		}
-		/*emitter構造体ににNULLを指定した変数によって動作が変わるので注意!!*/
+		/*emitter構造体にNULLを指定した変数によって動作が変わるので注意!!*/
 		DWORD calculateFlags =
 			X3DAUDIO_CALCULATE_MATRIX |						//行列係数テーブルの計算を有効にします。 
 			//X3DAUDIO_CALCULATE_DELAY |						//遅延時間配列の計算を有効にします (ステレオのみ)。 

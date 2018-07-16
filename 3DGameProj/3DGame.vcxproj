@@ -106,7 +106,6 @@
     <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\Transform.hpp" />
     <ClInclude Include="GameSrc\ECS\ECS.hpp" />
-    <ClInclude Include="GameSrc\ECS\EnemyMovements\EnemyMovements.hpp" />
     <ClInclude Include="GameSrc\GameController\GameController.h" />
     <ClInclude Include="GameSrc\GameController\Helper.hpp" />
     <ClInclude Include="GameSrc\GameMain.h" />

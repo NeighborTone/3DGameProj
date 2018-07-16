@@ -157,9 +157,6 @@
     <Filter Include="GameSrc\ECS\Components\ComponentsData">
       <UniqueIdentifier>{9c4219a8-0487-4f9a-9c34-b2f71aacf2ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSrc\ECS\Components\EnemyMovements">
-      <UniqueIdentifier>{3e8e8885-de58-49a6-b3b4-6aaca9c717ce}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Engine.h">
@@ -305,9 +302,6 @@
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\FieldComponent.h">
       <Filter>GameSrc\ECS\Components\Lower</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ECS\EnemyMovements\EnemyMovements.hpp">
-      <Filter>GameSrc\ECS\Components\EnemyMovements</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h">
       <Filter>GameSrc\ECS\Components\MoveComponents</Filter>

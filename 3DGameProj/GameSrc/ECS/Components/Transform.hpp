@@ -1,11 +1,6 @@
 #pragma once
 #include "../ECS.hpp"
 #include "../../Engine.h"
-#define STUB override {}
-using Pos = Vec3;
-using Velocity = Vec3;
-using Angles = Vec3;
-using Scale = Vec3;
 
 class TransformComponent : public Component
 {

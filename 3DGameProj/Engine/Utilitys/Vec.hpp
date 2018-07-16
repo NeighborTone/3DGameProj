@@ -2,6 +2,7 @@
 #pragma warning (disable : 4458)	//thisを使うため消す
 #pragma warning (disable : 4715)	//不正な値の場合落とすため
 #include <DirectXMath.h>
+
 template <typename T>
 /*! @class Vec2
 *   @brief 2次元ベクトルを扱います
@@ -595,3 +596,8 @@ public:
 	}
 
 };
+
+using Pos = Vec3;
+using Velocity = Vec3;
+using Angles = Vec3;
+using Scale = Vec3;

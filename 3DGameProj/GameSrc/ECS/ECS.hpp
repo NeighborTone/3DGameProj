@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#define STUB override {}
+
 class Entity;
 class Component;
 class EntityManager;
