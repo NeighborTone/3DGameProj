@@ -149,7 +149,7 @@ public:
 		//コンストラクタ
 		Circ(float* dur) : duration(dur) {}
 
-		float In(float t, float b, float c)	//バグあり
+		float In(float t, float b, float c)	
 		{
 			return -c * static_cast<float>((sqrt(1 - (t /= *duration)*t) - 1)) + b;
 		}

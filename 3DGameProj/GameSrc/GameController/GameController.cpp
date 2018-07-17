@@ -21,9 +21,6 @@ GameController::GameController() :
 	thief(entityManager.AddEntity()),
 	field(entityManager.AddEntity())
 {
-	GetParticle().AddEffect("expro", "Resource/Effect/testEf.efk");
-	GetParticle().AddEffect("sky", "Resource/Effect/stars.efk");
-	GetParticle().AddEffect("app", "Resource/Effect/Appear.efk");
 	player.AddComponent<TransformComponent>(Pos(0, 10, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
@@ -33,37 +30,12 @@ GameController::GameController() :
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
 	thief.AddComponent<ThiefComponent>(2.5f);
-	//Testコード
-	sound.Load("Resource/Sounds/se.ogg", true);
-	
-}
-
-GameController::~GameController()
-{
 
 }
 
 void GameController::CollisionEvent()
 {
-	for (auto& it : thief.GetComponent<ThiefComponent>().Get())
-	{
-		if (!it->isActive)
-		{
-			continue;
-		}
-		if (shot.GetComponent<InputShotComponent>().IsHit
-		(
-			AABB(Pos(it->mesh.pos),Scale(it->mesh.scale /2)))
-		)
-		{
-			//Testコード
-			GetParticle().Play("expro", Pos(it->mesh.pos));
-			sound.UpDate3DSound(Pos(it->mesh.pos), ComAssist::GetPos(player));
-			sound.PlaySE();
-			//これは今後エネミーの内部で行う
-			--it->life;
-		}
-	}
+	thief.GetComponent<ThiefComponent>().Damaged(shot);
 }
 
 void GameController::Initialize()
@@ -81,9 +53,12 @@ void GameController::UpDate()
 	entityManager.Refresh();
 	entityManager.UpDate();
 	CollisionEvent();
-	//Test
+	
+	//プレイヤーの位置と向きから発射する
 	shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
+	//果てが来てしまうのでプレイヤーと一緒に動かす
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
+	//効果音のListenerをセットする
 	thief.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
 }
 

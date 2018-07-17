@@ -3,6 +3,7 @@
 SkyBoxComponent::SkyBoxComponent(std::string texturePath)
 {
 	tex.Load(texturePath);
+	GameController::GetParticle().AddEffect("sky", "Resource/Effect/stars.efk");
 	skyHandle = GameController::GetParticle().Play("sky", Vec3(0, 0, 0));
 }
 

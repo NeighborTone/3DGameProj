@@ -1,4 +1,5 @@
 #include "ThiefComponent.h"
+#include "InputShotComponent.h"
 #include <iterator>
 std::unique_ptr<EnemyData> ThiefComponent::AddEnemy()
 {
@@ -20,11 +21,9 @@ void ThiefComponent::Create()
 {
 	//Test
 	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
-	//
 	{
 		data.emplace_back(AddEnemy());
 		Random rand;
-		
 		data.at(data.size()-1)->mesh.GetMaterial().Load("Resource/Shader/hoge.hlsl");
 		data.at(data.size()-1)->mesh.GetMaterial().SetTexture(0, &tex);
 		data.at(data.size()-1)->mesh.CreateSphere();
@@ -37,9 +36,8 @@ void ThiefComponent::Create()
 		data.at(data.size()-1)->mesh.pos.z = rand.GetRand(100.0f, 200.0f);
 		
 		GameController::GetParticle().Play("app", Vec3(data.at(data.size() - 1)->mesh.pos));
-		sound.PlaySE();
+		appSound.PlaySE();
 	}
-	
 	
 }
 
@@ -57,15 +55,41 @@ void ThiefComponent::SetListenerPos(Pos&& pos)
 {
 	if (!data.empty())
 	{
-		sound.UpDate3DSound(Vec3(data.at(data.size() - 1)->mesh.pos), Vec3(pos.x, pos.y, pos.z));
+		pos_ = pos;	
+		appSound.UpDate3DSound(Vec3(data.at(data.size() - 1)->mesh.pos), Vec3(pos.x, pos.y, pos.z));
 	}
 }
 
 ThiefComponent::ThiefComponent(const float r)
 {
+	GameController::GetParticle().AddEffect("app", "Resource/Effect/Appear.efk");
+	GameController::GetParticle().AddEffect("expro", "Resource/Effect/testEf.efk");
 	tex.Load("Resource/Texture/stonewall_diff.jpg");
-	sound.Load("Resource/Sounds/steam_long.wav",true);
+	appSound.Load("Resource/Sounds/steam_long.wav",true);
+	exproSound.Load("Resource/Sounds/se.ogg", true);
 	radius = r;
+}
+
+void ThiefComponent::Damaged(Entity& e)
+{
+	if (data.empty())
+	{
+		return;
+	}
+	for (auto& it :data)
+	{
+		if (!it->isActive)
+		{
+			continue;
+		}
+		if (e.GetComponent<InputShotComponent>().IsHit(AABB(Pos(it->mesh.pos), Scale(it->mesh.scale / 2))))
+		{
+			GameController::GetParticle().Play("expro", Pos(it->mesh.pos));
+			exproSound.PlaySE();
+			exproSound.UpDate3DSound(Pos(it->mesh.pos), Vec3(pos_.x, pos_.y, pos_.z));
+			--it->life;
+		}
+	}
 }
 
 void ThiefComponent::Initialize()
@@ -97,7 +121,6 @@ void ThiefComponent::UpDate()
 			it->mesh.pos.z -= it->velocity.z;
 		}
 	}
-	//
 	Executioners();
 }
 
@@ -120,5 +143,3 @@ const std::vector<std::unique_ptr<EnemyData>>& ThiefComponent::Get() const
 {
 	return data;
 }
-
-

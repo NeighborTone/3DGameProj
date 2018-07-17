@@ -10,7 +10,7 @@
 class GameController
 {
 private:
-	enum class GameGroup : std::size_t
+	enum GameGroup : std::size_t
 	{
 		TITLE,
 		GAME,
@@ -23,14 +23,11 @@ private:
 	Entity& skyBox;
 	Entity& thief;
 	Entity& field;
-	//‰¼
-	SoundEngine::SoundSource sound;
-	//
+
 public:
-	static Particle& GetParticle();
-	
+	static Particle& GetParticle();	
 	GameController();
-	~GameController();
+	~GameController() = default;
 	void CollisionEvent();
 	void Initialize();
 	void UpDate();

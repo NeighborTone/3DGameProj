@@ -9,8 +9,9 @@
 class ThiefComponent : public Component
 {
 private:
-	Pos*  pos_;
-	SoundEngine::SoundSource sound;
+	Pos  pos_;
+	SoundEngine::SoundSource appSound;
+	SoundEngine::SoundSource exproSound;
 	Texture tex;
 	std::vector<std::unique_ptr<EnemyData>> data;
 	std::unique_ptr<EnemyData> AddEnemy();
@@ -24,6 +25,7 @@ private:
 public:
 	void SetListenerPos(Pos&& pos);
 	ThiefComponent(const float r);
+	void Damaged(Entity& e);
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() override;
