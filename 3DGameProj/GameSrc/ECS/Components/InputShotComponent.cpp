@@ -5,13 +5,14 @@ InputShotComponent::InputShotComponent(const float speed, const int maxNum, cons
 	speed_(speed)
 {
 	tex.Load("Resource/Texture/stonewall_diff.jpg");
+	mesh.GetMaterial().Load("Resource/Shader/shot.hlsl");
+	mesh.GetMaterial().SetTexture(0, &tex);
+	mesh.CreateSphere(radius * 2);
 	shots.resize(maxNum);
 	for (auto& it : shots)
 	{
-		it.mesh.GetMaterial().Load("Resource/Shader/shot.hlsl");
-		it.mesh.GetMaterial().SetTexture(0, &tex);
+		it.scale = radius * 2;
 		it.radius = radius;
-		it.mesh.CreateSphere(it.radius*2);
 	}
 }
 
@@ -19,7 +20,7 @@ void InputShotComponent::Initialize()
 {
 	for (auto& it : shots)
 	{
-		it.deathTime = 0;
+		it.lifeSpan = 0;
 		it.isActive = false;
 	}
 }
@@ -30,12 +31,12 @@ void InputShotComponent::UpDate()
 	{
 		if (it.isActive)
 		{
-			it.mesh.pos += it.velocity;
-			++it.deathTime;
+			it.pos += it.velocity;
+			++it.lifeSpan;
 		}
-		if (it.deathTime > 100 && it.isActive)
+		if (it.lifeSpan > 100 && it.isActive)
 		{
-			it.deathTime = 0;
+			it.lifeSpan = 0;
 			it.isActive = false;
 		}
 	}
@@ -47,7 +48,9 @@ void InputShotComponent::Draw3D()
 	{
 		if (it.isActive)
 		{
-			it.mesh.Draw();
+			mesh.pos = it.pos;
+			mesh.scale = it.scale;
+			mesh.Draw();
 		}
 	}
 }
@@ -61,14 +64,14 @@ void InputShotComponent::Shot(TransformComponent&& trans)
 		if (isShot && !it.isActive)
 		{
 			//いったんセット
-			it.mesh.pos = trans.pos;
+			it.pos = trans.pos;
 			//弾の射出方向を決める。90度ずれてしまうのでオフセットする
 			it.velocity.x = cosf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
 			it.velocity.y = sinf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
 			it.velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * speed_;
 			it.isActive = true;
 			//カメラとかぶるのでちょっと前に出す
-			it.mesh.pos += (it.velocity  * 0.5f);
+			it.pos += (it.velocity  * 0.5f);
 			break;
 		}
 	}
@@ -82,18 +85,13 @@ bool InputShotComponent::IsHit(AABB&& aabb)
 		{
 			continue;
 		}
-		if (Collison::SegmentAABBCollision(Vec3(it.mesh.pos), Vec3(it.mesh.pos + it.velocity), AABB(aabb)))
+		if (Collison::SegmentAABBCollision(Vec3(it.pos), Vec3(it.pos + it.velocity), AABB(aabb)))
 		{
-			it.deathTime = 0;
+			it.lifeSpan = 0;
 			it.isActive = false;
 			return true;
 		}
-	
 	}
 	return false;
 }
 
-const std::vector<InputShotComponent::Shots>& InputShotComponent::GetShots() const
-{
-	return shots;
-}

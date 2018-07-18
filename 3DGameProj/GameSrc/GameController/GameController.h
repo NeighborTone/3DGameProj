@@ -23,6 +23,7 @@ private:
 	Entity& skyBox;
 	Entity& thief;
 	Entity& field;
+	Entity& map;
 
 public:
 	static Particle& GetParticle();	

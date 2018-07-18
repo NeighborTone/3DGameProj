@@ -80,7 +80,7 @@ bool Collison::RaySphereCollision(Vec3 && res, float & res_t, const Vec3 && p, c
 	return true;
 }
 
-bool Collison::LineSphereCollision(Vec3 && res, float && res_t, const Sphere && volume, const Vec3 && pos_start, const Vec3 && pos_end)
+bool Collison::LineSphereCollision(Vec3 && res, float & res_t, const Sphere && volume, const Vec3 && pos_start, const Vec3 && pos_end)
 {
 	return RaySphereCollision(Vec3(res), res_t, Vec3(pos_start), Vec3(pos_end) - Vec3(pos_start).Normalize(),
 		Sphere(volume));

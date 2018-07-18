@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../Engine/Utilitys/Randam.hpp"
 #include "../../GameController/GameController.h"
-#include "../Components/ComponentData/EnemyData.hpp"
+#include "../Components/ComponentData/MetaData.hpp"
 #include "../ECS.hpp"
 #include "../Components/ComponentData/AABB.hpp"
 #include <vector>
@@ -9,12 +9,13 @@
 class ThiefComponent : public Component
 {
 private:
-	Pos  pos_;
+	Pos  listenerPos;
 	SoundEngine::SoundSource appSound;
 	SoundEngine::SoundSource exproSound;
 	Texture tex;
-	std::vector<std::unique_ptr<EnemyData>> data;
-	std::unique_ptr<EnemyData> AddEnemy();
+	Mesh mesh;
+	std::vector<std::unique_ptr<MetaData>> data;
+	std::unique_ptr<MetaData> AddEnemy();
 	//‘Ì—Í‚ğŠÄ‹‚·‚é
 	void LifeCheck();
 	//V‚µ‚¢“G‚ğ¶¬‚·‚é
@@ -30,6 +31,4 @@ public:
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() STUB
-	//“G‚Ìî•ñ‚ğ“¾‚é
-	const std::vector<std::unique_ptr<EnemyData>>& Get() const;
 };

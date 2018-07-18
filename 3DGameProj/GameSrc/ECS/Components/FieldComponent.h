@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Engine./Graphics/Mesh.h"
+#include "../../Engine.h"
 #include "../ECS.hpp"
 
 class FieldComponent : public Component

@@ -113,6 +113,9 @@
     <ClCompile Include="GameSrc\ECS\Components\ThiefComponent.cpp">
       <Filter>GameSrc\ECS\Components\MoveComponents</Filter>
     </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\MiniMapComponent.cpp">
+      <Filter>GameSrc\ECS\Components\Upward</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -306,7 +309,10 @@
     <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h">
       <Filter>GameSrc\ECS\Components\MoveComponents</Filter>
     </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\ComponentData\EnemyData.hpp">
+    <ClInclude Include="GameSrc\ECS\Components\MiniMapComponent.h">
+      <Filter>GameSrc\ECS\Components\Upward</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\ComponentData\MetaData.hpp">
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
     </ClInclude>
   </ItemGroup>
