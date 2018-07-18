@@ -1,6 +1,8 @@
 #include "ThiefComponent.h"
 #include "InputShotComponent.h"
+#include "../../GameController/Helper.hpp"
 #include <iterator>
+#include <iostream>
 std::unique_ptr<EnemyData> ThiefComponent::AddEnemy()
 {
 	return std::make_unique<EnemyData>();
@@ -29,12 +31,14 @@ void ThiefComponent::Create()
 		data.at(data.size()-1)->mesh.CreateSphere();
 		data.at(data.size()-1)->isActive = true;
 		data.at(data.size()-1)->life = 3;
-		data.at(data.size()-1)->velocity = 0.3f;
+		data.at(data.size()-1)->velocity = 0.4f;
 		data.at(data.size()-1)->mesh.scale = radius * 2;
-		data.at(data.size()-1)->mesh.pos.x = rand.GetRand(0.0f, 100.0f);
+		const float theta = rand.GetRand(0.f, 360.0f);	//出現角度を決める
+		constexpr float FIELD_RADIUS = 500;		//フィールドの半径
+		data.at(data.size()-1)->mesh.pos.x = cosf(DirectX::XMConvertToRadians(theta)) * FIELD_RADIUS;
+		data.at(data.size()-1)->mesh.pos.z = sinf(DirectX::XMConvertToRadians(theta)) * FIELD_RADIUS;
 		data.at(data.size()-1)->mesh.pos.y = rand.GetRand(10.0f, 100.0f);
-		data.at(data.size()-1)->mesh.pos.z = rand.GetRand(100.0f, 200.0f);
-		
+
 		GameController::GetParticle().Play("app", Vec3(data.at(data.size() - 1)->mesh.pos));
 		appSound.PlaySE();
 	}
@@ -113,12 +117,20 @@ void ThiefComponent::UpDate()
 		return;
 	}
 	LifeCheck();
+	
 	//Test
 	for (auto& it : data)
 	{
 		if (it->isActive)
 		{
-			it->mesh.pos.z -= it->velocity.z;
+
+		auto Tracking = [=](Pos &pos) {
+			Vec3 ret = (pos_ - pos);
+			ret.Normalize();
+			return ret;
+		};
+			
+			it->mesh.pos += Tracking(it->mesh.pos) * it->velocity;
 		}
 	}
 	Executioners();

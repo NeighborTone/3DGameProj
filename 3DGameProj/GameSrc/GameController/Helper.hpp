@@ -1,6 +1,6 @@
 #pragma once
 #include "../ECS/Components/Transform.hpp"
-
+#include "../ECS/Components/ComponentData/EnemyData.hpp"
 //冗長になりがちなのでよく使うコンポーネントの取得関数を用意しておく
 class ComAssist
 {
@@ -37,4 +37,3 @@ public:
 	}
 
 };
-
