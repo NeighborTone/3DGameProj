@@ -316,4 +316,7 @@
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MyIcon.rc" />
+  </ItemGroup>
 </Project>

@@ -112,6 +112,9 @@
     <ClInclude Include="GameSrc\GameController\Helper.hpp" />
     <ClInclude Include="GameSrc\GameMain.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MyIcon.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{E2043983-6A5C-4717-B40B-E4734C959F5A}</ProjectGuid>
