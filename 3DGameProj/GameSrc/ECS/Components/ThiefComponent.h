@@ -31,4 +31,6 @@ public:
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() STUB
+	const std::vector<std::unique_ptr<MetaData>>& ThiefComponent::GetData() const;
+	
 };

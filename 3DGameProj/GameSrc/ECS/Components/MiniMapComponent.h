@@ -7,13 +7,13 @@
 class MiniMapComponent : public Component
 {
 private:
-	TransformComponent* trans;
 	Sprite map;
-	Sprite enemys;
+	Sprite topping;
+	Sprite enemyIcon;
 public:
 
 	MiniMapComponent();
-
+	void DrawEnemys(Entity& enemy,Entity& player);
 	void Initialize() override;
 
 	void UpDate() override;

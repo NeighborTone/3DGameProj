@@ -15,7 +15,7 @@ public:
 	template<typename T = TransformComponent>
 	static Angles GetAngles(Entity& e)
 	{
-		return Angles(e.GetComponent<T>().angles);
+		return Angles(e.GetComponent<T>().angle);
 	}
 	//‘å‚«‚³Žæ“¾
 	template<typename T = TransformComponent>

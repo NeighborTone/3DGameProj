@@ -75,6 +75,7 @@ void GameController::Draw2D()
 	Mouse::DrawCursor(false);
 	player.GetComponent<CameraComponent>().Project2D();
 	entityManager.Draw2D();
+	map.GetComponent<MiniMapComponent>().DrawEnemys(thief,player);
 }
 
 void GameController::Finalize()

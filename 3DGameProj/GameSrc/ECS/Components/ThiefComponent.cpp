@@ -152,3 +152,8 @@ void ThiefComponent::Draw3D()
 		}
 	}
 }
+
+const std::vector<std::unique_ptr<MetaData>>& ThiefComponent::GetData() const
+{
+	return data;
+}
