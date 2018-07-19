@@ -50,7 +50,6 @@
     <ClCompile Include="GameSrc\ECS\Components\FieldComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\InputShotComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\InuputMoveComponent.cpp" />
-    <ClCompile Include="GameSrc\ECS\Components\MeshComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\MiniMapComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\SkyBoxComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\ThiefComponent.cpp" />
@@ -102,7 +101,6 @@
     <ClInclude Include="GameSrc\ECS\Components\FieldComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\InputShotComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\InuputMoveComponent.h" />
-    <ClInclude Include="GameSrc\ECS\Components\MeshComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\MiniMapComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\SkyBoxComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h" />
