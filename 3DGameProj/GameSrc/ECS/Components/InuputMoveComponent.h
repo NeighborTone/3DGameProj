@@ -6,6 +6,9 @@
 class InuputMoveComponent : public Component
 {
 private:
+	static constexpr float UpMax = -90;
+	static constexpr float DownMax = 20;
+	static constexpr float DirOffSet = 90;
 	float speed_;
 	TransformComponent* transform;
 	Vec3 dir;

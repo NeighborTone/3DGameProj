@@ -26,13 +26,13 @@ void InuputMoveComponent::MoveLeftAndRight()
 
 void InuputMoveComponent::FixedMovableAngle()
 {
-	if (transform->angle.x >= 40)
+	if (transform->angle.x >= DownMax)
 	{
-		transform->angle.x = 40;
+		transform->angle.x = DownMax;
 	}
-	if (transform->angle.x <= -90)
+	if (transform->angle.x <= UpMax)
 	{
-		transform->angle.x = -90;
+		transform->angle.x = UpMax;
 	}
 }
 
@@ -44,9 +44,9 @@ void InuputMoveComponent::ManipulationOfView()
 
 void InuputMoveComponent::ForwardAndBackwardDirection()
 {
-	dir.x = cosf(DirectX::XMConvertToRadians(-transform->angle.y + 90)) * cosf(DirectX::XMConvertToRadians(-transform->angle.x)) * transform->velocity.x;
+	dir.x = cosf(DirectX::XMConvertToRadians(-transform->angle.y + DirOffSet)) * cosf(DirectX::XMConvertToRadians(-transform->angle.x)) * transform->velocity.x;
 	dir.y = sinf(DirectX::XMConvertToRadians(-transform->angle.x)) * transform->velocity.y;
-	dir.z = cosf(DirectX::XMConvertToRadians(-transform->angle.x)) * sinf(DirectX::XMConvertToRadians(-transform->angle.y + 90)) * transform->velocity.z;
+	dir.z = cosf(DirectX::XMConvertToRadians(-transform->angle.x)) * sinf(DirectX::XMConvertToRadians(-transform->angle.y + DirOffSet)) * transform->velocity.z;
 }
 
 void InuputMoveComponent::LeftAndRightDirection()

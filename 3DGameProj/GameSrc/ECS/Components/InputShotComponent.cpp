@@ -66,12 +66,13 @@ void InputShotComponent::Shot(TransformComponent&& trans)
 			//いったんセット
 			it.pos = trans.pos;
 			//弾の射出方向を決める。90度ずれてしまうのでオフセットする
-			it.velocity.x = cosf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
+			static constexpr float DirOffSet = 90;
+			it.velocity.x = cosf(DirectX::XMConvertToRadians(-trans.angle.y + DirOffSet)) * cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
 			it.velocity.y = sinf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
-			it.velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + 90)) * speed_;
+			it.velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + DirOffSet)) * speed_;
 			it.isActive = true;
 			//カメラとかぶるのでちょっと前に出す
-			it.pos += (it.velocity  * 0.5f);
+			it.pos += (it.velocity  * 0.2f);
 			break;
 		}
 	}

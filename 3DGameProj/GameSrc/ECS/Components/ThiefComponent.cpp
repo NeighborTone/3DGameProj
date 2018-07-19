@@ -21,8 +21,8 @@ void ThiefComponent::LifeCheck()
 
 void ThiefComponent::Create()
 {
-	//Test
-	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
+	//$Test$
+	if (cnt.GetCurrentCount() > 120)
 	{
 		data.emplace_back(AddEnemy());
 		data.at(data.size()-1)->isActive = true;
@@ -59,7 +59,8 @@ void ThiefComponent::SetListenerPos(Pos&& pos)
 	}
 }
 
-ThiefComponent::ThiefComponent(const float r)
+ThiefComponent::ThiefComponent(const float r):
+	cnt(0,1,0,120)
 {
 	GameController::GetParticle().AddEffect("app", "Resource/Effect/Appear.efk");
 	GameController::GetParticle().AddEffect("expro", "Resource/Effect/testEf.efk");
@@ -110,13 +111,14 @@ void ThiefComponent::Initialize()
 
 void ThiefComponent::UpDate()
 {
+	++cnt;
 	Create();
 	if (data.empty())
 	{
 		return;
 	}
 	LifeCheck();
-	//Test
+	//$Test$
 	for (auto& it : data)
 	{
 		if (it->isActive)

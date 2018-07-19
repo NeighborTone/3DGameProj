@@ -3,12 +3,14 @@
 #include "../../GameController/GameController.h"
 #include "../Components/ComponentData/MetaData.hpp"
 #include "../ECS.hpp"
+#include "../../../Engine/Utilitys/Counter.hpp"
 #include "../Components/ComponentData/AABB.hpp"
 #include <vector>
 #include <memory>
 class ThiefComponent : public Component
 {
 private:
+	Counter cnt;
 	Pos  listenerPos;
 	SoundEngine::SoundSource appSound;
 	SoundEngine::SoundSource exproSound;

@@ -10,13 +10,22 @@
 class GameController
 {
 private:
+	enum class GameState
+	{
+		PLAY,		//ゲーム中
+		STOP,		//停止中
+	};
 	enum GameGroup : std::size_t
 	{
-		TITLE,
-		GAME,
-		END
+		ALWAYS,		//ゲームの状態に関わらず常に更新と描画を行うグループ
+		GAME,		//ゲーム中に更新と描画を行うグループ
+		END			//未定
 	};
 
+	void StateMachine();
+	void GameStart();
+	void GameStop();
+	GameState gameState;
 	EntityManager entityManager;
 	Entity& player;
 	Entity& shot;
@@ -25,6 +34,7 @@ private:
 	Entity& field;
 	Entity& map;
 
+	std::vector<Entity*> gameScene;
 public:
 	static Particle& GetParticle();	
 	GameController();
