@@ -6,6 +6,7 @@ MiniMapComponent::MiniMapComponent()
 {
 	map.Load("Resource/Texture/map.png");
 	enemyIcon.Load("Resource/Texture/enemy.png");
+	topping.Load("Resource/Texture/topping.png");
 }
 
 const void MiniMapComponent::DrawEnemys(const Entity& e, Entity& player)
@@ -29,6 +30,11 @@ const void MiniMapComponent::DrawEnemys(const Entity& e, Entity& player)
 
 		enemyIcon.Draw();
 	}
+}
+
+const void MiniMapComponent::DrawTopping(const Entity& topping_, Entity & player)
+{
+	
 }
 
 void MiniMapComponent::Initialize()

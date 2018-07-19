@@ -15,6 +15,7 @@ public:
 
 	MiniMapComponent();
 	const void DrawEnemys(const Entity& enemy, Entity& player);
+	const void DrawTopping(const Entity& topping_, Entity& player);
 	void Initialize() override;
 
 	void UpDate() override;
