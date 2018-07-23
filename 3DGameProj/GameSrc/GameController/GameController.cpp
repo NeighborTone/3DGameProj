@@ -58,7 +58,7 @@ GameController::GameController() :
 	map.AddComponent<MiniMapComponent>();
 
 	//グループに登録
-	player.AddGroup(ALWAYS);
+	player.AddGroup(GAME);
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
 	map.AddGroup(ALWAYS);
@@ -88,7 +88,7 @@ void GameController::Initialize()
 
 void GameController::UpDate()
 {
-	StateMachine();
+	StateMachine();	//ゲームの状態の監視
 	//$Test$
 	if (KeyBoard::Down(KeyBoard::Key::KEY_X))
 	{
@@ -119,6 +119,8 @@ void GameController::UpDate()
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
 	//効果音のListenerをセットする
 	thief.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
+	//マウスは常に画面中央
+	Mouse::SetMousePos(0, 0);
 }
 
 void GameController::Draw3D()
