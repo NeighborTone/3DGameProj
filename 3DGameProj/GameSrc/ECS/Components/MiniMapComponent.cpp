@@ -21,9 +21,7 @@ const void MiniMapComponent::DrawEnemys(const Entity& e, Entity& player)
 		enemyIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
 		enemyIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
 		enemyIcon.pos.z = 0;
-		const Vec2 mapCenter(
-			Engine::GetWindowSize().x / 2.f - mapRadius,
-			-Engine::GetWindowSize().y / 2.f + mapRadius);
+		const Vec2 mapCenter(Engine::GetWindowSize().x / 2.f - mapRadius, -Engine::GetWindowSize().y / 2.f + mapRadius);
 		enemyIcon.pos.x += mapCenter.x;
 		enemyIcon.pos.y += mapCenter.y;
 
@@ -54,5 +52,5 @@ void MiniMapComponent::Draw2D()
 	map.pos.y = -Engine::GetWindowSize().y / 2.f + mapRadius;
 	map.Draw();
 	
-
+	topping.Draw();
 }

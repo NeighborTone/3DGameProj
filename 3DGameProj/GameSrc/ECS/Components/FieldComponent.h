@@ -10,8 +10,8 @@ private:
 
 public:
 	FieldComponent();
-	void Initialize() override;
-	void UpDate() override;
+	void Initialize() STUB
+	void UpDate() STUB
 	void Draw3D() override;
-	void Draw2D() override;
+	void Draw2D() STUB
 };

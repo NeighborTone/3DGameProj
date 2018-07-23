@@ -6,6 +6,7 @@
 #include "../ECS/Components/FieldComponent.h"
 #include "../ECS/Components/ThiefComponent.h"
 #include "../ECS/Components/MiniMapComponent.h"
+#include "../ECS/Components/ToppingComponent.h"
 #include <iostream>
 
 
@@ -17,7 +18,7 @@ void GameController::StateMachine()
 //$Test$
 void GameController::GameStart()
 {
-	if (KeyBoard::Down(KeyBoard::Key::KEY_C))
+	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
 	{
 		gameState = GameState::PLAY;
 	}
@@ -25,7 +26,7 @@ void GameController::GameStart()
 //$Test$
 void GameController::GameStop()
 {
-	if (KeyBoard::Down(KeyBoard::Key::KEY_V))
+	if (KeyBoard::Down(KeyBoard::Key::KEY_X))
 	{
 		gameState = GameState::STOP;
 	}
@@ -43,7 +44,8 @@ GameController::GameController() :
 	skyBox(entityManager.AddEntity()),
 	thief(entityManager.AddEntity()),
 	field(entityManager.AddEntity()),
-	map(entityManager.AddEntity())
+	map(entityManager.AddEntity()),
+	topping(entityManager.AddEntity())
 {
 	gameState = GameState::STOP;
 	player.AddComponent<TransformComponent>(Pos(0, 10, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
@@ -56,11 +58,12 @@ GameController::GameController() :
 	field.AddComponent<FieldComponent>();
 	thief.AddComponent<ThiefComponent>(2.5f);
 	map.AddComponent<MiniMapComponent>();
-
+	topping.AddComponent<ToppingComponent>();
 	//ÉOÉãÅ[ÉvÇ…ìoò^
 	player.AddGroup(GAME);
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
+	topping.AddGroup(ALWAYS);
 	map.AddGroup(ALWAYS);
 	shot.AddGroup(GAME);
 	thief.AddGroup(GAME);
@@ -90,7 +93,7 @@ void GameController::UpDate()
 {
 	StateMachine();	//ÉQÅ[ÉÄÇÃèÛë‘ÇÃäƒéã
 	//$Test$
-	if (KeyBoard::Down(KeyBoard::Key::KEY_X))
+	if (KeyBoard::Down(KeyBoard::Key::KEY_C))
 	{
 		entityManager.Initialize();
 	}

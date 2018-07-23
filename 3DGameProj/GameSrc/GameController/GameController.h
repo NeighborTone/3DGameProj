@@ -33,7 +33,7 @@ private:
 	Entity& thief;
 	Entity& field;
 	Entity& map;
-
+	Entity& topping;
 	std::vector<Entity*> gameScene;
 public:
 	static Particle& GetParticle();	

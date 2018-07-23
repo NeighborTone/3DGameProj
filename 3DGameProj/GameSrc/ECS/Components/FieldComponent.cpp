@@ -7,22 +7,11 @@ FieldComponent::FieldComponent()
 	mesh.CreateSphere(1,26);
 }
 
-void FieldComponent::Initialize()
+void FieldComponent::Draw3D()
 {
 	mesh.scale = 1000;
 	mesh.scale.y = 1;
-
-}
-
-void FieldComponent::UpDate()
-{
-}
-
-void FieldComponent::Draw3D()
-{
 	mesh.Draw();
 }
 
-void FieldComponent::Draw2D()
-{
-}
+

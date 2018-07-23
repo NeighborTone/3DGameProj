@@ -67,7 +67,19 @@ void InuputMoveComponent::Initialize()
 		transform = &entity->AddComponent<TransformComponent>();
 	}
 	transform = &entity->GetComponent<TransformComponent>();
+
+	//‰ŠúˆÊ’u‚ð•Û‘¶‚µ‚Ä‚¨‚­
+	static bool isInit = false;
+	if (!isInit)
+	{
+		isInit = true;
+		initPos = transform->pos;
+	}
+	//ŽŸ‰ñˆÈ~‚Ì‰Šú‰»‚É‚Í•Û‘¶‚µ‚½’l‚ð—p‚¢‚é
+	transform->pos = initPos;
 	eyeHeight = transform->pos.y;
+
+
 }
 void InuputMoveComponent::UpDate()
 {
