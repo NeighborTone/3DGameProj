@@ -42,7 +42,7 @@ GameController::GameController() :
 	player(entityManager.AddEntity()),
 	shot(entityManager.AddEntity()),
 	skyBox(entityManager.AddEntity()),
-	thief(entityManager.AddEntity()),
+	enemy(entityManager.AddEntity()),
 	field(entityManager.AddEntity()),
 	map(entityManager.AddEntity()),
 	topping(entityManager.AddEntity())
@@ -56,7 +56,7 @@ GameController::GameController() :
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
-	thief.AddComponent<ThiefComponent>(2.5f);
+	enemy.AddComponent<ThiefComponent>(2.5f);
 	map.AddComponent<MiniMapComponent>();
 	topping.AddComponent<ToppingComponent>();
 	//グループに登録
@@ -66,13 +66,13 @@ GameController::GameController() :
 	topping.AddGroup(ALWAYS);
 	map.AddGroup(ALWAYS);
 	shot.AddGroup(GAME);
-	thief.AddGroup(GAME);
+	enemy.AddGroup(GAME);
 
 }
 
 void GameController::CollisionEvent()
 {
-	thief.GetComponent<ThiefComponent>().Damaged(shot);
+	enemy.GetComponent<ThiefComponent>().Damaged(shot);
 }
 
 void GameController::Initialize()
@@ -121,7 +121,9 @@ void GameController::UpDate()
 	//果てが来てしまうのでプレイヤーと一緒に動かす
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
 	//効果音のListenerをセットする
-	thief.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
+	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
+	//$Test$
+	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(Pos(topping.GetComponent<ToppingComponent>().GetData()[0].pos));
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
 }
@@ -164,7 +166,8 @@ void GameController::Draw2D()
 	}
 
 
-	map.GetComponent<MiniMapComponent>().DrawEnemys(thief, player);
+	map.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
+	map.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
 }
 
 void GameController::Finalize()

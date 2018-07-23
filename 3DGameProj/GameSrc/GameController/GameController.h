@@ -30,7 +30,7 @@ private:
 	Entity& player;
 	Entity& shot;
 	Entity& skyBox;
-	Entity& thief;
+	Entity& enemy;
 	Entity& field;
 	Entity& map;
 	Entity& topping;

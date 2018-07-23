@@ -10,8 +10,11 @@
 class ThiefComponent : public Component
 {
 private:
+	//$Test$
 	Counter cnt;
-	Pos  listenerPos;
+
+	Pos listenerPos;
+	Pos trackingTarget;
 	SoundEngine::SoundSource appSound;
 	SoundEngine::SoundSource exproSound;
 	Texture tex;
@@ -24,15 +27,16 @@ private:
 	void Create();
 	//アクティブでないものを処刑する
 	void Executioners();
-	float radius;
+	float radius_;
 public:
 	void SetListenerPos(Pos&& pos);
-	ThiefComponent(const float r);
+	ThiefComponent(const float radius);
 	void Damaged(Entity& e);
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() STUB
+	void SetTrackingTarget(Pos&& target);
 	const std::vector<std::unique_ptr<MetaData>>& ThiefComponent::GetData() const;
 	
 };

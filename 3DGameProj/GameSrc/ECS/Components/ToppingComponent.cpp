@@ -3,14 +3,14 @@
 ToppingComponent::ToppingComponent()
 {
 	tex.Load("Resource/Texture/t.png");
-	mesh.CreateSphere();
+	mesh.CreateSphere(2);
 	mesh.GetMaterial().SetTexture(0,&tex);
 	data.resize(1);
 }
 
 void ToppingComponent::Initialize()
 {
-	data[0].pos = Pos(0, 2, 0);
+	data[0].pos = Pos(0, 4, 0);
 }
 
 void ToppingComponent::UpDate()
@@ -25,4 +25,9 @@ void ToppingComponent::Draw3D()
 
 void ToppingComponent::Draw2D()
 {
+}
+
+const std::vector<MetaData>& ToppingComponent::GetData() const
+{
+	return data;
 }

@@ -28,7 +28,7 @@ void ThiefComponent::Create()
 		data.at(data.size()-1)->isActive = true;
 		data.at(data.size()-1)->lifeSpan = 3;
 		data.at(data.size()-1)->velocity = 0.4f;
-		data.at(data.size()-1)->scale = radius * 2;
+		data.at(data.size()-1)->scale = radius_ * 2;
 		Random rand;
 		const float THETA = rand.GetRand(0.f, 360.0f);	//出現角度を決める
 		constexpr float FIELD_RADIUS = 500;		//フィールドの半径
@@ -71,7 +71,7 @@ ThiefComponent::ThiefComponent(const float r):
 	mesh.GetMaterial().SetTexture(0, &tex);
 	mesh.SetDrawMode(D3D11_CULL_BACK, D3D11_FILL_WIREFRAME);
 	mesh.CreateSphere();
-	radius = r;
+	radius_ = r;
 }
 
 void ThiefComponent::Damaged(Entity& e)
@@ -126,8 +126,8 @@ void ThiefComponent::UpDate()
 
 		auto Tracking = [=](Pos& pos)
 		{
-			//とりあえずプレイヤーに追従させる
-			Vec3 ret = (listenerPos - pos);	
+			//とりあえず追従させる
+			Vec3 ret = (trackingTarget - pos);
 			ret.Normalize();
 			return ret;
 		};
@@ -153,6 +153,11 @@ void ThiefComponent::Draw3D()
 			mesh.Draw();
 		}
 	}
+}
+
+void ThiefComponent::SetTrackingTarget(Pos && target)
+{
+	trackingTarget = target;
 }
 
 const std::vector<std::unique_ptr<MetaData>>& ThiefComponent::GetData() const
