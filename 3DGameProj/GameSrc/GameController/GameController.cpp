@@ -103,6 +103,7 @@ void GameController::UpDate()
 
 	entityManager.Refresh();	//Entity‚Ìó‘Ô‚ÌŠÄ‹
 
+
 	auto& always(entityManager.GetGroup(ALWAYS));
 	for (auto& it : always)
 	{

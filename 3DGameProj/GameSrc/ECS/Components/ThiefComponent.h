@@ -14,7 +14,6 @@ private:
 	//$Test$
 	Counter cnt;
 	Pos listenerPos;
-	std::vector<Pos> trackingTarget;
 	SoundEngine::SoundSource appSound;
 	SoundEngine::SoundSource exproSound;
 	Texture tex;

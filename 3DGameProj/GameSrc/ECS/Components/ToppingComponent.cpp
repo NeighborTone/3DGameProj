@@ -11,11 +11,13 @@ ToppingComponent::ToppingComponent()
 void ToppingComponent::Initialize()
 {
 	//$Test$
-	static float i = 0;
+	float i = 0;
 	for (auto& it : data)
 	{
 		it.trans.pos = Pos(0, 4, i);
-		i += 10;
+		it.isArrested = false;
+		it.isActive = true;
+		i += 50;
 	}
 	
 }

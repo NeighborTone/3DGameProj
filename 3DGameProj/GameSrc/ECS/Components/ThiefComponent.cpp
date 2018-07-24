@@ -2,6 +2,7 @@
 #include "InputShotComponent.h"
 #include "../../GameController/Helper.hpp"
 #include "../Components/ToppingComponent.h"
+#include "../../Utilitys/Randam.hpp"
 #include <iterator>
 #include <iostream>
 std::unique_ptr<EnemyData> ThiefComponent::AddEnemy()
@@ -35,7 +36,8 @@ void ThiefComponent::Create()
 		constexpr float FIELD_RADIUS = 500;		//ƒtƒB[ƒ‹ƒh‚Ì”¼Œa
 		data.at(data.size()-1)->trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
 		data.at(data.size()-1)->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
-		data.at(data.size()-1)->trans.pos.y = rand.GetRand(10.0f, 100.0f);
+		data.at(data.size()-1)->trans.pos.y = rand.GetRand(20.0f, 100.0f);
+		data.at(data.size() - 1)->trackingTarget = Pos(0, 0, 0);
 		efHandle = GameController::GetParticle().Play("app", Vec3(data.at(data.size() - 1)->trans.pos));
 		GameController::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
 		GameController::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
@@ -124,16 +126,11 @@ void ThiefComponent::UpDate()
 	{
 		if (it->isActive)
 		{
-
-		auto Tracking = [=](Pos& pos)
-		{
-			//‚Æ‚è‚ ‚¦‚¸’Ç]‚³‚¹‚é
-			Vec3 ret = (trackingTarget[0] - pos);
+			//’Ç]‚³‚¹‚é
+			Vec3 ret = (it->trackingTarget - it->trans.pos);
 			ret.Normalize();
-			return ret;
-		};
-			
-			it->trans.pos += Tracking(it->trans.pos) * it->trans.velocity;
+
+			it->trans.pos += ret * it->trans.velocity;
 			//‚‚³‚Ì§ŒÀ‚ðŒˆ‚ß‚é
 			if (it->trans.pos.y <= 10)
 			{
@@ -154,7 +151,7 @@ void ThiefComponent::Draw3D()
 	{
 		if (it->isActive)
 		{
-			model.scale = it->trans.scale / 10;
+			model.scale = it->trans.scale / 10;	//Œ³‚Ìƒ‚ƒfƒ‹‚ª‘å‚«‚·‚¬‚é‚Ì‚Å
 			model.pos = it->trans.pos;
 			tex.Attach(0);
 			model.Draw();
@@ -164,14 +161,12 @@ void ThiefComponent::Draw3D()
 
 void ThiefComponent::SetTrackingTarget(Entity& target)
 {
-	trackingTarget.resize(target.GetComponent<ToppingComponent>().GetData().size());
-	for (auto& toppings : target.GetComponent<ToppingComponent>().GetData())
+	for (auto& it : data)
 	{
-		for (auto& targets : trackingTarget)
+		if (it->isActive)
 		{
-			targets = toppings.trans.pos;
+			it->trackingTarget = target.GetComponent<ToppingComponent>().GetData()[1].trans.pos;
 		}
-		
 	}
 	
 }

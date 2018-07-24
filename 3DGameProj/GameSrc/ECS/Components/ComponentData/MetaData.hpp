@@ -20,15 +20,18 @@ struct ShotData
 
 struct EnemyData
 {
+	
 	bool isActive;			//生きているか
 	int lifeSpan;			//寿命
 	AABB aabb;			//コリジョン用の形状
+	Pos trackingTarget;
 	TransForm trans;
 };
 
 struct ToppingData
 {
 	bool isActive;			//生きているか
+	bool isArrested;		//捕まっていないか
 	Sphere sphere;
 	TransForm trans;
 };
