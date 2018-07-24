@@ -27,7 +27,7 @@ void ToppingComponent::Draw2D()
 {
 }
 
-const std::vector<MetaData>& ToppingComponent::GetData() const
+std::vector<MetaData>& ToppingComponent::GetData()
 {
 	return data;
 }

@@ -40,9 +40,12 @@ public:
 	void Stop(Effekseer::Handle handle);
 	//明示的に停止、ただしエフェクトの生成をやめるだけなのでしばらく残る
 	void StopRoot(Effekseer::Handle handle);
-
+	//ハンドルを指定し座標を設定する
 	void SetPos(Effekseer::Handle handle, Vec3&& pos);
 
+	void SetScale(Effekseer::Handle handle, Vec3&& scale);
+
+	void SetAngles(Effekseer::Handle handle, Vec3&& angles);
 	Particle();
 	~Particle();
 

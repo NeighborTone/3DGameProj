@@ -27,6 +27,7 @@ private:
 	void GameStop();
 	GameState gameState;
 	EntityManager entityManager;
+
 	Entity& player;
 	Entity& shot;
 	Entity& skyBox;

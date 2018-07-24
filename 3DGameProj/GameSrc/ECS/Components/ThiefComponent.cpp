@@ -27,7 +27,7 @@ void ThiefComponent::Create()
 		data.emplace_back(AddEnemy());
 		data.at(data.size()-1)->isActive = true;
 		data.at(data.size()-1)->lifeSpan = 3;
-		data.at(data.size()-1)->velocity = 0.4f;
+		data.at(data.size()-1)->velocity = 2.4f;
 		data.at(data.size()-1)->scale = radius_ * 2;
 		Random rand;
 		const float THETA = rand.GetRand(0.f, 360.0f);	//oŒ»Šp“x‚ðŒˆ‚ß‚é
@@ -35,7 +35,9 @@ void ThiefComponent::Create()
 		data.at(data.size()-1)->pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
 		data.at(data.size()-1)->pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
 		data.at(data.size()-1)->pos.y = rand.GetRand(10.0f, 100.0f);
-		GameController::GetParticle().Play("app", Vec3(data.at(data.size() - 1)->pos));
+		efHandle = GameController::GetParticle().Play("app", Vec3(data.at(data.size() - 1)->pos));
+		GameController::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
+		GameController::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
 		appSound.PlaySE();
 	}
 }
@@ -64,13 +66,10 @@ ThiefComponent::ThiefComponent(const float r):
 {
 	GameController::GetParticle().AddEffect("app", "Resource/Effect/Appear.efk");
 	GameController::GetParticle().AddEffect("expro", "Resource/Effect/testEf.efk");
-	tex.Load("Resource/Texture/stonewall_diff.jpg");
+	tex.Load("Resource/UFO_D.png");
 	appSound.Load("Resource/Sounds/steam_long.wav",true);
 	exproSound.Load("Resource/Sounds/se.ogg", true);
-	mesh.GetMaterial().Load("Resource/Shader/hoge.hlsl");
-	mesh.GetMaterial().SetTexture(0, &tex);
-	mesh.SetDrawMode(D3D11_CULL_BACK, D3D11_FILL_WIREFRAME);
-	mesh.CreateSphere();
+	mesh.Load("Resource/ufo.fbx");
 	radius_ = r;
 }
 
@@ -86,9 +85,10 @@ void ThiefComponent::Damaged(Entity& e)
 		{
 			continue;
 		}
-		if (e.GetComponent<InputShotComponent>().IsHit(AABB(Pos(it->pos), Scale(it->scale / 2))))
+		if (e.GetComponent<InputShotComponent>().IsHit(AABB(Pos(it->pos), Scale(it->scale.x * 2.0f, it->scale.y * 0.8f, it->scale.z))))
 		{
-			GameController::GetParticle().Play("expro", Pos(it->pos));
+			efHandle = GameController::GetParticle().Play("expro", Pos(it->pos));
+			GameController::GetParticle().SetScale(efHandle, Vec3(6, 6, 6));
 			exproSound.PlaySE();
 			exproSound.UpDate3DSound(Pos(it->pos), Vec3(listenerPos));
 			--it->lifeSpan;
@@ -106,6 +106,7 @@ void ThiefComponent::Initialize()
 	{
 		it->isActive = false;
 	}
+	isAbduction = false;
 	Executioners();
 }
 
@@ -133,6 +134,12 @@ void ThiefComponent::UpDate()
 		};
 			
 			it->pos += Tracking(it->pos) * it->velocity;
+			//‚‚³‚Ì§ŒÀ‚ðŒˆ‚ß‚é
+			if (it->pos.y <= 10)
+			{
+				it->pos.y = 10;
+			}
+
 		}
 	}
 	Executioners();
@@ -148,17 +155,22 @@ void ThiefComponent::Draw3D()
 	{
 		if (it->isActive)
 		{
-			mesh.scale = it->scale;
+			mesh.scale = it->scale / 10;
 			mesh.pos = it->pos;
+			tex.Attach(0);
 			mesh.Draw();
 		}
 	}
 }
 
-void ThiefComponent::SetTrackingTarget(Pos && target)
+void ThiefComponent::SetTrackingTarget(Pos& target)
 {
+
 	trackingTarget = target;
 }
+
+
+
 
 const std::vector<std::unique_ptr<MetaData>>& ThiefComponent::GetData() const
 {

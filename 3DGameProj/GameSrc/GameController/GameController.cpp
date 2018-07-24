@@ -123,7 +123,8 @@ void GameController::UpDate()
 	//効果音のListenerをセットする
 	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
 	//$Test$
-	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(Pos(topping.GetComponent<ToppingComponent>().GetData()[0].pos));
+	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping.GetComponent<ToppingComponent>().GetData()[0].pos);
+
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
 }
@@ -144,7 +145,7 @@ void GameController::Draw3D()
 		it->Draw3D();
 	}
 
-
+	
 	GetParticle().UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
 }
 
@@ -165,9 +166,9 @@ void GameController::Draw2D()
 		it->Draw2D();
 	}
 
-
-	map.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
 	map.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
+	map.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
+	
 }
 
 void GameController::Finalize()

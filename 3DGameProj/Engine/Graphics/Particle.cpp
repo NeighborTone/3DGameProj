@@ -1,6 +1,9 @@
 #include "Particle.h"
 #include "../Engine.h"
 #include <iostream>
+
+
+
 Particle::Particle()
 {
 	Create();
@@ -95,6 +98,19 @@ void Particle::StopRoot(Effekseer::Handle handle)
 void Particle::SetPos(Effekseer::Handle handle, Vec3 && pos)
 {
 	manager->SetLocation(handle, pos.x, pos.y, pos.z);
+}
+
+void Particle::SetScale(Effekseer::Handle handle, Vec3 && scale)
+{
+	manager->SetScale(handle, scale.x, scale.y, scale.z);
+}
+
+void Particle::SetAngles(Effekseer::Handle handle, Vec3 && angles)
+{
+	manager->SetRotation(handle,
+		DirectX::XMConvertToRadians(angles.x),
+		DirectX::XMConvertToRadians(angles.y), 
+		DirectX::XMConvertToRadians(angles.z));
 }
 
 

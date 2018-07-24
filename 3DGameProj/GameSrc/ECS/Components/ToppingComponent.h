@@ -17,5 +17,5 @@ public:
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() override;
-	const std::vector<MetaData>& GetData() const;
+	std::vector<MetaData>& GetData();
 };

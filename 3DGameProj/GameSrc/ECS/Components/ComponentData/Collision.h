@@ -19,7 +19,7 @@ public:
 	//‹…a‚ÆAABB‚ÌÚG”»’è & ÅÚ‹ß“_
 	static bool SphereAABBCollision(Vec3&& res, const Sphere&& a, const AABB&& b);
 	//‹…‚ÆŒõü(p + td)‚Æ‚ÌŒğ·”»’è
-	static  bool RaySphereCollision(const Vec3&& p, const Vec3&& d, const Sphere&& s);
+	static bool RaySphereCollision(const Vec3&& point, const Vec3&& dir, const Sphere&& s);
 	//‹…‚ÆŒõü(p + td)‚Æ‚ÌŒğ·”»’è‚ÆŒğ·“_
 	static bool RaySphereCollision(Vec3&& res, float& res_t, const Vec3&& p, const Vec3&& d, const Sphere&& s);
 	//‹…‚Æü•ª(start, end)‚Æ‚ÌŒğ·”»’è
