@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Engine.h"
-
+#include "AABB.hpp"
+#include "Sphere.hpp"
 
 struct TransForm
 {
@@ -10,13 +11,24 @@ struct TransForm
 	Velocity velocity; 	//Œü‚«‚âˆÚ“®—Ê‚ğŠi”[
 };
 
-struct MetaData
+struct ShotData
+{
+	bool isActive;			//¶‚«‚Ä‚¢‚é‚©
+	int cnt;					//õ–½
+	TransForm trans;
+};
+
+struct EnemyData
 {
 	bool isActive;			//¶‚«‚Ä‚¢‚é‚©
 	int lifeSpan;			//õ–½
-	float radius;			//Mesh‚Ì”¼Œa
-	Pos pos;				//À•W
-	Scale scale;			//‘å‚«‚³
-	Angles angles;		//p¨
-	Velocity velocity; 	//Œü‚«‚âˆÚ“®—Ê‚ğŠi”[
+	AABB aabb;			//ƒRƒŠƒWƒ‡ƒ“—p‚ÌŒ`ó
+	TransForm trans;
+};
+
+struct ToppingData
+{
+	bool isActive;			//¶‚«‚Ä‚¢‚é‚©
+	Sphere sphere;
+	TransForm trans;
 };

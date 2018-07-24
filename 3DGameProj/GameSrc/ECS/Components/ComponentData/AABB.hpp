@@ -27,6 +27,11 @@ public:
 		pos = aabb.pos;
 		radius = aabb.radius;
 	}
-	
+	AABB& Create(const Pos& pos_, const Scale& r)
+	{
+		pos = pos_;
+		radius = r;
+		return *this;
+	}
 };
 

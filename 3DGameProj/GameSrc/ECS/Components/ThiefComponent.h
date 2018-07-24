@@ -14,32 +14,31 @@ private:
 	//$Test$
 	Counter cnt;
 	Pos listenerPos;
-	Pos trackingTarget;
+	std::vector<Pos> trackingTarget;
 	SoundEngine::SoundSource appSound;
 	SoundEngine::SoundSource exproSound;
 	Texture tex;
-	Model mesh;
-	std::vector<std::unique_ptr<MetaData>> data;
-	std::unique_ptr<MetaData> AddEnemy();
+	Model model;
+	std::vector<std::unique_ptr<EnemyData>> data;
+	std::unique_ptr<EnemyData> AddEnemy();
 	//体力を監視する
 	void LifeCheck();
 	//新しい敵を生成する
 	void Create();
 	//アクティブでないものを処刑する
 	void Executioners();
-	float radius_;
+	static constexpr float RADIUS = 2.5f;
 	int efHandle;
 	bool isAbduction = false;
 public:
 	void SetListenerPos(Pos&& pos);
-	ThiefComponent(const float radius);
+	ThiefComponent();
 	void Damaged(Entity& e);
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() STUB
-	void SetTrackingTarget(Pos& target);
-	void Abduction(Pos* target);	//誘拐する
-	const std::vector<std::unique_ptr<MetaData>>& ThiefComponent::GetData() const;
+	void SetTrackingTarget(Entity& target);
+	const std::vector<std::unique_ptr<EnemyData>>& ThiefComponent::GetData() const;
 	
 };

@@ -16,7 +16,7 @@ public:
 	static bool SphereCollision(Sphere&& s1, Sphere&& s2);
 	//球aとAABBの接触判定
 	static bool SphereAABBCollision(const Sphere&& a, const AABB&& b);
-	//球aとAABBの接触判定 & 最接近点
+	//球aとAABBの接触判定 & 最接近点。resは交差点の長さ
 	static bool SphereAABBCollision(Vec3&& res, const Sphere&& a, const AABB&& b);
 	//球と光線(p + td)との交差判定
 	static bool RaySphereCollision(const Vec3&& point, const Vec3&& dir, const Sphere&& s);

@@ -23,31 +23,31 @@ bool Collison::AABBCollision(AABB&& a, AABB&& b)
 bool Collison::SphereCollision(Sphere&& s1, Sphere&& s2)
 {
 	// a‚Æb‚Ì’†S“_‚Ì‹——£‚Ì•½•û‚ğ‹‚ß‚é
-	Vec3 d =s1.GetPos() - s2.GetPos();
+	Vec3 d =s1.pos - s2.pos;
 	float square = d.Dot(Vec3(d));
 
-	float r = s1.GetRadius() + s2.GetRadius();
+	float r = s1.radius + s2.radius;
 	return square <= (r * r);
 }
 
 bool Collison::SphereAABBCollision(const Sphere && a, const AABB && b)
 {
-	float square = SquarePointAABB(Vec3(a.GetPos()), AABB(b));
-	return square <= (a.GetRadius() * a.GetRadius());
+	float square = SquarePointAABB(Vec3(a.pos), AABB(b));
+	return square <= (a.radius * a.radius);
 }
 
 bool Collison::SphereAABBCollision(Vec3 && res, const Sphere && a, const AABB && b)
 {
-	ClosestPointAABB(Vec3(res), Vec3(a.GetPos()), AABB(b));
-	Vec3 v = res - a.GetPos();
-	return v.Dot(Vec3(v)) <= (a.GetRadius() * a.GetRadius());
+	ClosestPointAABB(Vec3(res), Vec3(a.pos), AABB(b));
+	Vec3 v = res - a.pos;
+	return v.Dot(Vec3(v)) <= (a.radius * a.radius);
 }
 
 bool Collison::RaySphereCollision(const Vec3 && p, const Vec3 && d, const Sphere && s)
 {
-	Vec3 m = p - s.GetPos();
+	Vec3 m = p - s.pos;
 
-	float c = m.Dot(Vec3(m)) - s.GetRadius() * s.GetRadius();
+	float c = m.Dot(Vec3(m)) - s.radius * s.radius;
 	if (c <= 0.0f) return true;
 
 	float b = m.Dot(Vec3(d));
@@ -61,10 +61,10 @@ bool Collison::RaySphereCollision(const Vec3 && p, const Vec3 && d, const Sphere
 
 bool Collison::RaySphereCollision(Vec3 && res, float & res_t, const Vec3 && p, const Vec3 && d, const Sphere && s)
 {
-	Vec3 m = p - s.GetPos();
+	Vec3 m = p - s.pos;
 
 	float b = m.Dot(Vec3(d));
-	float c = m.Dot(Vec3(m)) - s.GetRadius() * s.GetRadius();
+	float c = m.Dot(Vec3(m)) - s.radius * s.radius;
 	if ((c > 0.0f) && (b > 0.0f)) return false;
 
 	float disc = b * b - c;

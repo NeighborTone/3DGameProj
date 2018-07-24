@@ -4,33 +4,21 @@
 //‹…‘Ì‚Ì’è‹`
 class Sphere
 {
-private:
-	float radius_;
-	Pos pos_;
 public:
-	Sphere():radius_(1){}
-	Sphere(const Pos&& pos, const float radius)
+	float radius;
+	Pos pos;
+	Sphere():radius(1){}
+	Sphere(const Pos&& pos_, const float radius_)
 	{
-		radius_ = radius;
-		pos_ = pos;
+		radius = radius_;
+		pos = pos_;
 	}
-	Sphere& Create(const Pos&& pos,const float radius)
+	Sphere& Create(const Pos& pos_, const float radius_)
 	{
-		radius_ = radius;
-		pos_ = pos;
+		radius = radius_;
+		pos = pos_;
 		return *this;
 	}
-	void SetPos(const Pos&& pos)
-	{
-		pos_ = pos;
-	}
-	const Pos& GetPos() const
-	{
-		return pos_;
-	}
-	const float GetRadius() const
-	{
-		return radius_;
-	}
+
 	
 };

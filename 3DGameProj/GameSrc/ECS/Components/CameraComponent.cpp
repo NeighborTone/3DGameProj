@@ -2,7 +2,7 @@
 
 CameraComponent::CameraComponent()
 {
-	sprite.Load("Resource/Texture/cursor.png");
+	
 }
 
 void CameraComponent::Initialize()
@@ -39,20 +39,6 @@ void CameraComponent::Project2D()
 	camera2D.Run(false);
 }
 
-void CameraComponent::Draw2D()
-{
-	DrawCenterCursor(true);
-}
-
-void CameraComponent::DrawCenterCursor(bool enable)
-{
-	if (!enable)
-	{
-		return;
-	}
-	--sprite.angle.z;
-	sprite.Draw();
-}
 
 const Camera& CameraComponent::GetCamera3D() const
 {

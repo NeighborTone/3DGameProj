@@ -16,8 +16,8 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 	{
 		for (auto& toppings : e.GetComponent<ToppingComponent>().GetData())
 		{
-			const float dy = ComAssist::GetPos(player).z - toppings.pos.z;
-			const float dx = ComAssist::GetPos(player).x - toppings.pos.x;
+			const float dy = ComAssist::GetPos(player).z - toppings.trans.pos.z;
+			const float dx = ComAssist::GetPos(player).x - toppings.trans.pos.x;
 			const float rad = atan2(dy, dx);				//出現角度を決定
 			float distance = hypot(dx, dy) / 4;				//プレイヤーと敵の距離を調べる
 			if (abs(distance) >= 128) { distance = 128; }	//マップの端を超えないようにする
@@ -36,10 +36,10 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 	{
 		for (auto& enemys : e.GetComponent<ThiefComponent>().GetData())
 		{
-			const float dy = ComAssist::GetPos(player).z - enemys->pos.z;
-			const float dx = ComAssist::GetPos(player).x - enemys->pos.x;
+			const float dy = ComAssist::GetPos(player).z - enemys->trans.pos.z;
+			const float dx = ComAssist::GetPos(player).x - enemys->trans.pos.x;
 			const float rad = atan2(dy, dx);				//出現角度を決定
-			float distance = hypot(dx, dy) / 4;	//プレイヤーと敵の距離を調べる
+			float distance = hypot(dx, dy) / 4;	//プレイヤーとの距離を調べる
 			if (abs(distance) >= 128) { distance = 128; }	//マップの端を超えないようにする
 			enemyIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
 			enemyIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;

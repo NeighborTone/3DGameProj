@@ -7,7 +7,6 @@ private:
 	TransformComponent* transform;
 	Camera camera3D;
 	Camera camera2D;
-	Sprite sprite;
 public:
 	CameraComponent();
 	void Initialize() override;
@@ -15,7 +14,6 @@ public:
 	void Project3D();
 	void Project2D();
 	void Draw3D() STUB
-	void Draw2D() override;
-	void DrawCenterCursor(bool enable);
+	void Draw2D() STUB
 	const Camera& GetCamera3D() const;
 };

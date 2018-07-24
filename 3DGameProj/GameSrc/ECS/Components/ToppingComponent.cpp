@@ -5,29 +5,45 @@ ToppingComponent::ToppingComponent()
 	tex.Load("Resource/Texture/t.png");
 	mesh.CreateSphere(2);
 	mesh.GetMaterial().SetTexture(0,&tex);
-	data.resize(1);
+	data.resize(2);
 }
 
 void ToppingComponent::Initialize()
 {
-	data[0].pos = Pos(0, 4, 0);
+	//$Test$
+	static float i = 0;
+	for (auto& it : data)
+	{
+		it.trans.pos = Pos(0, 4, i);
+		i += 10;
+	}
+	
 }
 
 void ToppingComponent::UpDate()
 {
+
 }
 
 void ToppingComponent::Draw3D()
 {
-	mesh.pos = data[0].pos;
-	mesh.Draw();
+	if (data.empty())
+	{
+		return;
+	}
+	for (auto& it : data)
+	{
+		mesh.pos = it.trans.pos;
+		mesh.Draw();
+	}
 }
 
 void ToppingComponent::Draw2D()
 {
 }
 
-std::vector<MetaData>& ToppingComponent::GetData()
+
+std::vector<ToppingData>& ToppingComponent::GetData()
 {
 	return data;
 }

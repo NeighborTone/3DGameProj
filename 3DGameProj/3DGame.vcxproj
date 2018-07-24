@@ -47,6 +47,7 @@
     <ClCompile Include="Engine\Utilitys\FPS.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\CameraComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\ComponentData\Collision.cpp" />
+    <ClCompile Include="GameSrc\ECS\Components\CursorComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\FieldComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\InputShotComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\InuputMoveComponent.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Collision.h" />
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\MetaData.hpp" />
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Sphere.hpp" />
+    <ClInclude Include="GameSrc\ECS\Components\CursorComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\FieldComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\InputShotComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\InuputMoveComponent.h" />

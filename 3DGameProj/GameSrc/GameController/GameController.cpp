@@ -7,6 +7,7 @@
 #include "../ECS/Components/ThiefComponent.h"
 #include "../ECS/Components/MiniMapComponent.h"
 #include "../ECS/Components/ToppingComponent.h"
+#include "../ECS/Components/CursorComponent.h"
 #include <iostream>
 
 
@@ -51,20 +52,21 @@ GameController::GameController() :
 	player.AddComponent<TransformComponent>(Pos(0, 10, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
+	player.AddComponent<CursorComponent>();
 
 	shot.AddComponent<InputShotComponent>(28.0f, 30, 0.3f);
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
-	enemy.AddComponent<ThiefComponent>(2.5f);
+	enemy.AddComponent<ThiefComponent>();
 	map.AddComponent<MiniMapComponent>();
 	topping.AddComponent<ToppingComponent>();
 	//グループに登録
-	player.AddGroup(GAME);
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
 	topping.AddGroup(ALWAYS);
 	map.AddGroup(ALWAYS);
+	player.AddGroup(GAME);
 	shot.AddGroup(GAME);
 	enemy.AddGroup(GAME);
 
@@ -73,6 +75,7 @@ GameController::GameController() :
 void GameController::CollisionEvent()
 {
 	enemy.GetComponent<ThiefComponent>().Damaged(shot);
+	
 }
 
 void GameController::Initialize()
@@ -123,7 +126,7 @@ void GameController::UpDate()
 	//効果音のListenerをセットする
 	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
 	//$Test$
-	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping.GetComponent<ToppingComponent>().GetData()[0].pos);
+	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
 
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);

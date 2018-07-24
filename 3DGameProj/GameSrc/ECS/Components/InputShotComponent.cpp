@@ -11,8 +11,7 @@ InputShotComponent::InputShotComponent(const float speed, const int maxNum, cons
 	shots.resize(maxNum);
 	for (auto& it : shots)
 	{
-		it.scale = radius * 2;
-		it.radius = radius;
+		it.trans.scale = radius * 2;
 	}
 }
 
@@ -20,7 +19,7 @@ void InputShotComponent::Initialize()
 {
 	for (auto& it : shots)
 	{
-		it.lifeSpan = 0;
+		it.cnt = 0;
 		it.isActive = false;
 	}
 }
@@ -31,12 +30,12 @@ void InputShotComponent::UpDate()
 	{
 		if (it.isActive)
 		{
-			it.pos += it.velocity;
-			++it.lifeSpan;
+			it.trans.pos += it.trans.velocity;
+			++it.cnt;
 		}
-		if (it.lifeSpan > 100 && it.isActive)
+		if (it.cnt > 100 && it.isActive)
 		{
-			it.lifeSpan = 0;
+			it.cnt = 0;
 			it.isActive = false;
 		}
 	}
@@ -48,8 +47,8 @@ void InputShotComponent::Draw3D()
 	{
 		if (it.isActive)
 		{
-			mesh.pos = it.pos;
-			mesh.scale = it.scale;
+			mesh.pos = it.trans.pos;
+			mesh.scale = it.trans.scale;
 			mesh.Draw();
 		}
 	}
@@ -64,21 +63,21 @@ void InputShotComponent::Shot(TransformComponent&& trans)
 		if (isShot && !it.isActive)
 		{
 			//いったんセット
-			it.pos = trans.pos;
+			it.trans.pos = trans.pos;
 			//弾の射出方向を決める。90度ずれてしまうのでオフセットする
 			static constexpr float DirOffSet = 90;
-			it.velocity.x = cosf(DirectX::XMConvertToRadians(-trans.angle.y + DirOffSet)) * cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
-			it.velocity.y = sinf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
-			it.velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + DirOffSet)) * speed_;
+			it.trans.velocity.x = cosf(DirectX::XMConvertToRadians(-trans.angle.y + DirOffSet)) * cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
+			it.trans.velocity.y = sinf(DirectX::XMConvertToRadians(-trans.angle.x)) * speed_;
+			it.trans.velocity.z = cosf(DirectX::XMConvertToRadians(-trans.angle.x)) * sinf(DirectX::XMConvertToRadians(-trans.angle.y + DirOffSet)) * speed_;
 			it.isActive = true;
 			//カメラとかぶるのでちょっと前に出す
-			it.pos += (it.velocity  * 0.2f);
+			it.trans.pos += (it.trans.velocity  * 0.2f);
 			break;
 		}
 	}
 }
 
-bool InputShotComponent::IsHit(AABB&& aabb)
+bool InputShotComponent::IsHit(AABB& aabb)
 {
 	for (auto& it : shots)
 	{
@@ -86,9 +85,9 @@ bool InputShotComponent::IsHit(AABB&& aabb)
 		{
 			continue;
 		}
-		if (Collison::SegmentAABBCollision(Vec3(it.pos), Vec3(it.pos + it.velocity), AABB(aabb)))
+		if (Collison::SegmentAABBCollision(Vec3(it.trans.pos), Vec3(it.trans.pos + it.trans.velocity), AABB(aabb)))
 		{
-			it.lifeSpan = 0;
+			it.cnt = 0;
 			it.isActive = false;
 			return true;
 		}

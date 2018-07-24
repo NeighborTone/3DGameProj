@@ -9,7 +9,7 @@ class ToppingComponent : public Component
 private:
 	Mesh mesh;
 	Texture tex;
-	std::vector<MetaData> data;
+	std::vector<ToppingData> data;
 
 public:
 	ToppingComponent();
@@ -17,5 +17,5 @@ public:
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() override;
-	std::vector<MetaData>& GetData();
+	std::vector<ToppingData>& GetData();
 };
