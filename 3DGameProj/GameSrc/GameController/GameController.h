@@ -33,7 +33,7 @@ private:
 	Entity& skyBox;
 	Entity& enemy;
 	Entity& field;
-	Entity& map;
+	Entity& canvas;
 	Entity& topping;
 	std::vector<Entity*> gameScene;
 public:

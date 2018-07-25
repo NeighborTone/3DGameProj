@@ -30,7 +30,7 @@ bool Collison::SphereCollision(Sphere&& s1, Sphere&& s2)
 	return square <= (r * r);
 }
 
-bool Collison::SphereAABBCollision(const Sphere && a, const AABB && b)
+bool Collison::SphereAABBCollision(const Sphere & a, const AABB & b)
 {
 	float square = SquarePointAABB(Vec3(a.pos), AABB(b));
 	return square <= (a.radius * a.radius);

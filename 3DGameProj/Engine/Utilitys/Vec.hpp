@@ -57,6 +57,18 @@ public:
 	}
 
 	/*!
+	* @brief 2点間の距離を返します
+	* @return 距離
+	*/
+	T GetDistance(TemplateVec2& v)
+	{
+		const T dx = x - v.x;
+		const T dy = y - v.y;
+
+		return hypot(dx, dy);				
+	}
+
+	/*!
 	* @brief 長さを返します
 	* @return 長さ
 	*/
@@ -317,6 +329,21 @@ public:
 		result.z = x * v.y - y * v.x;
 		return result;
 	}
+
+	/*!
+	* @brief 2点間の距離を返します
+	* @note C++17でないとエラー
+	* @return 距離
+	*/
+	T GetDistance(TemplateVec3& v)
+	{
+		const T dx = x - v.x;
+		const T dy = y - v.y;
+		const T dz = z - v.z;
+
+		return std::hypot(dx, dy, dz);
+	}
+
 	/*!
 	* @brief 長さを返します
 	* @return float

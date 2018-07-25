@@ -28,15 +28,19 @@ private:
 	void Executioners();
 	static constexpr float RADIUS = 2.5f;
 	int efHandle;
-	bool isAbduction = false;
 public:
+	//効果音のリスナーをセット
 	void SetListenerPos(Pos&& pos);
 	ThiefComponent();
+	//当たり判定を行いたいEntityをセット
 	void Damaged(Entity& e);
+	//索敵範囲に入ったか
+	bool IsToBeInRange(Sphere& sphere);
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() STUB
+	//追跡したいターゲットをセット
 	void SetTrackingTarget(Entity& target);
 	const std::vector<std::unique_ptr<EnemyData>>& ThiefComponent::GetData() const;
 	

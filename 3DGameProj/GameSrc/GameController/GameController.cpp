@@ -45,7 +45,7 @@ GameController::GameController() :
 	skyBox(entityManager.AddEntity()),
 	enemy(entityManager.AddEntity()),
 	field(entityManager.AddEntity()),
-	map(entityManager.AddEntity()),
+	canvas(entityManager.AddEntity()),
 	topping(entityManager.AddEntity())
 {
 	gameState = GameState::STOP;
@@ -59,13 +59,13 @@ GameController::GameController() :
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
 	enemy.AddComponent<ThiefComponent>();
-	map.AddComponent<MiniMapComponent>();
+	canvas.AddComponent<MiniMapComponent>();
 	topping.AddComponent<ToppingComponent>();
 	//ÉOÉãÅ[ÉvÇ…ìoò^
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
-	topping.AddGroup(ALWAYS);
-	map.AddGroup(ALWAYS);
+	topping.AddGroup(GAME);
+	canvas.AddGroup(ALWAYS);
 	player.AddGroup(GAME);
 	shot.AddGroup(GAME);
 	enemy.AddGroup(GAME);
@@ -75,7 +75,7 @@ GameController::GameController() :
 void GameController::CollisionEvent()
 {
 	enemy.GetComponent<ThiefComponent>().Damaged(shot);
-	
+	//topping.GetComponent<ToppingComponent>().ToBeKidnapped(enemy);
 }
 
 void GameController::Initialize()
@@ -170,8 +170,8 @@ void GameController::Draw2D()
 		it->Draw2D();
 	}
 
-	map.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
-	map.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
+	canvas.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
+	canvas.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
 	
 }
 

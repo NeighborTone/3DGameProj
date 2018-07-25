@@ -10,7 +10,7 @@ private:
 	Mesh mesh;
 	Texture tex;
 	std::vector<ToppingData> data;
-
+	void Executioners();
 public:
 	ToppingComponent();
 	void Initialize() override;
@@ -18,4 +18,5 @@ public:
 	void Draw3D() override;
 	void Draw2D() override;
 	std::vector<ToppingData>& GetData();
+	void ToBeKidnapped(Entity& enemy);
 };

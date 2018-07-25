@@ -15,7 +15,7 @@ public:
 	//‹…‚Æ‹…
 	static bool SphereCollision(Sphere&& s1, Sphere&& s2);
 	//‹…a‚ÆAABB‚ÌÚG”»’è
-	static bool SphereAABBCollision(const Sphere&& a, const AABB&& b);
+	static bool SphereAABBCollision(const Sphere& a, const AABB& b);
 	//‹…a‚ÆAABB‚ÌÚG”»’è & ÅÚ‹ß“_Bres‚ÍŒğ·“_‚Ì’·‚³
 	static bool SphereAABBCollision(Vec3&& res, const Sphere&& a, const AABB&& b);
 	//‹…‚ÆŒõü(p + td)‚Æ‚ÌŒğ·”»’è

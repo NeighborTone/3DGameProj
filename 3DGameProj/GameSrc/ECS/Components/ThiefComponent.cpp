@@ -5,6 +5,8 @@
 #include "../../Utilitys/Randam.hpp"
 #include <iterator>
 #include <iostream>
+#include <algorithm>
+
 std::unique_ptr<EnemyData> ThiefComponent::AddEnemy()
 {
 	return std::make_unique<EnemyData>();
@@ -16,7 +18,7 @@ void ThiefComponent::LifeCheck()
 	{
 		if (it->lifeSpan <= 0)
 		{
-			it->isActive = false;
+			it->state = EnemyData::State::DEATH;
 		}
 	}
 }
@@ -27,7 +29,7 @@ void ThiefComponent::Create()
 	if (cnt.GetCurrentCount() > 120)
 	{
 		data.emplace_back(AddEnemy());
-		data.at(data.size()-1)->isActive = true;
+		data.at(data.size()-1)->state = EnemyData::State::TRACKING;
 		data.at(data.size()-1)->lifeSpan = 3;
 		data.at(data.size()-1)->trans.velocity = 2.4f;
 		data.at(data.size()-1)->trans.scale = RADIUS * 2;
@@ -50,10 +52,11 @@ void ThiefComponent::Executioners()
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const std::unique_ptr<EnemyData> &data)
 	{
-		return !data->isActive;
+		return data->state == EnemyData::State::DEATH;
 	}),
 		std::end(data));
 }
+
 
 void ThiefComponent::SetListenerPos(Pos&& pos)
 {
@@ -83,7 +86,7 @@ void ThiefComponent::Damaged(Entity& e)
 	}
 	for (auto& it :data)
 	{
-		if (!it->isActive)
+		if (it->state == EnemyData::State::DEATH)
 		{
 			continue;
 		}
@@ -95,7 +98,29 @@ void ThiefComponent::Damaged(Entity& e)
 			exproSound.UpDate3DSound(Pos(it->trans.pos), Vec3(listenerPos));
 			--it->lifeSpan;
 		}
+	
 	}
+}
+
+bool ThiefComponent::IsToBeInRange(Sphere& sphere)
+{
+	if (data.empty())
+	{
+		return false;
+	}
+	for (auto& it : data)
+	{
+		if (it->state != EnemyData::State::TRACKING)
+		{
+			continue;
+		}
+		if (Collison::SphereAABBCollision(sphere, it->aabb.Create(it->trans.pos - 5, Scale(it->trans.scale.x * 2.0f, it->trans.scale.y * 1.3f, it->trans.scale.z * 2))))
+		{
+			it->state = EnemyData::State::GETAWAY;
+			return true;
+		}
+	}
+	return false;
 }
 
 void ThiefComponent::Initialize()
@@ -106,9 +131,8 @@ void ThiefComponent::Initialize()
 	}
 	for (auto& it : data)
 	{
-		it->isActive = false;
+		it->state = EnemyData::State::DEATH;
 	}
-	isAbduction = false;
 	Executioners();
 }
 
@@ -124,7 +148,7 @@ void ThiefComponent::UpDate()
 	//$Test$
 	for (auto& it : data)
 	{
-		if (it->isActive)
+		if (it->state == EnemyData::State::TRACKING)
 		{
 			//追従させる
 			Vec3 ret = (it->trackingTarget - it->trans.pos);
@@ -137,7 +161,13 @@ void ThiefComponent::UpDate()
 				it->trans.pos.y = 10;
 			}
 		}
-	}
+		if (it->state == EnemyData::State::GETAWAY)
+		{
+			//$Test$
+			//it->trans.pos.z += it->trans.velocity.z * -1;
+		}
+	}	
+	
 	Executioners();
 }
 
@@ -149,7 +179,7 @@ void ThiefComponent::Draw3D()
 	}
 	for (auto& it : data)
 	{
-		if (it->isActive)
+		if (it->state != EnemyData::State::DEATH)
 		{
 			model.scale = it->trans.scale / 10;	//元のモデルが大きすぎるので
 			model.pos = it->trans.pos;
@@ -161,11 +191,34 @@ void ThiefComponent::Draw3D()
 
 void ThiefComponent::SetTrackingTarget(Entity& target)
 {
+	if (!target.HasComponent<ToppingComponent>())
+	{
+		return;
+	}
+	if (target.GetComponent<ToppingComponent>().GetData().empty())
+	{
+		return;
+	}
+	std::vector<std::pair<float,Pos>> dist;
+	dist.resize(target.GetComponent<ToppingComponent>().GetData().size());
 	for (auto& it : data)
 	{
-		if (it->isActive)
+		if (it->state == EnemyData::State::TRACKING)
 		{
-			it->trackingTarget = target.GetComponent<ToppingComponent>().GetData()[1].trans.pos;
+			for (size_t i = 0; i < target.GetComponent<ToppingComponent>().GetData().size(); ++i)
+			{
+				if (target.GetComponent<ToppingComponent>().GetData()[i].state == ToppingData::State::EFFECTIVE)
+				{
+					//複数のターゲットとの距離を測る
+					dist[i].first = abs(it->trans.pos.GetDistance(target.GetComponent<ToppingComponent>().GetData()[i].trans.pos));
+					//座標の保存
+					dist[i].second = target.GetComponent<ToppingComponent>().GetData()[i].trans.pos;
+				}
+				
+			}
+			//自分から見て一番近いものを追う
+			std::sort(std::begin(dist), std::end(dist), ComAssist::comp);
+			it->trackingTarget = dist[0].second;
 		}
 	}
 	

@@ -36,4 +36,8 @@ public:
 		return e.GetComponent<T>();
 	}
 
+	static bool comp(const  std::pair<float, Pos > &a, const std::pair<float, Pos> &b)
+	{
+		return a.first < b.first;
+	}
 };
