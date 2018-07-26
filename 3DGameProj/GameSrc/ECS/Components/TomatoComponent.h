@@ -2,9 +2,10 @@
 #include "../../Engine.h"
 #include "../ECS.hpp"
 #include "../Components/ComponentData/MetaData.hpp"
+#include "../../Utilitys/Easing.hpp"
 #include <vector>
 
-class ToppingComponent : public Component
+class TomatoComponent : public Component
 {
 private:
 	Mesh mesh;
@@ -12,7 +13,7 @@ private:
 	std::vector<ToppingData> data;
 	void Executioners();
 public:
-	ToppingComponent();
+	TomatoComponent();
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() override;

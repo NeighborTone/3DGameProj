@@ -116,7 +116,7 @@
     <ClCompile Include="GameSrc\ECS\Components\ThiefComponent.cpp">
       <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
     </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\ToppingComponent.cpp">
+    <ClCompile Include="GameSrc\ECS\Components\TomatoComponent.cpp">
       <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -312,7 +312,7 @@
     <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h">
       <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
     </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\ToppingComponent.h">
+    <ClInclude Include="GameSrc\ECS\Components\TomatoComponent.h">
       <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
     </ClInclude>
   </ItemGroup>

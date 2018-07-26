@@ -1,11 +1,13 @@
 #include "ThiefComponent.h"
 #include "InputShotComponent.h"
 #include "../../GameController/Helper.hpp"
-#include "../Components/ToppingComponent.h"
+#include "../Components/TomatoComponent.h"
 #include "../../Utilitys/Randam.hpp"
 #include <iterator>
 #include <iostream>
 #include <algorithm>
+
+long long ThiefComponent::id_ = 0;
 
 std::unique_ptr<EnemyData> ThiefComponent::AddEnemy()
 {
@@ -40,10 +42,13 @@ void ThiefComponent::Create()
 		data.at(data.size() - 1)->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
 		data.at(data.size() - 1)->trans.pos.y = rand.GetRand(20.0f, 100.0f);
 		data.at(data.size() - 1)->trackingTarget = Pos(0, 0, 0);
+		data.at(data.size() - 1)->id = id_;
+		std::cout << id_ << std::endl;
 		efHandle = GameController::GetParticle().Play("app", Vec3(data.at(data.size() - 1)->trans.pos));
 		GameController::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
 		GameController::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
 		appSound.PlaySE();
+		++id_;
 	}
 }
 
@@ -103,7 +108,7 @@ void ThiefComponent::Damaged(Entity& e)
 	}
 }
 
-bool ThiefComponent::IsToBeInRange(Sphere& sphere)
+bool ThiefComponent::IsToBeInRange(Sphere& sphere,long long& id_)
 {
 	if (data.empty())
 	{
@@ -119,6 +124,8 @@ bool ThiefComponent::IsToBeInRange(Sphere& sphere)
 			it->trans.pos - 5, 
 			Scale(it->trans.scale.x * 1.0f, it->trans.scale.y * 3.3f, it->trans.scale.z * 1.0f))))
 		{
+			//“–‚½‚Á‚½“G‚Æ“¯‚¶ID‚É‚·‚é
+			id_ = it->id;
 			it->state = EnemyData::State::GETAWAY;
 			return true;
 		}
@@ -136,6 +143,7 @@ void ThiefComponent::Initialize()
 	{
 		it->state = EnemyData::State::DEATH;
 	}
+	id_ = 0;
 	Executioners();
 }
 
@@ -195,15 +203,15 @@ void ThiefComponent::Draw3D()
 
 void ThiefComponent::SetTrackingTarget(Entity& target)
 {
-	if (!target.HasComponent<ToppingComponent>())
+	if (!target.HasComponent<TomatoComponent>())
 	{
 		return;
 	}
-	if (target.GetComponent<ToppingComponent>().GetData().empty())
+	if (target.GetComponent<TomatoComponent>().GetData().empty())
 	{
 		return;
 	}
-	auto& targets = target.GetComponent<ToppingComponent>().GetData();
+	auto& targets = target.GetComponent<TomatoComponent>().GetData();
 	std::vector<std::pair<float, Pos>> dist;
 	dist.resize(targets.size());
 	dist.shrink_to_fit();

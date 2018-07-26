@@ -1,6 +1,6 @@
 #include "MiniMapComponent.h"
 #include "ThiefComponent.h"
-#include "ToppingComponent.h"
+#include "TomatoComponent.h"
 #include "../../GameController/Helper.hpp"
 #include <cmath>
 MiniMapComponent::MiniMapComponent()
@@ -12,9 +12,9 @@ MiniMapComponent::MiniMapComponent()
 
 const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 {
-	if (e.HasComponent<ToppingComponent>())
+	if (e.HasComponent<TomatoComponent>())
 	{
-		for (auto& toppings : e.GetComponent<ToppingComponent>().GetData())
+		for (auto& toppings : e.GetComponent<TomatoComponent>().GetData())
 		{
 			const float dy = ComAssist::GetPos(player).z - toppings.trans.pos.z;
 			const float dx = ComAssist::GetPos(player).x - toppings.trans.pos.x;

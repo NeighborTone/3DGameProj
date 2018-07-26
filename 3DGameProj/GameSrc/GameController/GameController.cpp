@@ -6,10 +6,9 @@
 #include "../ECS/Components/FieldComponent.h"
 #include "../ECS/Components/ThiefComponent.h"
 #include "../ECS/Components/MiniMapComponent.h"
-#include "../ECS/Components/ToppingComponent.h"
+#include "../ECS/Components/TomatoComponent.h"
 #include "../ECS/Components/CursorComponent.h"
 #include <iostream>
-
 
 void GameController::StateMachine()
 {
@@ -60,7 +59,7 @@ GameController::GameController() :
 	field.AddComponent<FieldComponent>();
 	enemy.AddComponent<ThiefComponent>();
 	canvas.AddComponent<MiniMapComponent>();
-	topping.AddComponent<ToppingComponent>();
+	topping.AddComponent<TomatoComponent>();
 	//ÉOÉãÅ[ÉvÇ…ìoò^
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
@@ -75,7 +74,7 @@ GameController::GameController() :
 void GameController::CollisionEvent()
 {
 	enemy.GetComponent<ThiefComponent>().Damaged(shot);
-	topping.GetComponent<ToppingComponent>().ToBeKidnapped(enemy);
+	topping.GetComponent<TomatoComponent>().ToBeKidnapped(enemy);
 }
 
 void GameController::Initialize()
@@ -142,14 +141,11 @@ void GameController::Draw3D()
 	{
 		it->Draw3D();
 	}
-
 	auto& gameScene(entityManager.GetGroup(GAME));
 	for (auto& it : gameScene)
 	{
 		it->Draw3D();
 	}
-
-	
 	GetParticle().UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
 }
 
