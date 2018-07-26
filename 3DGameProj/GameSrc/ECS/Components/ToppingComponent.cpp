@@ -94,6 +94,6 @@ void ToppingComponent::ToBeKidnapped(Entity& enemy)
 		if (enemy.GetComponent<ThiefComponent>().IsToBeInRange(it.sphere.Create(it.trans.pos, 1)))
 		{
 			it.state = ToppingData::State::INVALID;
-		}	
+		}
 	}
 }

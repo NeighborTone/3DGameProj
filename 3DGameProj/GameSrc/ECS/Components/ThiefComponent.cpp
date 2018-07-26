@@ -49,7 +49,6 @@ void ThiefComponent::Create()
 
 void ThiefComponent::Executioners()
 {
-	
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const std::unique_ptr<EnemyData> &data)
 	{
@@ -167,6 +166,7 @@ void ThiefComponent::UpDate()
 		{
 			//$Test$
 			it->trans.pos.z += it->trans.velocity.z * -1;
+			it->trans.pos.x += it->trans.velocity.x * -1;
 		}
 	}
 
@@ -213,10 +213,8 @@ void ThiefComponent::SetTrackingTarget(Entity& target)
 			{
 				if (targets[i].state == ToppingData::State::INVALID)
 				{
-					//$Test$
-					//無効なターゲットも追跡してしまうので無効なものは遠くにしておく
-#undef min
-#undef max
+#undef min	//$Test$
+#undef max	//無効なターゲットも追跡してしまうので無効なものは遠くにしておく
 					constexpr float Max = std::numeric_limits<float>::max();
 					dist[i].first = Max;
 					dist[i].second = Pos(Max, Max, Max);
