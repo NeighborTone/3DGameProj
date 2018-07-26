@@ -115,7 +115,9 @@ bool ThiefComponent::IsToBeInRange(Sphere& sphere)
 		{
 			continue;
 		}
-		if (Collison::SphereAABBCollision(sphere, it->aabb.Create(it->trans.pos - 5, Scale(it->trans.scale.x * 1.0f, it->trans.scale.y * 3.3f, it->trans.scale.z * 1.0f))))
+		if (Collison::SphereAABBCollision(sphere, it->aabb.Create(
+			it->trans.pos - 5, 
+			Scale(it->trans.scale.x * 1.0f, it->trans.scale.y * 3.3f, it->trans.scale.z * 1.0f))))
 		{
 			it->state = EnemyData::State::GETAWAY;
 			return true;

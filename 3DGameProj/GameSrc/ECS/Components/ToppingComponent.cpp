@@ -72,28 +72,5 @@ void ToppingComponent::ToBeKidnapped(Entity& enemy)
 	{
 		return;
 	}
-	for (auto& it : data)
-	{
-		for (auto& enemys : enemy.GetComponent<ThiefComponent>().GetData())
-		{
-			if (it.state == ToppingData::State::INVALID && enemys->state == EnemyData::State::GETAWAY)
-			{
-				//$Test$
-				//“G‚Æ‹——£‚ª‹ß‚¢•¨‚ðˆê‚É“®‚©‚·
-				if (abs(enemys->trans.pos.GetDistance(Pos(it.trans.pos)) <= 15))
-				{
-					it.trans.pos = enemys->trans.pos;
-					it.trans.pos.y = 8;
-				}
-			}
-		}
-		if (it.state != ToppingData::State::EFFECTIVE)
-		{
-			continue;
-		}
-		if (enemy.GetComponent<ThiefComponent>().IsToBeInRange(it.sphere.Create(it.trans.pos, 1)))
-		{
-			it.state = ToppingData::State::INVALID;
-		}
-	}
+
 }
