@@ -75,7 +75,7 @@ GameController::GameController() :
 void GameController::CollisionEvent()
 {
 	enemy.GetComponent<ThiefComponent>().Damaged(shot);
-	//topping.GetComponent<ToppingComponent>().ToBeKidnapped(enemy);
+	topping.GetComponent<ToppingComponent>().ToBeKidnapped(enemy);
 }
 
 void GameController::Initialize()

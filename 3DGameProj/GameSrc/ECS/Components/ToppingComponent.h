@@ -17,6 +17,6 @@ public:
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() override;
-	std::vector<ToppingData>& GetData();
+	const std::vector<ToppingData>& GetData() const;
 	void ToBeKidnapped(Entity& enemy);
 };

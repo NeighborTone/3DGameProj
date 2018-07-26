@@ -335,7 +335,7 @@ public:
 	* @note C++17‚Å‚È‚¢‚ÆƒGƒ‰[
 	* @return ‹——£
 	*/
-	T GetDistance(TemplateVec3& v)
+	T GetDistance(TemplateVec3&& v)
 	{
 		const T dx = x - v.x;
 		const T dy = y - v.y;

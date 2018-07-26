@@ -1,5 +1,6 @@
 #include "ToppingComponent.h"
 #include "ThiefComponent.h"
+#include <algorithm>
 void ToppingComponent::Executioners()
 {
 	data.erase(std::remove_if(std::begin(data), std::end(data),
@@ -64,7 +65,7 @@ void ToppingComponent::Draw2D()
 }
 
 
-std::vector<ToppingData>& ToppingComponent::GetData()
+const std::vector<ToppingData>& ToppingComponent::GetData() const
 {
 	return data;
 }
@@ -81,11 +82,20 @@ void ToppingComponent::ToBeKidnapped(Entity& enemy)
 		{
 			continue;
 		}
-		if (enemy.GetComponent<ThiefComponent>().IsToBeInRange(it.sphere.Create(it.trans.pos, 10)))
+		if (enemy.GetComponent<ThiefComponent>().IsToBeInRange(it.sphere.Create(it.trans.pos, 1)))
 		{
 			it.state = ToppingData::State::INVALID;
 
 		}
-
+		
+		for (auto& e : enemy.GetComponent<ThiefComponent>().GetData())
+		{
+			if (it.state == ToppingData::State::INVALID && e->state == EnemyData::State::GETAWAY)
+			{
+				it.trans.pos = e->trans.pos;
+				it.trans.pos.y = 8;
+			}
+		}
 	}
+
 }
