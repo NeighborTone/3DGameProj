@@ -49,10 +49,12 @@ void ThiefComponent::Create()
 
 void ThiefComponent::Executioners()
 {
+	
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const std::unique_ptr<EnemyData> &data)
 	{
-		return data->state == EnemyData::State::DEATH;
+		constexpr float FieldOut = 1000;
+		return data->state == EnemyData::State::DEATH || abs(data->trans.pos.x) >= FieldOut || abs(data->trans.pos.z) >= FieldOut;
 	}),
 		std::end(data));
 }
@@ -199,27 +201,37 @@ void ThiefComponent::SetTrackingTarget(Entity& target)
 	{
 		return;
 	}
+	auto& targets = target.GetComponent<ToppingComponent>().GetData();
 	std::vector<std::pair<float, Pos>> dist;
-	dist.resize(target.GetComponent<ToppingComponent>().GetData().size());
+	dist.resize(targets.size());
 	dist.shrink_to_fit();
 	for (auto& it : data)
 	{
 		if (it->state == EnemyData::State::TRACKING)
 		{
-			for (size_t i = 0; i < target.GetComponent<ToppingComponent>().GetData().size(); ++i)
+			for (size_t i = 0; i < targets.size(); ++i)
 			{
+				if (targets[i].state == ToppingData::State::INVALID)
+				{
+					//$Test$
+					//無効なターゲットも追跡してしまうので無効なものは遠くにしておく
+#undef min
+#undef max
+					constexpr float Max = std::numeric_limits<float>::max();
+					dist[i].first = Max;
+					dist[i].second = Pos(Max, Max, Max);
+					continue;
+				}
 				//複数の有効なターゲットとの距離を測る
-				dist[i].first = abs(it->trans.pos.GetDistance(Pos(target.GetComponent<ToppingComponent>().GetData()[i].trans.pos)));
+				dist[i].first = abs(it->trans.pos.GetDistance(Pos(targets[i].trans.pos)));
 				//座標の保存
-				dist[i].second = target.GetComponent<ToppingComponent>().GetData()[i].trans.pos;
-			
+				dist[i].second = targets[i].trans.pos;
 			}
 			//自分から見て一番近いものを追う
 			std::sort(std::begin(dist), std::end(dist), ComAssist::comp);
 			it->trackingTarget = dist[0].second;
 		}
 	}
-
 }
 
 const std::vector<std::unique_ptr<EnemyData>>& ThiefComponent::GetData() const

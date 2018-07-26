@@ -126,7 +126,7 @@ void GameController::UpDate()
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
 	//効果音のListenerをセットする
 	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
-	//$Test$
+	//追跡対象をセットし対象を追跡する
 	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
 
 	//マウスは常に画面中央
