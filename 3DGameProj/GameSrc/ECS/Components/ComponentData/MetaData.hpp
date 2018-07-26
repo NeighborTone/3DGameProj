@@ -23,11 +23,12 @@ struct EnemyData
 	enum class State
 	{
 		TRACKING,	//追跡中
-		GETAWAY,		//逃走中
-		DEATH			//死亡
+		GETAWAY,	//逃走中
+		DEATH		//死亡
 	};
+	long long id;
 	State state;
-	int lifeSpan;				//寿命
+	int lifeSpan;			//寿命
 	AABB aabb;				//コリジョンの形状
 	Pos trackingTarget;		//追跡対象
 	TransForm trans;
@@ -37,11 +38,11 @@ struct ToppingData
 {
 	enum class State
 	{
-		EFFECTIVE,		//有効
-		INVALID,			//無効(攫われている)
-		DEATH				//死亡
-
+		EFFECTIVE,		//有効(追跡可能)
+		INVALID,		//無効(追跡無効,攫われている)
+		DEATH			//死亡
 	};
+	long long id;
 	State state;
 	Sphere sphere;
 	TransForm trans;

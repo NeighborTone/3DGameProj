@@ -12,6 +12,7 @@ class ThiefComponent : public Component
 {
 private:
 	//$Test$
+	static long long id_;
 	Counter cnt;
 	Pos listenerPos;
 	SoundEngine::SoundSource appSound;
@@ -35,7 +36,7 @@ public:
 	//当たり判定を行いたいEntityをセット
 	void Damaged(Entity& e);
 	//索敵範囲に入ったか
-	bool IsToBeInRange(Sphere& sphere);
+	bool IsToBeInRange(Sphere& sphere, long long& id_);
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() override;

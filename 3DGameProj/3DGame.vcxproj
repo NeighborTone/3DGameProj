@@ -54,7 +54,7 @@
     <ClCompile Include="GameSrc\ECS\Components\MiniMapComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\SkyBoxComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\ThiefComponent.cpp" />
-    <ClCompile Include="GameSrc\ECS\Components\ToppingComponent.cpp" />
+    <ClCompile Include="GameSrc\ECS\Components\TomatoComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\ECS.cpp" />
     <ClCompile Include="GameSrc\GameController\GameController.cpp" />
     <ClCompile Include="GameSrc\GameMain.cpp" />
@@ -107,7 +107,7 @@
     <ClInclude Include="GameSrc\ECS\Components\MiniMapComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\SkyBoxComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h" />
-    <ClInclude Include="GameSrc\ECS\Components\ToppingComponent.h" />
+    <ClInclude Include="GameSrc\ECS\Components\TomatoComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\Transform.hpp" />
     <ClInclude Include="GameSrc\ECS\ECS.hpp" />
     <ClInclude Include="GameSrc\GameController\GameController.h" />
