@@ -52,13 +52,13 @@ GameController::GameController() :
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
 	player.AddComponent<CursorComponent>();
-
-	shot.AddComponent<InputShotComponent>(28.0f, 30, 0.3f);
+	shot.AddComponent<InputShotComponent>(40.0f, 20, 0.3f);
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
 	enemy.AddComponent<ThiefComponent>();
 	canvas.AddComponent<MiniMapComponent>();
+
 	topping.AddComponent<TomatoComponent>();
 	//ÉOÉãÅ[ÉvÇ…ìoò^
 	skyBox.AddGroup(ALWAYS);
@@ -168,7 +168,6 @@ void GameController::Draw2D()
 
 	canvas.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
 	canvas.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
-	
 }
 
 void GameController::Finalize()

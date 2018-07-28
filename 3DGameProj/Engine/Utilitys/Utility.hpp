@@ -39,33 +39,47 @@ namespace Memory
 *   @detail コンストラクタでチェック用変数と文字列を設定してください
 *   @detail HRUSULT, int, bool型のいずれかでチェックできます
 */
-class ErrorMessage
+class Message
 {
 public:
-	ErrorMessage(HRESULT hr, const char* text, const char* category)
+	Message(HRESULT hr, const char* text, const char* category)
 	{
 		if (FAILED(hr))
 		{
 			MessageBox(NULL, text, category, MB_OK);
 		}
 	}
-	ErrorMessage(int isTrue, const char* text, const char* category)
+	Message(int isTrue, const char* text, const char* category)
 	{
 		if (!isTrue)
 		{
 			MessageBox(NULL, text, category, MB_OK);
 		}
 	}
-	ErrorMessage(bool isTrue, const char* text, const char* category)
+	Message(bool isTrue, const char* text, const char* category)
 	{
 		if (!isTrue)
 		{
 			MessageBox(NULL, text, category, MB_OK);
 		}
 	}
-	ErrorMessage(const char* text, const char* category)
+	Message(const char* text, const char* category)
 	{
 		MessageBox(NULL, text, category, MB_OK);
+	}
+	static bool SetFullScreen()
+	{
+		int flag;
+		flag = MessageBox(
+			NULL,
+			TEXT("フルスクリーンモードで起動しますか？"),
+			TEXT("スクリーン設定"),
+			MB_YESNO | MB_ICONQUESTION);
+		if (flag == IDNO)
+		{
+			return true;
+		}
+		return false;
 	}
 };
 

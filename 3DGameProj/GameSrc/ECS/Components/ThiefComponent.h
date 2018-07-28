@@ -28,7 +28,10 @@ private:
 	//アクティブでないものを処刑する
 	void Executioners();
 	static constexpr float RADIUS = 2.5f;
+	static constexpr float UpMoveMAX = 20;
+	static constexpr float HeightMax = 10;
 	int efHandle;
+	bool isNotFound;
 public:
 	//効果音のリスナーをセット
 	void SetListenerPos(Pos&& pos);

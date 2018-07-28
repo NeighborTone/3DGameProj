@@ -4,8 +4,7 @@
 InputShotComponent::InputShotComponent(const float speed, const int maxNum, const float radius) :
 	speed_(speed)
 {
-	tex.Load("Resource/Texture/stonewall_diff.jpg");
-	mesh.GetMaterial().Load("Resource/Shader/shot.hlsl");
+	tex.Load("Resource/Texture/a.png");
 	mesh.GetMaterial().SetTexture(0, &tex);
 	mesh.CreateSphere(radius * 2);
 	shots.resize(maxNum);
@@ -33,7 +32,7 @@ void InputShotComponent::UpDate()
 			it.trans.pos += it.trans.velocity;
 			++it.cnt;
 		}
-		if (it.cnt > 100 && it.isActive)
+		if (it.cnt > KillTime && it.isActive)
 		{
 			it.cnt = 0;
 			it.isActive = false;

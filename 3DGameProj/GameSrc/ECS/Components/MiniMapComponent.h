@@ -7,18 +7,17 @@
 class MiniMapComponent : public Component
 {
 private:
-	static constexpr float mapRadius = 128;
+	static constexpr float MapRadius = 128;
 	Sprite map;
 	Sprite toppingIcon;
 	Sprite enemyIcon;
 public:
 
 	MiniMapComponent();
-	const void DrawEntityes(const Entity& enemy, Entity& player);
-	const void DrawTopping(const Entity& topping_, Entity& player);
-	void Initialize() override;
+	const void DrawEntityes(const Entity& entity, Entity& player);
+	void Initialize() STUB
 
-	void UpDate() override;
+	void UpDate() STUB
 
 	void Draw3D() STUB
 

@@ -2,7 +2,7 @@
 
 CursorComponent::CursorComponent()
 {
-	sprite.Load("Resource/Texture/cursor.png");
+	sprite.Load("Resource/Texture/cursor2.png");
 }
 
 void CursorComponent::UpDate()

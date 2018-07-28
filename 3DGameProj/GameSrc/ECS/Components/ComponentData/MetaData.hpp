@@ -2,6 +2,9 @@
 #include "../../Engine.h"
 #include "AABB.hpp"
 #include "Sphere.hpp"
+#include "../../Utilitys/Easing.hpp"
+
+/*オブジェクトの個数毎に作る必要があるデータ群*/
 
 struct TransForm
 {
@@ -31,6 +34,7 @@ struct EnemyData
 	int lifeSpan;			//寿命
 	AABB aabb;				//コリジョンの形状
 	Pos trackingTarget;		//追跡対象
+	Easing upMove;
 	TransForm trans;
 };
 
@@ -42,6 +46,7 @@ struct ToppingData
 		INVALID,		//無効(追跡無効,攫われている)
 		DEATH			//死亡
 	};
+	Easing sucked;
 	long long id;
 	State state;
 	Sphere sphere;

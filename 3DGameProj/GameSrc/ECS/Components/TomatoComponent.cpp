@@ -7,7 +7,7 @@ void TomatoComponent::Executioners()
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const ToppingData &data)
 	{
-		constexpr float FieldOut = 950;
+		constexpr float FieldOut = 470;
 		return data.state == ToppingData::State::DEATH || abs(data.trans.pos.x) >= FieldOut || abs(data.trans.pos.z) >= FieldOut;
 	}),
 		std::end(data));
@@ -25,13 +25,16 @@ void TomatoComponent::Initialize()
 {
 	//$Test$
 	data.resize(10);
-	float i = -40;
 	for (auto& it : data)
 	{
+		Random rand;
+		const float THETA = rand.GetRand(0.f, 360.0f);	//出現角度を決める
+		const float APP_RADIUS = rand.GetRand(100.f,300.f);		//半径
+		it.trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
+		it.trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
+		it.trans.pos.y = OnGround;
 		it.id = -1;
-		it.trans.pos = Pos(0, 4, i);
 		it.state = ToppingData::State::EFFECTIVE;
-		i += 20;
 	}
 	
 }
@@ -70,7 +73,6 @@ const std::vector<ToppingData>& TomatoComponent::GetData() const
 
 void TomatoComponent::ToBeKidnapped(Entity& enemy)
 {
-
 	if (data.empty())
 	{
 		return;
@@ -92,17 +94,17 @@ void TomatoComponent::ToBeKidnapped(Entity& enemy)
 					if (abs(enemys->trans.pos.GetDistance(Pos(targets.trans.pos)) <= 15))
 					{
 						targets.trans.pos = enemys->trans.pos;
-						targets.trans.pos.y = 8;
+						targets.sucked.Run(Easing::QuadIn,50);
+						targets.trans.pos.y = targets.sucked.GetVolume(OnGround, enemys->trans.pos.y - 4);
 					}
 				}
 			}
-			
 		}
 		if (!enemyIsFind)
 		{
-			//無効状態から有効にしたいのだがうまくいかない
 			targets.state = ToppingData::State::EFFECTIVE;
-			targets.trans.pos.y = 4;
+			targets.sucked.Reset();
+			targets.trans.pos.y = OnGround;
 			targets.id = -1;
 		}
 		//すでに無効になっているものや、死んでいるものはスキップ

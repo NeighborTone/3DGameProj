@@ -2,12 +2,12 @@
 #include "../../Engine.h"
 #include "../ECS.hpp"
 #include "../Components/ComponentData/MetaData.hpp"
-#include "../../Utilitys/Easing.hpp"
 #include <vector>
 
 class TomatoComponent : public Component
 {
 private:
+	static constexpr float OnGround = 4;
 	Mesh mesh;
 	Texture tex;
 	std::vector<ToppingData> data;

@@ -114,7 +114,7 @@ bool Camera::Create()
 		nullptr,								//D3D11_RENDER_TARGET_VIEW_DESCへのポインター
 		&renderTargetView);			//ID3D11RenderTargetViewへのポインターのアドレス
 
-	ErrorMessage(hr, "レンダーターゲットビューの作成に失敗", "Error");
+	Message(hr, "レンダーターゲットビューの作成に失敗", "Error");
 	
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	SecureZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
@@ -143,7 +143,7 @@ bool Camera::Create()
 		nullptr,				//サブリソースの記述の配列へのポインター
 		&depthTexture);	//作成されるテクスチャーへのポインターのアドレス
 
-	ErrorMessage(hr, "2Dテクスチャー配列の作成に失敗", "Error");
+	Message(hr, "2Dテクスチャー配列の作成に失敗", "Error");
 
 	depthStencilView.Release();
 
@@ -168,7 +168,7 @@ bool Camera::Create()
 		&depthStencilViewDesc,  //深度ステンシルビューの記述へのポインター
 		&depthStencilView);		//ID3D11DepthStencilViewへのポインター
 
-	ErrorMessage(hr, "深度ステンシルビューの作成に失敗", "Error");
+	Message(hr, "深度ステンシルビューの作成に失敗", "Error");
 
 	constantBuffer.Release();
 	//コンスタントバッファー作成
@@ -183,7 +183,7 @@ bool Camera::Create()
 		nullptr, 
 		&constantBuffer);
 	
-	ErrorMessage(hr, "コンスタントバッファーの作成に失敗", "Error");
+	Message(hr, "コンスタントバッファーの作成に失敗", "Error");
 
 	return true;
 }

@@ -12,6 +12,7 @@ private:
  Mesh mesh;
  std::vector<ShotData> shots;
  Texture tex;
+ static constexpr int KillTime = 60;
 public:
   InputShotComponent(const float speed,const int maxNum,const float radius);
   void Initialize() override;
