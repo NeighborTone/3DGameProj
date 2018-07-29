@@ -57,7 +57,14 @@ public:
 		this->min = min;
 		this->max = max;
 	}
-
+	//!カウンターを初期化します
+	void SetCounter(T now, T add, T min, T max) 
+	{
+		this->now = now;
+		this->add = add;
+		this->min = min;
+		this->max = max;
+	}
 	/*!
 	* @brief カウンターを加算値分足します
 	* @return 現在のカウンターの値
@@ -91,7 +98,7 @@ public:
 		}
 		return now;
 	}
-	//!終了時間をまで加算自分増やします。終了時間以上になったら停止します
+	//!終了時間をまで加算値分増やします。上限以上になったら停止します
 	void Add()
 	{
 		if (now >= max)
@@ -99,6 +106,15 @@ public:
 			return;
 		}
 		now += add;
+	}
+	//!終了時間をまで加算値分引きます。下限以下になったら停止します
+	void Sub()
+	{
+		if (now <= min)
+		{
+			return;
+		}
+		now -= add;
 	}
 	//!経過時間を0にし、フラグを再セットします
 	void Reset()

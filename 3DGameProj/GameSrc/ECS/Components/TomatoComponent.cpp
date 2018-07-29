@@ -7,7 +7,7 @@ void TomatoComponent::Executioners()
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const ToppingData &data)
 	{
-		constexpr float FieldOut = 470;
+		constexpr float FieldOut = 430;
 		return data.state == ToppingData::State::DEATH || abs(data.trans.pos.x) >= FieldOut || abs(data.trans.pos.z) >= FieldOut;
 	}),
 		std::end(data));
@@ -44,11 +44,6 @@ void TomatoComponent::UpDate()
 	if (data.empty())
 	{
 		return;
-	}
-	//$Test$
-	if (KeyBoard::Down(KeyBoard::Key::KEY_V))
-	{
-		data[0].state = ToppingData::State::DEATH;
 	}
 	Executioners();
 }

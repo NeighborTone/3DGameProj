@@ -8,6 +8,7 @@
 #include "../ECS/Components/MiniMapComponent.h"
 #include "../ECS/Components/TomatoComponent.h"
 #include "../ECS/Components/CursorComponent.h"
+#include "../ECS/Components/ScoreBoardComponent.h"
 #include <iostream>
 
 void GameController::StateMachine()
@@ -58,7 +59,7 @@ GameController::GameController() :
 	field.AddComponent<FieldComponent>();
 	enemy.AddComponent<ThiefComponent>();
 	canvas.AddComponent<MiniMapComponent>();
-
+	canvas.AddComponent<ScoreBoardComponent>();
 	topping.AddComponent<TomatoComponent>();
 	//グループに登録
 	skyBox.AddGroup(ALWAYS);
@@ -127,7 +128,8 @@ void GameController::UpDate()
 	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
 	//追跡対象をセットし対象を追跡する
 	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
-
+	//敵が死んだらスコアを増やす
+	canvas.GetComponent<ScoreBoardComponent>().SetEntity(enemy);
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
 }

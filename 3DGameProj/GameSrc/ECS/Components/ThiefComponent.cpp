@@ -8,7 +8,6 @@
 #include <algorithm>
 
 long long ThiefComponent::id_ = 0;
-
 std::unique_ptr<EnemyData> ThiefComponent::AddEnemy()
 {
 	return std::make_unique<EnemyData>();
@@ -32,7 +31,7 @@ void ThiefComponent::Create()
 	{
 		return;
 	}
-	if (cnt.GetCurrentCount() >= 60)
+	if (++cnt >= 60)
 	{
 		data.emplace_back(AddEnemy());
 		data.at(data.size() - 1)->state = EnemyData::State::TRACKING;
@@ -60,8 +59,9 @@ void ThiefComponent::Executioners()
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const std::unique_ptr<EnemyData> &data)
 	{
-		constexpr float FieldOut = 510;
-		return data->state == EnemyData::State::DEATH || abs(data->trans.pos.x) >= FieldOut || abs(data->trans.pos.z) >= FieldOut;
+		constexpr float FieldOut = 500;
+		return data->state == EnemyData::State::DEATH ||
+			(abs(data->trans.pos.x) >= FieldOut || abs(data->trans.pos.z) >= FieldOut && data->state == EnemyData::State::GETAWAY);
 	}),
 		std::end(data));
 }
@@ -153,7 +153,6 @@ void ThiefComponent::Initialize()
 
 void ThiefComponent::UpDate()
 {
-	++cnt;
 	Create();
 	if (data.empty())
 	{
@@ -187,7 +186,7 @@ void ThiefComponent::UpDate()
 			}
 			else
 			{
-				it->upMove.Run(Easing::QuintIn,60);
+				it->upMove.Run(Easing::QuintIn, 60);
 				it->trans.pos.y = it->upMove.GetVolume(HeightMax, UpMoveMAX);
 			}
 		}
@@ -258,6 +257,7 @@ void ThiefComponent::SetTrackingTarget(Entity& target)
 			it->trackingTarget = dist[0].second;
 		}
 	}
+	//有効なターゲットがいない場合出現させない
 	auto count = std::count_if(targets.begin(), targets.end(),
 		[](const ToppingData& state)  { return state.state ==  ToppingData::State::EFFECTIVE; });
 		if (count == 0)
@@ -268,7 +268,6 @@ void ThiefComponent::SetTrackingTarget(Entity& target)
 		{
 			isNotFound = false;
 		}
-	
 }
 
 const std::vector<std::unique_ptr<EnemyData>>& ThiefComponent::GetData() const

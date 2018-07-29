@@ -158,13 +158,6 @@ public:
 			return !pEntity->IsActive();
 		}),
 			std::end(entityes));
-
-		entityes.erase(std::remove_if(std::begin(entityes), std::end(entityes),
-			[](const std::unique_ptr<Entity> &pEntity)
-		{
-			return !pEntity->IsActive();
-		}),
-			std::end(entityes));
 	}
 
 	std::vector<Entity*>& GetGroup(Group group)
