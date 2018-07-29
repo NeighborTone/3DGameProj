@@ -9,29 +9,8 @@
 #include "../ECS/Components/TomatoComponent.h"
 #include "../ECS/Components/CursorComponent.h"
 #include "../ECS/Components/ScoreBoardComponent.h"
+#include "../ECS/Components/GameStateComponent.h"
 #include <iostream>
-
-void GameController::StateMachine()
-{
-	GameStart();
-	GameStop();
-}
-//$Test$
-void GameController::GameStart()
-{
-	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
-	{
-		gameState = GameState::PLAY;
-	}
-}
-//$Test$
-void GameController::GameStop()
-{
-	if (KeyBoard::Down(KeyBoard::Key::KEY_X))
-	{
-		gameState = GameState::STOP;
-	}
-}
 
 Particle& GameController::GetParticle()
 {
@@ -46,9 +25,10 @@ GameController::GameController() :
 	enemy(entityManager.AddEntity()),
 	field(entityManager.AddEntity()),
 	canvas(entityManager.AddEntity()),
-	topping(entityManager.AddEntity())
+	topping(entityManager.AddEntity()),
+	gameMaster(entityManager.AddEntity())
 {
-	gameState = GameState::STOP;
+	gameMaster.AddComponent<GameStateComponent>();
 	player.AddComponent<TransformComponent>(Pos(0, 10, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
@@ -62,6 +42,7 @@ GameController::GameController() :
 	canvas.AddComponent<ScoreBoardComponent>();
 	topping.AddComponent<TomatoComponent>();
 	//グループに登録
+	gameMaster.AddGroup(ALWAYS);
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
 	topping.AddGroup(GAME);
@@ -94,15 +75,12 @@ void GameController::Initialize()
 
 void GameController::UpDate()
 {
-	StateMachine();	//ゲームの状態の監視
 	//$Test$
-	if (KeyBoard::Down(KeyBoard::Key::KEY_C))
+	if (ComAssist::GetGameState(gameMaster) == GameState::RESET)
 	{
 		entityManager.Initialize();
 	}
-
 	entityManager.Refresh();	//Entityの状態の監視
-
 
 	auto& always(entityManager.GetGroup(ALWAYS));
 	for (auto& it : always)
@@ -110,7 +88,7 @@ void GameController::UpDate()
 		it->UpDate();
 	}
 
-	if (gameState == GameState::PLAY)
+	if (ComAssist::GetGameState(gameMaster) == GameState::PLAY)
 	{
 		auto& gameScene(entityManager.GetGroup(GAME));
 		for (auto& it : gameScene)
@@ -148,6 +126,7 @@ void GameController::Draw3D()
 	{
 		it->Draw3D();
 	}
+	//すべてのparticleにカメラのビューとプロジェクションを渡す
 	GetParticle().UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
 }
 

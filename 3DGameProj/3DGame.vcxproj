@@ -49,6 +49,7 @@
     <ClCompile Include="GameSrc\ECS\Components\ComponentData\Collision.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\CursorComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\FieldComponent.cpp" />
+    <ClCompile Include="GameSrc\ECS\Components\GameStateComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\InputShotComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\InuputMoveComponent.cpp" />
     <ClCompile Include="GameSrc\ECS\Components\MiniMapComponent.cpp" />
@@ -103,6 +104,7 @@
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\Sphere.hpp" />
     <ClInclude Include="GameSrc\ECS\Components\CursorComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\FieldComponent.h" />
+    <ClInclude Include="GameSrc\ECS\Components\GameStateComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\InputShotComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\InuputMoveComponent.h" />
     <ClInclude Include="GameSrc\ECS\Components\MiniMapComponent.h" />

@@ -5,6 +5,11 @@ CursorComponent::CursorComponent()
 	sprite.Load("Resource/Texture/cursor2.png");
 }
 
+void CursorComponent::Initialize()
+{
+	trans.angles = 0;
+}
+
 void CursorComponent::UpDate()
 {
 	--trans.angles.z;

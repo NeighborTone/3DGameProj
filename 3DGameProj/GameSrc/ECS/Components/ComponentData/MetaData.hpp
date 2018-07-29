@@ -4,8 +4,6 @@
 #include "Sphere.hpp"
 #include "../../Utilitys/Easing.hpp"
 
-/*オブジェクトの個数毎に作る必要があるデータ群*/
-
 struct TransForm
 {
 	Pos pos;				//座標
@@ -51,4 +49,11 @@ struct ToppingData
 	State state;
 	Sphere sphere;
 	TransForm trans;
+};
+
+enum class GameState
+{
+	PLAY,		//ゲーム中
+	STOP,		//停止中
+	RESET		//すべてのEntityの初期化処理を呼ぶ
 };

@@ -122,6 +122,9 @@
     <ClCompile Include="GameSrc\ECS\Components\ScoreBoardComponent.cpp">
       <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
     </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\GameStateComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -319,6 +322,9 @@
       <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\ScoreBoardComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\GameStateComponent.h">
       <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
     </ClInclude>
   </ItemGroup>

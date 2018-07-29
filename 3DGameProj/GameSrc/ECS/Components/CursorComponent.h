@@ -10,7 +10,7 @@ private:
 	Sprite sprite;
 public:
 	CursorComponent();
-	void Initialize() STUB
+	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() STUB
 	void Draw2D() override;

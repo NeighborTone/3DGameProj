@@ -1,6 +1,6 @@
 #pragma once
 #include "../ECS/Components/Transform.hpp"
-
+#include "../ECS/Components/GameStateComponent.h"
 //冗長になりがちなのでよく使うコンポーネントの取得関数を用意しておく
 class ComAssist
 {
@@ -35,5 +35,10 @@ public:
 	{
 		return e.GetComponent<T>();
 	}
-
+	//ゲームの状態を取得
+	template<typename T = GameStateComponent, typename TState = GameState>
+	static TState GetGameState(Entity& e)
+	{
+		return e.GetComponent<T>().GetCurrentState();
+	}
 };

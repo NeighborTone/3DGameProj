@@ -5,7 +5,7 @@
 class ScoreBoardComponent : public Component
 {
 private:
-	const std::string font = "ƒƒCƒŠƒI";
+	const std::string font = "Segoe Print";
 	static constexpr float size = 30;
 	Float4 colorDelta;
 	struct Data
@@ -23,6 +23,6 @@ public:
 	void UpDate() override;
 	void Draw3D() STUB
 	void Draw2D() override;
-	//ˆø”‚É“ü‚ê‚½“G‚ğE‚µ‚½‚çƒXƒRƒA‚ª‰ÁZ‚³‚ê‚é
+	//ˆø”‚É“ü‚ê‚½“G‚ªE‚³‚ê‚½‚çƒXƒRƒA‚ª‰ÁZ‚³‚ê‚é
 	const void SetEntity(const Entity& enemy);
 };

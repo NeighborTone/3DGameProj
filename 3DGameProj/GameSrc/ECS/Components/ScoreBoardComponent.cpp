@@ -1,6 +1,6 @@
 #include "ScoreBoardComponent.h"
 #include "ThiefComponent.h"
-
+#include <iostream>
 const unsigned ScoreBoardComponent::GetDigit(unsigned num) const
 {
 	unsigned digit = 0;
@@ -35,11 +35,11 @@ void ScoreBoardComponent::UpDate()
 
 void ScoreBoardComponent::Draw2D()
 {
-	data.number.pos.x = (float)(Engine::GetWindowSize().x / 2) - (size / 2 )- (GetDigit(data.score) * size / 4);	//1桁につきサイズ分ずらす
+	data.number.Create(std::to_string(data.score), size, font);
+	data.number.pos.x = (float)(Engine::GetWindowSize().x / 2) - (size / 2 ) - (GetDigit(data.score) * size / 3);	//1桁につきサイズ分ずらす
 	data.number.pos.y = (float)(Engine::GetWindowSize().y / 2) - (size * 0.8f);
 	data.number.color = data.color;
 	data.number.Draw();
-	data.number.Create(std::to_string(data.score), size, font);
 }
 
 const void ScoreBoardComponent::SetEntity(const Entity& enemy)
