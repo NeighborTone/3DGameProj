@@ -6,7 +6,6 @@
 class PauseComponent : public Component
 {
 private:
-	bool flag = false;
 	TransForm trans;
 	Easing ease;
 	Sprite sprite;

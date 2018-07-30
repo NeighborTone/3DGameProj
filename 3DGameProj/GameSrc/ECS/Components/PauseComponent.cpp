@@ -10,6 +10,7 @@ void PauseComponent::Initialize()
 {
 	ease.Reset();
 	trans.pos = 0;
+	trans.scale = 0;
 }
 
 void PauseComponent::UpDate()
@@ -21,11 +22,11 @@ void PauseComponent::UpDate()
 
 void PauseComponent::Draw2D()
 {
-
+	text.pos = trans.pos;
 	text.scale = trans.scale;
 	text.color = Float4(1, 1, 1, 1);
 	text.Draw();
-
+	
 	sprite.color.a = 0.5f;
 	sprite.Draw();
 }

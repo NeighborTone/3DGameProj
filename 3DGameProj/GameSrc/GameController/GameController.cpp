@@ -70,14 +70,19 @@ void GameController::Initialize()
 
 void GameController::UpDate()
 {
-	auto& always(entityManager.GetGroup(ALWAYS));
-	auto& gameScene(entityManager.GetGroup(GAME));
-	auto& pause(entityManager.GetGroup(STOP));
-	switch (ComAssist::GetGameState(gameMaster))
+	const auto&& state = ComAssist::GetGameState(gameMaster);
+	if (state == GameState::RESET)
 	{
-	case GameState::RESET:
 		entityManager.Initialize();
-	case GameState::PLAY:
+	}
+	auto& always(entityManager.GetGroup(ALWAYS));
+	for (auto& it : always)
+	{
+		it->UpDate();
+	}
+	if (state == GameState::PLAY)
+	{
+		auto& gameScene(entityManager.GetGroup(GAME));
 		for (auto& it : gameScene)
 		{
 			it->UpDate();
@@ -86,7 +91,10 @@ void GameController::UpDate()
 		CollisionEvent();
 		//プレイヤーの位置と向きから発射する
 		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
-	case GameState::STOP:
+	}
+	if (state == GameState::STOP)
+	{
+		auto& pause(entityManager.GetGroup(STOP));
 		for (auto& it : pause)
 		{
 			it->UpDate();
@@ -94,10 +102,6 @@ void GameController::UpDate()
 	}
 	//Entityの状態の監視
 	entityManager.Refresh();
-	for (auto& it : always)
-	{
-		it->UpDate();
-	}
 	//果てが来てしまうのでプレイヤーと一緒に動かす
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
 	//効果音のListenerをセットする
