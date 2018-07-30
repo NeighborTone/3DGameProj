@@ -25,7 +25,7 @@ public:
 	}
 
 	//値を取得
-	//引数：始点(float), 終点(float)
+	//引数：始点(float), 終点(float)-始点(float)
 	float GetVolume(float startPoint, float endPoint)
 	{
 		return startPoint + (vol * endPoint);

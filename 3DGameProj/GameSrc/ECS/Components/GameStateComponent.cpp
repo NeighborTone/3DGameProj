@@ -31,7 +31,7 @@ const GameState GameStateComponent::GetCurrentState() const
 
 void GameStateComponent::Initialize()
 {
-	state = GameState::STOP;
+	state = GameState::PLAY;
 }
 
 void GameStateComponent::UpDate()

@@ -14,6 +14,7 @@ private:
 	{
 		ALWAYS,	//ゲームの状態に関わらず常に更新と描画を行うグループ
 		GAME,		//ゲーム中に更新を行うグループ
+		STOP,		//一時停止中に更新を行うグループ
 		END			//未定
 	};
 
@@ -25,7 +26,8 @@ private:
 	Entity& skyBox;
 	Entity& enemy;
 	Entity& field;
-	Entity& canvas;
+	Entity& gameUIcanvas;
+	Entity& pauseUIcanvas;
 	Entity& topping;
 public:
 	static Particle& GetParticle();	
