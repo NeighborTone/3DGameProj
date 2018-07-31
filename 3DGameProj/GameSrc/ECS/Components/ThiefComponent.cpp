@@ -59,7 +59,6 @@ void ThiefComponent::Executioners()
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const std::unique_ptr<EnemyData> &data)
 	{
-		constexpr float FieldOut = 500;
 		return data->state == EnemyData::State::DEATH ||
 			(abs(data->trans.pos.x) >= FieldOut || abs(data->trans.pos.z) >= FieldOut && data->state == EnemyData::State::GETAWAY);
 	}),
@@ -81,6 +80,8 @@ ThiefComponent::ThiefComponent() :
 {
 	GameController::GetParticle().AddEffect("app", "Resource/Effect/Appear.efk");
 	GameController::GetParticle().AddEffect("expro", "Resource/Effect/testEf.efk");
+	GameController::GetParticle().AddEffect("sucking", "Resource/Effect/suck.efk");
+	GameController::GetParticle().AddEffect("away", "Resource/Effect/away.efk");
 	tex.Load("Resource/Texture/UFO_D.png");
 	appSound.Load("Resource/Sounds/steam_long.wav", true);
 	exproSound.Load("Resource/Sounds/se.ogg", true);
@@ -130,6 +131,7 @@ bool ThiefComponent::IsToBeInRange(Sphere& sphere,long long& id_)
 			//“–‚½‚Á‚½“G‚Æ“¯‚¶ID‚É‚·‚é
 			id_ = it->id;
 			it->state = EnemyData::State::GETAWAY;
+			GameController::GetParticle().Play("sucking", Pos(it->trans.pos));
 			return true;
 		}
 	}
@@ -188,6 +190,10 @@ void ThiefComponent::UpDate()
 			{
 				it->upMove.Run(Easing::QuintIn, 60);
 				it->trans.pos.y = it->upMove.GetVolume(HeightMax, UpMoveMAX);
+			}
+			if ((abs(it->trans.pos.x) >= FieldOut || abs(it->trans.pos.z) >= FieldOut && it->state == EnemyData::State::GETAWAY))
+			{
+				GameController::GetParticle().Play("away", Pos(it->trans.pos));
 			}
 		}
 	}

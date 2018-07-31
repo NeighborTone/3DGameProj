@@ -11,7 +11,6 @@
 class ThiefComponent : public Component
 {
 private:
-	//$Test$
 	static long long id_;
 	Counter cnt;
 	Pos listenerPos;
@@ -27,6 +26,7 @@ private:
 	void Create();
 	//アクティブでないものを処刑する
 	void Executioners();
+	static constexpr float FieldOut = 500;
 	static constexpr float RADIUS = 2.5f;
 	static constexpr float UpMoveMAX = 20;
 	static constexpr float HeightMax = 10;

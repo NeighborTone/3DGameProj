@@ -96,6 +96,7 @@ void InuputMoveComponent::Initialize()
 	//ŽŸ‰ñˆÈ~‚Ì‰Šú‰»‚É‚Í•Û‘¶‚µ‚½’l‚ð—p‚¢‚é
 	transform->pos = initPos;
 	eyeHeight = transform->pos.y;
+	transform->angle = 0;
 }
 void InuputMoveComponent::UpDate()
 {
@@ -110,21 +111,3 @@ void InuputMoveComponent::UpDate()
 	Mouse::SetMousePos(0, 0);
 }
 
-void InuputMoveComponent::Draw2D()
-{
-	t.Create("prex" + std::to_string(prePos.x) + "::" + "prez" + std::to_string(prePos.z));
-	t.color = Float4(1, 1, 1, 1);
-	t.pos.y = 20;
-	t.pos.x = -500;
-	t.Draw();
-	t.Create("distance" + (std::to_string(abs(transform->pos.GetDistance(Pos(0, 0, 0))))));
-	t.color = Float4(1, 1, 1, 1);
-	t.pos.y = 40;
-	t.pos.x = -500;
-	t.Draw();
-	t.Create("x"+ std::to_string(transform->pos.x) + "::" + "z" + std::to_string(transform->pos.z));
-	t.color = Float4(1, 1, 1, 1);
-	t.pos.y = 0;
-	t.pos.x = -500;
-	t.Draw();
-}

@@ -18,7 +18,7 @@ const void GameStateComponent::GamePause()
 
 const void GameStateComponent::GameReset()
 {
-	if(KeyBoard::Down(KeyBoard::Key::KEY_C))
+	if(KeyBoard::Down(KeyBoard::Key::KEY_C) && state == GameState::PAUSE)
 	{
 		state = GameState::RESET;
 	}

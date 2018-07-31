@@ -15,7 +15,7 @@ void PauseComponent::Initialize()
 
 void PauseComponent::UpDate()
 {
-	ease.Run(Easing::QuadIn, 40);
+	ease.Run(Easing::QuadIn, 20);
 	trans.scale = ease.GetVolume(0, 1);
 
 }

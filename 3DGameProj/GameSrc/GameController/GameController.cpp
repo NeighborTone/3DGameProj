@@ -94,7 +94,7 @@ GameController::GameController() :
 	titleCanvas(entityManager.AddEntity())
 {
 	gameMaster.AddComponent<GameStateComponent>();
-	player.AddComponent<TransformComponent>(Pos(0, 10, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
+	player.AddComponent<TransformComponent>(Pos(0, 15, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
 	player.AddComponent<CursorComponent>();
