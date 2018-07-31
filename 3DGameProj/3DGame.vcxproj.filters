@@ -93,40 +93,43 @@
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
     </ClCompile>
     <ClCompile Include="GameSrc\ECS\Components\CameraComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClCompile>
     <ClCompile Include="GameSrc\ECS\Components\CursorComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\FieldComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClCompile>
     <ClCompile Include="GameSrc\ECS\Components\InputShotComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClCompile>
     <ClCompile Include="GameSrc\ECS\Components\InuputMoveComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\MiniMapComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\SkyBoxComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\ThiefComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\TomatoComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\ScoreBoardComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClCompile>
     <ClCompile Include="GameSrc\ECS\Components\GameStateComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\SkyBoxComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\FieldComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\ScoreBoardComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\MiniMapComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\ThiefComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\TomatoComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClCompile>
     <ClCompile Include="GameSrc\ECS\Components\PauseComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Pause</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\TitleComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +168,18 @@
     </Filter>
     <Filter Include="GameSrc\ECS\Components\ComponentSystem">
       <UniqueIdentifier>{0dd7dd97-275d-46a9-9b1f-4db8796c1868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components\ComponentSystem\Game">
+      <UniqueIdentifier>{aca5712d-ca73-4329-aa32-0a1a133aa446}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components\ComponentSystem\Always">
+      <UniqueIdentifier>{e87dce3e-3a3b-4b92-828d-d7e302ca313b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components\ComponentSystem\Pause">
+      <UniqueIdentifier>{ff5e111f-4649-4a2a-991e-e66996b7656c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSrc\ECS\Components\ComponentSystem\Title">
+      <UniqueIdentifier>{e8f7f2dc-58d7-46ff-bdb0-96891111f4c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -294,44 +309,47 @@
     <ClInclude Include="GameSrc\ECS\Components\ComponentData\MetaData.hpp">
       <Filter>GameSrc\ECS\Components\ComponentsData</Filter>
     </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\Transform.hpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\CameraComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\CursorComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\FieldComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\InputShotComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\InuputMoveComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\MiniMapComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\SkyBoxComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\TomatoComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\ScoreBoardComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\GameStateComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\SkyBoxComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\FieldComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\ScoreBoardComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\MiniMapComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\TomatoComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\Transform.hpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\PauseComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem</Filter>
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Pause</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\TitleComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

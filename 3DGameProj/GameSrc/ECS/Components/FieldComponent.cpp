@@ -4,13 +4,12 @@ FieldComponent::FieldComponent()
 {
 	tex.Load("Resource/Texture/w.png");
 	mesh.GetMaterial().SetTexture(0, &tex);
-	mesh.CreateSphere(1,48);
+	mesh.CreateSphere(1000,48);
 }
 
 void FieldComponent::Draw3D()
 {
-	mesh.scale = 1000;
-	mesh.scale.y = 1;
+	mesh.scale.y *= 0.001f;
 	mesh.Draw();
 }
 

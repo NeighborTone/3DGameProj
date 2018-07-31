@@ -20,6 +20,7 @@ private:
 	void ManipulationOfView();
 	void ForwardAndBackwardDirection();
 	void LeftAndRightDirection();
+	Text t;
 public:
 	//ù‰ñ‘¬“x‚ğˆø”‚Éw’è
 	InuputMoveComponent(const float angleSpeed);
@@ -29,6 +30,6 @@ public:
 	
 	void Draw3D() STUB
 
-	void Draw2D() STUB
+	void Draw2D() override;
 
 };

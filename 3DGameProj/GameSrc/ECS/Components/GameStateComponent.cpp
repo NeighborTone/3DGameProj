@@ -8,11 +8,11 @@ const void GameStateComponent::GamePlay()
 	}
 }
 
-const void GameStateComponent::GameStop()
+const void GameStateComponent::GamePause()
 {
-	if (KeyBoard::Down(KeyBoard::Key::KEY_X))
+	if (KeyBoard::Down(KeyBoard::Key::KEY_X) && state != GameState::TITLE)
 	{
-		state = GameState::STOP;
+		state = GameState::PAUSE;
 	}
 }
 
@@ -31,12 +31,12 @@ const GameState GameStateComponent::GetCurrentState() const
 
 void GameStateComponent::Initialize()
 {
-	state = GameState::PLAY;
+	state = GameState::TITLE;
 }
 
 void GameStateComponent::UpDate()
 {
 	GamePlay();
-	GameStop();
+	GamePause();
 	GameReset();
 }

@@ -6,8 +6,9 @@ class GameStateComponent : public Component
 {
 private:
 	GameState state;
+	const void GameTitle();
 	const void GamePlay();
-	const void GameStop();
+	const void GamePause();
 	const void GameReset();
 public:
 	const GameState GetCurrentState() const;

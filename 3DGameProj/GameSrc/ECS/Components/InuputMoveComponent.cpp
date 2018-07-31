@@ -1,5 +1,5 @@
 #include "InuputMoveComponent.h"
-
+#include "ComponentData/Collision.h"
 void InuputMoveComponent::MoveForwardAndBack()
 {
 	if (KeyBoard::On(KeyBoard::Key::KEY_W))
@@ -90,6 +90,22 @@ void InuputMoveComponent::UpDate()
 	transform->pos.y = eyeHeight;
 	ManipulationOfView();
 	FixedMovableAngle();
-
+	
+	
 	Mouse::SetMousePos(0, 0);
+}
+
+void InuputMoveComponent::Draw2D()
+{
+	
+	t.Create("distance" +(std::to_string(abs(transform->pos.GetDistance(Pos(0, 0, 0))))));
+	t.color = Float4(1, 1, 1, 1);
+	t.pos.y = 20;
+	t.pos.x = -500;
+	t.Draw();
+	t.Create("x"+ std::to_string(transform->pos.x) + "::" + "z" + std::to_string(transform->pos.z));
+	t.color = Float4(1, 1, 1, 1);
+	t.pos.y = 0;
+	t.pos.x = -500;
+	t.Draw();
 }

@@ -11,7 +11,69 @@
 #include "../ECS/Components/ScoreBoardComponent.h"
 #include "../ECS/Components/GameStateComponent.h"
 #include "../ECS/Components/PauseComponent.h"
+#include "../ECS/Components/TitleComponent.h"
 #include <iostream>
+
+const void GameController::Title(const GameState state)
+{
+	if (state == GameState::TITLE)
+	{
+		auto& titleScene(entityManager.GetGroup(TITLE));
+		for (auto& it : titleScene)
+		{
+			it->UpDate();
+		}
+	}
+}
+
+const void GameController::Play(const GameState state)
+{
+	if (state == GameState::PLAY)
+	{
+		auto& gameScene(entityManager.GetGroup(GAME));
+		for (auto& it : gameScene)
+		{
+			it->UpDate();
+		}
+		//衝突した時のイベント処理
+		CollisionEvent();
+		//プレイヤーの位置と向きから発射する
+		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
+	}
+}
+
+const void GameController::Pause(const GameState state)
+{
+	if (state == GameState::PAUSE)
+	{
+		auto& pause(entityManager.GetGroup(PAUSE));
+		for (auto& it : pause)
+		{
+			it->UpDate();
+		}
+	}
+}
+
+const void GameController::Always()
+{
+	auto& always(entityManager.GetGroup(ALWAYS));
+	for (auto& it : always)
+	{
+		it->UpDate();
+	}
+}
+
+const void GameController::SetParameter()
+{
+	//果てが来てしまうのでプレイヤーと一緒に動かす
+	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
+	//効果音のListenerをセットする
+	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
+	//追跡対象をセットし対象を追跡する
+	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
+	//敵が死んだらスコアを増やす
+	gameCanvas.GetComponent<ScoreBoardComponent>().SetEntity(enemy);
+}
 
 Particle& GameController::GetParticle()
 {
@@ -25,10 +87,11 @@ GameController::GameController() :
 	skyBox(entityManager.AddEntity()),
 	enemy(entityManager.AddEntity()),
 	field(entityManager.AddEntity()),
-	gameUIcanvas(entityManager.AddEntity()),
+	gameCanvas(entityManager.AddEntity()),
 	topping(entityManager.AddEntity()),
 	gameMaster(entityManager.AddEntity()),
-	pauseUIcanvas(entityManager.AddEntity())
+	pauseCanvas(entityManager.AddEntity()),
+	titleCanvas(entityManager.AddEntity())
 {
 	gameMaster.AddComponent<GameStateComponent>();
 	player.AddComponent<TransformComponent>(Pos(0, 10, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
@@ -40,20 +103,22 @@ GameController::GameController() :
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
 	enemy.AddComponent<ThiefComponent>();
-	gameUIcanvas.AddComponent<MiniMapComponent>();
-	gameUIcanvas.AddComponent<ScoreBoardComponent>();
-	pauseUIcanvas.AddComponent<PauseComponent>();
+	gameCanvas.AddComponent<MiniMapComponent>();
+	gameCanvas.AddComponent<ScoreBoardComponent>();
+	pauseCanvas.AddComponent<PauseComponent>();
 	topping.AddComponent<TomatoComponent>();
+	titleCanvas.AddComponent<TitleComponent>();
 	//グループに登録
+	titleCanvas.AddGroup(TITLE);
 	gameMaster.AddGroup(ALWAYS);
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
-	gameUIcanvas.AddGroup(ALWAYS);
+	gameCanvas.AddGroup(ALWAYS);
 	topping.AddGroup(GAME);
 	player.AddGroup(GAME);
 	shot.AddGroup(GAME);
 	enemy.AddGroup(GAME);
-	pauseUIcanvas.AddGroup(STOP);
+	pauseCanvas.AddGroup(PAUSE);
 
 }
 
@@ -75,41 +140,13 @@ void GameController::UpDate()
 	{
 		entityManager.Initialize();
 	}
-	auto& always(entityManager.GetGroup(ALWAYS));
-	for (auto& it : always)
-	{
-		it->UpDate();
-	}
-	if (state == GameState::PLAY)
-	{
-		auto& gameScene(entityManager.GetGroup(GAME));
-		for (auto& it : gameScene)
-		{
-			it->UpDate();
-		}
-		//衝突した時のイベント処理
-		CollisionEvent();
-		//プレイヤーの位置と向きから発射する
-		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
-	}
-	if (state == GameState::STOP)
-	{
-		auto& pause(entityManager.GetGroup(STOP));
-		for (auto& it : pause)
-		{
-			it->UpDate();
-		}
-	}
+	Always();
+	Title(state);
+	Play(state);
+	Pause(state);
 	//Entityの状態の監視
 	entityManager.Refresh();
-	//果てが来てしまうのでプレイヤーと一緒に動かす
-	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
-	//効果音のListenerをセットする
-	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
-	//追跡対象をセットし対象を追跡する
-	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
-	//敵が死んだらスコアを増やす
-	gameUIcanvas.GetComponent<ScoreBoardComponent>().SetEntity(enemy);
+	SetParameter();
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
 }
@@ -117,22 +154,7 @@ void GameController::UpDate()
 void GameController::Draw3D()
 {
 	player.GetComponent<CameraComponent>().Project3D();
-
-	auto& always(entityManager.GetGroup(ALWAYS));
-	for (auto& it : always)
-	{
-		it->Draw3D();
-	}
-	auto& gameScene(entityManager.GetGroup(GAME));
-	for (auto& it : gameScene)
-	{
-		it->Draw3D();
-	}
-	auto& pause(entityManager.GetGroup(STOP));
-	for (auto& it : pause)
-	{
-		it->Draw3D();
-	}
+	entityManager.Draw3D();
 	//すべてのparticleにカメラのビューとプロジェクションを渡す
 	GetParticle().UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
 }
@@ -142,24 +164,32 @@ void GameController::Draw2D()
 	Mouse::DrawCursor(false);
 	player.GetComponent<CameraComponent>().Project2D();
 
+	const auto&& state = ComAssist::GetGameState(gameMaster);
 	auto& always(entityManager.GetGroup(ALWAYS));
 	auto& gameScene(entityManager.GetGroup(GAME));
-	auto& pause(entityManager.GetGroup(STOP));
-
 	//後に処理したものが手前に描画される
 	for (auto& it : always)
 	{
 		it->Draw2D();
 	}
-	gameUIcanvas.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
-	gameUIcanvas.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
+	gameCanvas.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
+	gameCanvas.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
 	for (auto& it : gameScene)
 	{
 		it->Draw2D();
 	}
-	switch (ComAssist::GetGameState(gameMaster))
+
+	if (state == GameState::TITLE)
 	{
-	case GameState::STOP:
+		auto& title(entityManager.GetGroup(TITLE));
+		for (auto& it : title)
+		{
+			it->Draw2D();
+		}
+	}
+	if(state == GameState::PAUSE)
+	{
+		auto& pause(entityManager.GetGroup(PAUSE));
 		for (auto& it : pause)
 		{
 			it->Draw2D();

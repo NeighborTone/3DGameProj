@@ -43,7 +43,6 @@ void GameMain::Run()
 	{
 		UpDate();
 		Draw();
-		
 	}
 }
 

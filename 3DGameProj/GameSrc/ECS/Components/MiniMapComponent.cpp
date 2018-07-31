@@ -19,8 +19,8 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 		{
 			const float dy = ComAssist::GetPos(player).z - toppings.trans.pos.z;
 			const float dx = ComAssist::GetPos(player).x - toppings.trans.pos.x;
-			const float rad = atan2(dy, dx);				//出現角度を決定
-			float distance = hypot(dx, dy) / 4;				//プレイヤーと敵の距離を調べる
+			const float rad = atan2(dy, dx);				//角度を決定
+			float distance = hypot(dx, dy) / 4;			//プレイヤーと敵の距離を調べる
 			if (abs(distance) >= MapRadius) { distance = MapRadius; }	//マップの端を超えないようにする
 			toppingIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
 			toppingIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
@@ -36,7 +36,7 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 		{
 			const float dy = ComAssist::GetPos(player).z - enemys->trans.pos.z;
 			const float dx = ComAssist::GetPos(player).x - enemys->trans.pos.x;
-			const float rad = atan2(dy, dx);				//出現角度を決定
+			const float rad = atan2(dy, dx);				//角度を決定
 			float distance = hypot(dx, dy) / 4;	//プレイヤーとの距離を調べる
 			if (abs(distance) >= MapRadius) { distance = MapRadius; }	//マップの端を超えないようにする
 			enemyIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;

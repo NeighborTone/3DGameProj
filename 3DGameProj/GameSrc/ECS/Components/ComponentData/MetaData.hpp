@@ -53,7 +53,8 @@ struct ToppingData
 
 enum class GameState
 {
+	TITLE,		//タイトル
 	PLAY,		//ゲーム中
-	STOP,		//停止中
+	PAUSE,		//停止中
 	RESET		//すべてのEntityの初期化処理を呼ぶ
 };
