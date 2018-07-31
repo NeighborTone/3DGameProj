@@ -2,25 +2,43 @@
 #include "ComponentData/Collision.h"
 void InuputMoveComponent::MoveForwardAndBack()
 {
-	if (KeyBoard::On(KeyBoard::Key::KEY_W))
+	const bool isOut = abs(transform->pos.GetDistance(Pos(0, 0, 0))) >= 500;
+	if (!isOut)
+	{
+		prePos = transform->pos;
+	}
+	if (KeyBoard::On(KeyBoard::Key::KEY_W) && !isOut)
 	{
 		transform->pos += dir;
 	}
-	if (KeyBoard::On(KeyBoard::Key::KEY_S))
+	if (KeyBoard::On(KeyBoard::Key::KEY_S) && !isOut)
 	{
 		transform->pos -= dir;
+	}
+	if(isOut)
+	{
+		transform->pos = prePos;
 	}
 }
 
 void InuputMoveComponent::MoveLeftAndRight()
 {
-	if (KeyBoard::On(KeyBoard::Key::KEY_D))
+	const bool isOut = abs(transform->pos.GetDistance(Pos(0, 0, 0))) >= 500;
+	if (!isOut)
+	{
+		prePos = transform->pos;
+	}
+	if (KeyBoard::On(KeyBoard::Key::KEY_D) && !isOut)
 	{
 		transform->pos += dir;
 	}
-	if (KeyBoard::On(KeyBoard::Key::KEY_A))
+	if (KeyBoard::On(KeyBoard::Key::KEY_A) && !isOut)
 	{
 		transform->pos -= dir;
+	}
+	if (isOut)
+	{
+		transform->pos = prePos;
 	}
 }
 
@@ -78,8 +96,6 @@ void InuputMoveComponent::Initialize()
 	//ŽŸ‰ñˆÈ~‚Ì‰Šú‰»‚É‚Í•Û‘¶‚µ‚½’l‚ð—p‚¢‚é
 	transform->pos = initPos;
 	eyeHeight = transform->pos.y;
-
-
 }
 void InuputMoveComponent::UpDate()
 {
@@ -91,16 +107,19 @@ void InuputMoveComponent::UpDate()
 	ManipulationOfView();
 	FixedMovableAngle();
 	
-	
 	Mouse::SetMousePos(0, 0);
 }
 
 void InuputMoveComponent::Draw2D()
 {
-	
-	t.Create("distance" +(std::to_string(abs(transform->pos.GetDistance(Pos(0, 0, 0))))));
+	t.Create("prex" + std::to_string(prePos.x) + "::" + "prez" + std::to_string(prePos.z));
 	t.color = Float4(1, 1, 1, 1);
 	t.pos.y = 20;
+	t.pos.x = -500;
+	t.Draw();
+	t.Create("distance" + (std::to_string(abs(transform->pos.GetDistance(Pos(0, 0, 0))))));
+	t.color = Float4(1, 1, 1, 1);
+	t.pos.y = 40;
 	t.pos.x = -500;
 	t.Draw();
 	t.Create("x"+ std::to_string(transform->pos.x) + "::" + "z" + std::to_string(transform->pos.z));

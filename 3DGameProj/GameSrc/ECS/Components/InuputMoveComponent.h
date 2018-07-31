@@ -12,6 +12,7 @@ private:
 	float speed_;
 	TransformComponent* transform;
 	Vec3 dir;
+	Pos prePos;
 	Pos initPos;
 	float eyeHeight;
 	void MoveForwardAndBack();
