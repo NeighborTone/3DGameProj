@@ -100,7 +100,7 @@ void ThiefComponent::Damaged(Entity& e)
 		{
 			continue;
 		}
-		if (e.GetComponent<InputShotComponent>().IsHit(it->aabb.Create(it->trans.pos, Scale(it->trans.scale.x * 2.1f, it->trans.scale.y * 0.8f, it->trans.scale.z))))
+		if (e.GetComponent<InputShotComponent>().IsHit(it->aabb.Create(it->trans.pos, Scale(it->trans.scale.x * 2.1f, it->trans.scale.y, it->trans.scale.z))))
 		{
 			efHandle = GameController::GetParticle().Play("expro", Pos(it->trans.pos));
 			GameController::GetParticle().SetScale(efHandle, Vec3(6, 6, 6));

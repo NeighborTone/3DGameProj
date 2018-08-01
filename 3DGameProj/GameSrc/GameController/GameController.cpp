@@ -14,7 +14,7 @@
 #include "../ECS/Components/TitleComponent.h"
 #include <iostream>
 
-const void GameController::Title(const GameState state)
+const void GameController::Title(const GameState& state)
 {
 	if (state == GameState::TITLE)
 	{
@@ -26,7 +26,7 @@ const void GameController::Title(const GameState state)
 	}
 }
 
-const void GameController::Play(const GameState state)
+const void GameController::Play(const GameState& state)
 {
 	if (state == GameState::PLAY)
 	{
@@ -42,12 +42,24 @@ const void GameController::Play(const GameState state)
 	}
 }
 
-const void GameController::Pause(const GameState state)
+const void GameController::Pause(const GameState& state)
 {
 	if (state == GameState::PAUSE)
 	{
 		auto& pause(entityManager.GetGroup(PAUSE));
 		for (auto& it : pause)
+		{
+			it->UpDate();
+		}
+	}
+}
+
+const void GameController::End(const GameState& state)
+{
+	if (state == GameState::END)
+	{
+		auto& end(entityManager.GetGroup(END));
+		for (auto& it : end)
 		{
 			it->UpDate();
 		}
@@ -73,6 +85,9 @@ const void GameController::SetParameter()
 	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
 	//敵が死んだらスコアを増やす
 	gameCanvas.GetComponent<ScoreBoardComponent>().SetEntity(enemy);
+	//ゲームエンドならスコアボードを動かす
+	const auto&& state = ComAssist::GetGameState(gameMaster);
+	gameCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
 }
 
 Particle& GameController::GetParticle()
@@ -99,6 +114,7 @@ GameController::GameController() :
 	player.AddComponent<CameraComponent>();
 	player.AddComponent<CursorComponent>();
 	shot.AddComponent<InputShotComponent>(40.0f, 20, 0.3f);
+
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
@@ -149,6 +165,7 @@ void GameController::UpDate()
 	SetParameter();
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
+
 }
 
 void GameController::Draw3D()
@@ -191,6 +208,14 @@ void GameController::Draw2D()
 	{
 		auto& pause(entityManager.GetGroup(PAUSE));
 		for (auto& it : pause)
+		{
+			it->Draw2D();
+		}
+	}
+	if(state == GameState::END)
+	{
+		auto& end(entityManager.GetGroup(END));
+		for (auto& it : end)
 		{
 			it->Draw2D();
 		}

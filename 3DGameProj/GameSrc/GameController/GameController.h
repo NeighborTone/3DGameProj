@@ -12,11 +12,11 @@ class GameController
 private:
 	enum GameGroup : std::size_t
 	{
-		ALWAYS,	//ゲームの状態に関わらず常に更新と描画を行うグループ
+		ALWAYS,		//ゲームの状態に関わらず常に更新と描画を行うグループ
 		TITLE,		//タイトル中に更新を行うグループ
 		GAME,		//ゲーム中に更新を行うグループ
 		PAUSE,		//一時停止中に更新を行うグループ
-		END			//未定
+		END			//ゲーム終了時に更新を行うグループ
 	};
 
 	EntityManager entityManager;
@@ -30,9 +30,10 @@ private:
 	Entity& gameCanvas;
 	Entity& pauseCanvas;
 	Entity& topping;
-	const void Title(const GameState state);
-	const void Play(const GameState state);
-	const void Pause(const GameState state);
+	const void Title(const GameState& state);
+	const void Play(const GameState& state);
+	const void Pause(const GameState& state);
+	const void End(const GameState& state);
 	const void Always();
 	const void SetParameter();
 public:

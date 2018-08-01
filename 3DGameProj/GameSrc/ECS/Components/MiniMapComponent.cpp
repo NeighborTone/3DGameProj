@@ -13,6 +13,7 @@ MiniMapComponent::MiniMapComponent()
 
 const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 {
+	const Vec2 mapCenter(Engine::GetWindowSize().x / 2.f - MapRadius, -Engine::GetWindowSize().y / 2.f + MapRadius);
 	if (e.HasComponent<TomatoComponent>())
 	{
 		for (auto& toppings : e.GetComponent<TomatoComponent>().GetData())
@@ -24,7 +25,6 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 			if (abs(distance) >= MapRadius) { distance = MapRadius; }	//マップの端を超えないようにする
 			toppingIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
 			toppingIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
-			const Vec2 mapCenter(Engine::GetWindowSize().x / 2.f - MapRadius, -Engine::GetWindowSize().y / 2.f + MapRadius);
 			toppingIcon.pos.x += mapCenter.x;
 			toppingIcon.pos.y += mapCenter.y;
 			toppingIcon.Draw();
@@ -41,7 +41,6 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 			if (abs(distance) >= MapRadius) { distance = MapRadius; }	//マップの端を超えないようにする
 			enemyIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
 			enemyIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
-			const Vec2 mapCenter(Engine::GetWindowSize().x / 2.f - MapRadius, -Engine::GetWindowSize().y / 2.f + MapRadius);
 			enemyIcon.pos.x += mapCenter.x;
 			enemyIcon.pos.y += mapCenter.y;
 			enemyIcon.color.a = 0.8f;

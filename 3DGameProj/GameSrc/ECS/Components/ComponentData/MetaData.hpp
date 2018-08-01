@@ -51,10 +51,11 @@ struct ToppingData
 	TransForm trans;
 };
 
-enum class GameState
+enum class GameState : short
 {
 	TITLE,		//タイトル
 	PLAY,		//ゲーム中
 	PAUSE,		//停止中
-	RESET		//すべてのEntityの初期化処理を呼ぶ
+	RESET,		//すべてのEntityの初期化処理を呼ぶ
+	END,		//ゲーム終了
 };

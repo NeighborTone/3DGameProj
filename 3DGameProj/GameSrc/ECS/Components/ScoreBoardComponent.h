@@ -2,6 +2,7 @@
 #include "../ECS.hpp"
 #include "../../Engine.h"
 #include "ComponentData/MetaData.hpp"
+
 class ScoreBoardComponent : public Component
 {
 private:
@@ -10,6 +11,7 @@ private:
 	Float4 colorDelta;
 	struct Data
 	{
+		Easing ease;
 		Float4 color;
 		TransForm trans;
 		Text number;
@@ -24,5 +26,7 @@ public:
 	void Draw3D() STUB
 	void Draw2D() override;
 	//引数に入れた敵が殺されたらスコアが加算される
-	const void SetEntity(const Entity& enemy);
+	void SetEntity(const Entity& enemy);
+	//ゲームの状態がEndならアニメーションする
+	void CheckState(const GameState& state);
 };

@@ -124,6 +124,12 @@ public:
 		now = 0;
 	}
 
+	//!現在のカウンターの値をミリ秒で返します
+	T GetMilliSecond(T frameRate)
+	{
+		return (now / frameRate) * 1000;
+	}
+
 	//!終了時間を設定します
 	void SetEndTime(T max, T min)
 	{
@@ -185,5 +191,7 @@ public:
 };
 
 typedef TemplateCounter<int>Counter;
+typedef TemplateCounter<long>Counter_l;
+typedef TemplateCounter<long long>Counter_ll;
 typedef TemplateCounter<float>Counter_f;
 typedef TemplateCounter<double>Counter_d;
