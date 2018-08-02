@@ -87,12 +87,13 @@ const void GameController::Play(const GameState& state)
 		CollisionEvent();
 		//プレイヤーの位置と向きから発射する
 		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
-		if (KeyBoard::Down(KeyBoard::Key::KEY_A) &&
-			enemy.HasComponent<ThiefComponent>())
+		//$Test$振る舞いを動的に付け替えるテスト
+		if (KeyBoard::Down(KeyBoard::Key::KEY_A))
 		{
-			enemy.GetComponent<ThiefComponent>().DeleteThis();
+			enemy.DeleteComponent<ThiefComponent>();
 		}
-		if (KeyBoard::Down(KeyBoard::Key::KEY_G))
+		if (KeyBoard::Down(KeyBoard::Key::KEY_G) &&
+			!enemy.HasComponent<ThiefComponent>())
 		{
 			enemy.AddComponent<ThiefComponent>();
 		}

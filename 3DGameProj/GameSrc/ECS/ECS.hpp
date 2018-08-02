@@ -59,7 +59,7 @@ private:
 	ComponentArray  componentArray;
 	ComponentBitSet componentBitSet;
 	GroupBitSet groupBitSet;
-	void Deleteomponent()
+	void DeleteComponent()
 	{
 		components.erase(std::remove_if(std::begin(components), std::end(components),
 			[](const std::unique_ptr<Component> &pCom)
@@ -78,7 +78,7 @@ public:
 	}
 	void UpDate()
 	{
-		Deleteomponent();
+		DeleteComponent();
 		for (auto& c : components) c->UpDate();
 	}
 	void Draw3D() 
@@ -129,7 +129,15 @@ public:
 		c->Initialize();
 		return *c;
 	}
-	
+	//指定したコンポーネントを削除する
+	template<typename T> void DeleteComponent()
+	{
+		if (HasComponent<T>())
+		{
+			GetComponent<T>().DeleteThis();
+			componentBitSet[GetComponentTypeID<T>()] = false;
+		}
+	}
 	//登録したコンポーネントを取得する
 	template<typename T> T& GetComponent() const
 	{
