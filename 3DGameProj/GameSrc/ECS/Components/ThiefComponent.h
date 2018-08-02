@@ -16,8 +16,6 @@ private:
 	Pos listenerPos;
 	SoundEngine::SoundSource appSound;
 	SoundEngine::SoundSource exproSound;
-	Texture tex;
-	Model model;
 	std::vector<std::unique_ptr<EnemyData>> data;
 	std::unique_ptr<EnemyData> AddEnemy();
 	//‘Ì—Í‚ðŠÄŽ‹‚·‚é

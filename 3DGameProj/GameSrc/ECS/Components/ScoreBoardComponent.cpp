@@ -7,12 +7,6 @@ std::unique_ptr<ScoreData> ScoreBoardComponent::AddData()
 	return std::make_unique<ScoreData>();
 }
 
-void ScoreBoardComponent::CreateEffect()
-{
-	
-
-}
-
 const unsigned ScoreBoardComponent::GetDigit(unsigned num) const
 {
 	unsigned digit = 0;
@@ -90,8 +84,12 @@ void ScoreBoardComponent::Draw2D()
 
 void ScoreBoardComponent::SetEntity(const Entity& enemy)
 {
+	if (!enemy.HasComponent<ThiefComponent>())
+	{
+		return;
+	}
 	const auto& enemys = enemy.GetComponent<ThiefComponent>().GetData();
-	if (enemys.empty())
+	if (enemys.empty() || enemys.data() == nullptr)
 	{
 		return;
 	}
@@ -100,16 +98,16 @@ void ScoreBoardComponent::SetEntity(const Entity& enemy)
 		if (it->lifeSpan == 0)
 		{
 			effects.emplace_back(AddData());
-			effects.at(effects.size() - 1)->color = Float4(1, 1, 1, 1);
+			effects.back()->color = Float4(1, 1, 1, 1);
 			if (it->state == EnemyData::State::TRACKING)
 			{
 				data.score += 100;
-				effects.at(effects.size() - 1)->score = 100;
+				effects.back()->score = 100;
 			}
 			if (it->state == EnemyData::State::GETAWAY)
 			{
 				data.score += 50;
-				effects.at(effects.size() - 1)->score = 50;
+				effects.back()->score = 50;
 			}
 		}
 	}

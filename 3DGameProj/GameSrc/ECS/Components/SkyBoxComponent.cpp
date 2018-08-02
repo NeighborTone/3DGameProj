@@ -3,14 +3,13 @@
 SkyBoxComponent::SkyBoxComponent(std::string texturePath)
 {
 	tex.Load(texturePath);
-	GameController::GetParticle().AddEffect("sky", "Resource/Effect/stars.efk");
-	skyHandle = GameController::GetParticle().Play("sky", Vec3(0, 0, 0));
+	skyHandle = AsetManager::GetParticle().Play("sky", Vec3(0, 0, 0));
 }
 
 void SkyBoxComponent::SetPos(Pos&& pos)
 {
 	trans->pos = pos;
-	GameController::GetParticle().SetPos(skyHandle,Pos(trans->pos));
+	AsetManager::GetParticle().SetPos(skyHandle,Pos(trans->pos));
 }
 
 void SkyBoxComponent::Initialize()

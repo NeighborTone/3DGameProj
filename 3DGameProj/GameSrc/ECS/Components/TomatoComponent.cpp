@@ -68,7 +68,10 @@ const std::vector<ToppingData>& TomatoComponent::GetData() const
 
 void TomatoComponent::ToBeKidnapped(Entity& enemy)
 {
-	if (data.empty())
+	auto& enemys = enemy.GetComponent<ThiefComponent>().GetData();
+	if (data.empty() ||
+		enemys.data() == nullptr ||
+		data.data() == nullptr)
 	{
 		return;
 
@@ -76,21 +79,20 @@ void TomatoComponent::ToBeKidnapped(Entity& enemy)
 	for (auto& targets : data)
 	{
 		bool enemyIsFind = false;
-		for (auto& enemys : enemy.GetComponent<ThiefComponent>().GetData())
+		for (auto& enemysIt : enemys)
 		{
-			if (targets.id == enemys->id)
+			if (targets.id == enemysIt->id)
 			{
 				enemyIsFind = true;
 				//–³Œøó‘Ô‚Ìƒ^[ƒQƒbƒg‚ð“®‚©‚·
-				if (targets.state == ToppingData::State::INVALID && enemys->state == EnemyData::State::GETAWAY)
+				if (targets.state == ToppingData::State::INVALID && enemysIt->state == EnemyData::State::GETAWAY)
 				{
-					//$Test$
 					//“G‚Æ‹——£‚ª‹ß‚¢•¨‚ðˆê‚É“®‚©‚·
-					if (abs(enemys->trans.pos.GetDistance(Pos(targets.trans.pos)) <= 15))
+					if (abs(enemysIt->trans.pos.GetDistance(Pos(targets.trans.pos)) <= 15))
 					{
-						targets.trans.pos = enemys->trans.pos;
+						targets.trans.pos = enemysIt->trans.pos;
 						targets.sucked.Run(Easing::QuadIn,50);
-						targets.trans.pos.y = targets.sucked.GetVolume(OnGround, enemys->trans.pos.y - 4);
+						targets.trans.pos.y = targets.sucked.GetVolume(OnGround, enemysIt->trans.pos.y - 4);
 					}
 				}
 			}

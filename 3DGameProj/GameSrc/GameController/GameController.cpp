@@ -14,6 +14,54 @@
 #include "../ECS/Components/TitleComponent.h"
 #include <iostream>
 
+GameController::GameController() :
+	player(entityManager.AddEntity()),
+	shot(entityManager.AddEntity()),
+	skyBox(entityManager.AddEntity()),
+	enemy(entityManager.AddEntity()),
+	field(entityManager.AddEntity()),
+	gameCanvas(entityManager.AddEntity()),
+	topping(entityManager.AddEntity()),
+	gameMaster(entityManager.AddEntity()),
+	pauseCanvas(entityManager.AddEntity()),
+	titleCanvas(entityManager.AddEntity())
+{
+	AsetManager::LoadAset();
+	gameMaster.AddComponent<GameStateComponent>();
+	player.AddComponent<TransformComponent>(Pos(0, 15, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
+	player.AddComponent<InuputMoveComponent>(0.1f);
+	player.AddComponent<CameraComponent>();
+	player.AddComponent<CursorComponent>();
+	shot.AddComponent<InputShotComponent>(40.0f, 20, 0.3f);
+
+	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
+	field.AddComponent<FieldComponent>();
+	enemy.AddComponent<ThiefComponent>();
+	gameCanvas.AddComponent<MiniMapComponent>();
+	gameCanvas.AddComponent<ScoreBoardComponent>();
+	pauseCanvas.AddComponent<PauseComponent>();
+	topping.AddComponent<TomatoComponent>();
+	titleCanvas.AddComponent<TitleComponent>();
+	//グループに登録
+	titleCanvas.AddGroup(TITLE);
+	gameMaster.AddGroup(ALWAYS);
+	skyBox.AddGroup(ALWAYS);
+	field.AddGroup(ALWAYS);
+	gameCanvas.AddGroup(ALWAYS);
+	topping.AddGroup(GAME);
+	player.AddGroup(GAME);
+	shot.AddGroup(GAME);
+	enemy.AddGroup(GAME);
+	pauseCanvas.AddGroup(PAUSE);
+
+}
+
+void GameController::CollisionEvent()
+{
+	enemy.GetComponent<ThiefComponent>().Damaged(shot);
+	topping.GetComponent<TomatoComponent>().ToBeKidnapped(enemy);
+}
+
 const void GameController::Title(const GameState& state)
 {
 	if (state == GameState::TITLE)
@@ -39,7 +87,8 @@ const void GameController::Play(const GameState& state)
 		CollisionEvent();
 		//プレイヤーの位置と向きから発射する
 		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
-		if (KeyBoard::Down(KeyBoard::Key::KEY_A))
+		if (KeyBoard::Down(KeyBoard::Key::KEY_A) &&
+			enemy.HasComponent<ThiefComponent>())
 		{
 			enemy.GetComponent<ThiefComponent>().DeleteThis();
 		}
@@ -83,60 +132,6 @@ const void GameController::Always()
 	}
 }
 
-Particle& GameController::GetParticle()
-{
-	static std::unique_ptr<Particle> ef = std::make_unique<Particle>();
-	return *ef;
-}
-
-GameController::GameController() :
-	player(entityManager.AddEntity()),
-	shot(entityManager.AddEntity()),
-	skyBox(entityManager.AddEntity()),
-	enemy(entityManager.AddEntity()),
-	field(entityManager.AddEntity()),
-	gameCanvas(entityManager.AddEntity()),
-	topping(entityManager.AddEntity()),
-	gameMaster(entityManager.AddEntity()),
-	pauseCanvas(entityManager.AddEntity()),
-	titleCanvas(entityManager.AddEntity())
-{
-	gameMaster.AddComponent<GameStateComponent>();
-	player.AddComponent<TransformComponent>(Pos(0, 15, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
-	player.AddComponent<InuputMoveComponent>(0.1f);
-	player.AddComponent<CameraComponent>();
-	player.AddComponent<CursorComponent>();
-	shot.AddComponent<InputShotComponent>(40.0f, 20, 0.3f);
-
-
-	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
-	field.AddComponent<FieldComponent>();
-	enemy.AddComponent<ThiefComponent>();
-	gameCanvas.AddComponent<MiniMapComponent>();
-	gameCanvas.AddComponent<ScoreBoardComponent>();
-	pauseCanvas.AddComponent<PauseComponent>();
-	topping.AddComponent<TomatoComponent>();
-	titleCanvas.AddComponent<TitleComponent>();
-	//グループに登録
-	titleCanvas.AddGroup(TITLE);
-	gameMaster.AddGroup(ALWAYS);
-	skyBox.AddGroup(ALWAYS);
-	field.AddGroup(ALWAYS);
-	gameCanvas.AddGroup(ALWAYS);
-	topping.AddGroup(GAME);
-	player.AddGroup(GAME);
-	shot.AddGroup(GAME);
-	enemy.AddGroup(GAME);
-	pauseCanvas.AddGroup(PAUSE);
-
-}
-
-void GameController::CollisionEvent()
-{
-	enemy.GetComponent<ThiefComponent>().Damaged(shot);
-	topping.GetComponent<TomatoComponent>().ToBeKidnapped(enemy);
-}
-
 void GameController::Initialize()
 {
 	entityManager.Initialize();
@@ -176,7 +171,7 @@ void GameController::Draw3D()
 	player.GetComponent<CameraComponent>().Project3D();
 	entityManager.Draw3D();
 	//すべてのparticleにカメラのビューとプロジェクションを渡す
-	GetParticle().UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
+	AsetManager::GetParticle().UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
 }
 
 void GameController::Draw2D()

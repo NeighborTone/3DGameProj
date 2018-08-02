@@ -34,21 +34,21 @@ void ThiefComponent::Create()
 	if (++cnt >= 60)
 	{
 		data.emplace_back(AddEnemy());
-		data.at(data.size() - 1)->state = EnemyData::State::TRACKING;
-		data.at(data.size() - 1)->lifeSpan = 3;
-		data.at(data.size() - 1)->trans.velocity = 0.8f;
-		data.at(data.size() - 1)->trans.scale = RADIUS * 2;
+		data.back()->state = EnemyData::State::TRACKING;
+		data.back()->lifeSpan = 3;
+		data.back()->trans.velocity = 0.8f;
+		data.back()->trans.scale = RADIUS * 2;
 		Random rand;
 		const float THETA = rand.GetRand(0.f, 45.0f);	//出現角度を決める
 		constexpr float FIELD_RADIUS = 500;		//フィールドの半径
-		data.at(data.size() - 1)->trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
-		data.at(data.size() - 1)->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
-		data.at(data.size() - 1)->trans.pos.y = rand.GetRand(20.0f, 100.0f);
-		data.at(data.size() - 1)->trackingTarget = Pos(0, 0, 0);
-		data.at(data.size() - 1)->id = id_;
-		efHandle = GameController::GetParticle().Play("app", Vec3(data.at(data.size() - 1)->trans.pos));
-		GameController::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
-		GameController::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
+		data.back()->trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
+		data.back()->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
+		data.back()->trans.pos.y = rand.GetRand(20.0f, 100.0f);
+		data.back()->trackingTarget = Pos(0, 0, 0);
+		data.back()->id = id_;
+		efHandle = AsetManager::GetParticle().Play("app", Vec3(data.back()->trans.pos));
+		AsetManager::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
+		AsetManager::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
 		appSound.PlaySE();
 		++id_;
 	}
@@ -68,28 +68,30 @@ void ThiefComponent::Executioners()
 
 void ThiefComponent::SetListenerPos(Pos&& pos)
 {
+	if (!IsActive())
+	{
+		return;
+	}
 	if (!data.empty())
 	{
 		listenerPos = pos;
-		appSound.UpDate3DSound(Vec3(data.at(data.size() - 1)->trans.pos), Vec3(pos.x, pos.y, pos.z));
+		appSound.UpDate3DSound(Vec3(data.back()->trans.pos), Vec3(pos.x, pos.y, pos.z));
 	}
 }
 
 ThiefComponent::ThiefComponent() :
 	cnt(0, 1, 0, 60)
 {
-	GameController::GetParticle().AddEffect("app", "Resource/Effect/Appear.efk");
-	GameController::GetParticle().AddEffect("expro", "Resource/Effect/testEf.efk");
-	GameController::GetParticle().AddEffect("sucking", "Resource/Effect/suck.efk");
-	GameController::GetParticle().AddEffect("away", "Resource/Effect/away.efk");
-	tex.Load("Resource/Texture/UFO_D.png");
 	appSound.Load("Resource/Sounds/steam_long.wav", true);
 	exproSound.Load("Resource/Sounds/se.ogg", true);
-	model.Load("Resource/Model/ufo.fbx");
 }
 
 void ThiefComponent::Damaged(Entity& e)
 {
+	if (!IsActive())
+	{
+		return;
+	}
 	if (data.empty())
 	{
 		return;
@@ -102,8 +104,8 @@ void ThiefComponent::Damaged(Entity& e)
 		}
 		if (e.GetComponent<InputShotComponent>().IsHit(it->aabb.Create(it->trans.pos, Scale(it->trans.scale.x * 2.1f, it->trans.scale.y, it->trans.scale.z))))
 		{
-			efHandle = GameController::GetParticle().Play("expro", Pos(it->trans.pos));
-			GameController::GetParticle().SetScale(efHandle, Vec3(6, 6, 6));
+			efHandle = AsetManager::GetParticle().Play("expro", Pos(it->trans.pos));
+			AsetManager::GetParticle().SetScale(efHandle, Vec3(6, 6, 6));
 			exproSound.PlaySE();
 			exproSound.UpDate3DSound(Pos(it->trans.pos), Vec3(listenerPos));
 			--it->lifeSpan;
@@ -131,7 +133,7 @@ bool ThiefComponent::IsToBeInRange(Sphere& sphere,long long& id_)
 			//当たった敵と同じIDにする
 			id_ = it->id;
 			it->state = EnemyData::State::GETAWAY;
-			GameController::GetParticle().Play("sucking", Pos(it->trans.pos));
+			AsetManager::GetParticle().Play("sucking", Pos(it->trans.pos));
 			return true;
 		}
 	}
@@ -155,6 +157,10 @@ void ThiefComponent::Initialize()
 
 void ThiefComponent::UpDate()
 {
+	if (!IsActive())
+	{
+		return;
+	}
 	Create();
 	if (data.empty())
 	{
@@ -193,7 +199,7 @@ void ThiefComponent::UpDate()
 			}
 			if ((abs(it->trans.pos.x) >= FieldOut || abs(it->trans.pos.z) >= FieldOut && it->state == EnemyData::State::GETAWAY))
 			{
-				GameController::GetParticle().Play("away", Pos(it->trans.pos));
+				AsetManager::GetParticle().Play("away", Pos(it->trans.pos));
 			}
 		}
 	}
@@ -211,16 +217,19 @@ void ThiefComponent::Draw3D()
 	{
 		if (it->state != EnemyData::State::DEATH)
 		{
-			model.scale = it->trans.scale / 10;	//元のモデルが大きすぎるので
-			model.pos = it->trans.pos;
-			tex.Attach(0);
-			model.Draw();
+			TransForm convert = it->trans;	//元のモデルが大きすぎるので
+			convert.scale /= 10;
+			AsetManager::GetModels().DrawModel("UFO", convert);
 		}
 	}
 }
 
 void ThiefComponent::SetTrackingTarget(Entity& target)
 {
+	if (!IsActive())
+	{
+		return;
+	}
 	if (!target.HasComponent<TomatoComponent>())
 	{
 		return;

@@ -5,7 +5,7 @@
 #include "Helper.hpp"
 #include "../ECS/Components/ComponentData/Sphere.hpp"
 #include "../ECS/Components/ComponentData/Collision.h"
-
+#include "AsetManager.h"
 //Entityの制御を行うクラスです
 class GameController
 {
@@ -18,7 +18,6 @@ private:
 		PAUSE,		//一時停止中に更新を行うグループ
 		END			//ゲーム終了時に更新を行うグループ
 	};
-
 	EntityManager entityManager;
 	Entity& gameMaster;
 	Entity& player;
@@ -36,7 +35,6 @@ private:
 	const void End(const GameState& state);
 	const void Always();
 public:
-	static Particle& GetParticle();	
 	GameController();
 	~GameController() = default;
 	void CollisionEvent();

@@ -14,7 +14,6 @@ private:
 	ScoreData data;
 	std::vector<std::unique_ptr<ScoreData>> effects;
 	std::unique_ptr<ScoreData> AddData();
-	void CreateEffect();
 	const unsigned GetDigit(unsigned num) const;
 public:
 	ScoreBoardComponent();
