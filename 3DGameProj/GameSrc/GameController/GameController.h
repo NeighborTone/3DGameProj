@@ -35,7 +35,6 @@ private:
 	const void Pause(const GameState& state);
 	const void End(const GameState& state);
 	const void Always();
-	const void SetParameter();
 public:
 	static Particle& GetParticle();	
 	GameController();

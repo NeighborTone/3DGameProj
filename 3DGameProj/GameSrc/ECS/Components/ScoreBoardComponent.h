@@ -2,22 +2,19 @@
 #include "../ECS.hpp"
 #include "../../Engine.h"
 #include "ComponentData/MetaData.hpp"
-
+#include <vector>
 class ScoreBoardComponent : public Component
 {
 private:
 	const std::string font = "Segoe Print";
 	static constexpr float size = 30;
 	Float4 colorDelta;
-	struct Data
-	{
-		Easing ease;
-		Float4 color;
-		TransForm trans;
-		Text number;
-		int score;
-	};
-	Data data;
+	Text score;
+	Text scoreEffect;
+	ScoreData data;
+	std::vector<std::unique_ptr<ScoreData>> effects;
+	std::unique_ptr<ScoreData> AddData();
+	void CreateEffect();
 	const unsigned GetDigit(unsigned num) const;
 public:
 	ScoreBoardComponent();

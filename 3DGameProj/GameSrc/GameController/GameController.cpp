@@ -39,6 +39,14 @@ const void GameController::Play(const GameState& state)
 		CollisionEvent();
 		//プレイヤーの位置と向きから発射する
 		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
+		if (KeyBoard::Down(KeyBoard::Key::KEY_A))
+		{
+			enemy.GetComponent<ThiefComponent>().DeleteThis();
+		}
+		if (KeyBoard::Down(KeyBoard::Key::KEY_G))
+		{
+			enemy.AddComponent<ThiefComponent>();
+		}
 	}
 }
 
@@ -73,21 +81,6 @@ const void GameController::Always()
 	{
 		it->UpDate();
 	}
-}
-
-const void GameController::SetParameter()
-{
-	//果てが来てしまうのでプレイヤーと一緒に動かす
-	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
-	//効果音のListenerをセットする
-	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
-	//追跡対象をセットし対象を追跡する
-	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
-	//敵が死んだらスコアを増やす
-	gameCanvas.GetComponent<ScoreBoardComponent>().SetEntity(enemy);
-	//ゲームエンドならスコアボードを動かす
-	const auto&& state = ComAssist::GetGameState(gameMaster);
-	gameCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
 }
 
 Particle& GameController::GetParticle()
@@ -156,13 +149,23 @@ void GameController::UpDate()
 	{
 		entityManager.Initialize();
 	}
+
+	//敵が死んだらスコアを増やす
+	gameCanvas.GetComponent<ScoreBoardComponent>().SetEntity(enemy);
 	Always();
 	Title(state);
 	Play(state);
 	Pause(state);
 	//Entityの状態の監視
 	entityManager.Refresh();
-	SetParameter();
+	//果てが来てしまうのでプレイヤーと一緒に動かす
+	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
+	//効果音のListenerをセットする。正しく聞こえないことがあるのでEntityの更新の後に呼ぶ
+	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
+	//追跡対象をセットし対象を追跡する
+	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
+	//ゲームエンドならスコアボードを動かす
+	gameCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
 

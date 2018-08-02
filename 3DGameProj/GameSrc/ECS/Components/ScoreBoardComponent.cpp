@@ -1,6 +1,18 @@
 #include "ScoreBoardComponent.h"
 #include "ThiefComponent.h"
 #include <iostream>
+
+std::unique_ptr<ScoreData> ScoreBoardComponent::AddData()
+{
+	return std::make_unique<ScoreData>();
+}
+
+void ScoreBoardComponent::CreateEffect()
+{
+	
+
+}
+
 const unsigned ScoreBoardComponent::GetDigit(unsigned num) const
 {
 	unsigned digit = 0;
@@ -14,7 +26,7 @@ const unsigned ScoreBoardComponent::GetDigit(unsigned num) const
 
 ScoreBoardComponent::ScoreBoardComponent()
 {
-	data.number.Create(std::to_string(0), size, font);
+	score.Create(std::to_string(0), size, font);
 }
 
 void ScoreBoardComponent::Initialize()
@@ -37,15 +49,43 @@ void ScoreBoardComponent::UpDate()
 	const float posY = (float)(Engine::GetWindowSize().y / 2) - (size * 0.8f);
 	data.trans.pos.x = posX;
 	data.trans.pos.y = posY;
+
+
+	for (auto& it : effects)
+	{
+		const float SposY = (float)(Engine::GetWindowSize().y / 2);
+
+		it->ease.Run(Easing::SineIn,40);
+		it->trans.pos.x = posX;
+		it->trans.pos.y = it->ease.GetVolume(0, SposY);
+		it->color.a -= 0.03f;
+		it->color.r = data.color.r;
+		it->color.g = data.color.g;
+		it->color.b = data.color.b;
+	}
+
+	effects.erase(std::remove_if(std::begin(effects), std::end(effects),
+		[](const std::unique_ptr<ScoreData> &data)
+	{
+		return data->ease.IsEaseEnd();
+	}),
+		std::end(effects));
 }
 
 void ScoreBoardComponent::Draw2D()
 {
-	data.number.Create(std::to_string(data.score), size, font);
-	data.number.pos.x = data.trans.pos.x;
-	data.number.pos.y = data.trans.pos.y;
-	data.number.color = data.color;
-	data.number.Draw();
+	score.Create(std::to_string(data.score), size, font);
+	score.pos.x = data.trans.pos.x;
+	score.pos.y = data.trans.pos.y;
+	score.color = data.color;
+	score.Draw();
+	for (auto& it : effects)
+	{
+		scoreEffect.Create("+" + std::to_string(it->score), size, font);
+		scoreEffect.pos = it->trans.pos;
+		scoreEffect.color = it->color;
+		scoreEffect.Draw();
+	}
 }
 
 void ScoreBoardComponent::SetEntity(const Entity& enemy)
@@ -57,13 +97,20 @@ void ScoreBoardComponent::SetEntity(const Entity& enemy)
 	}
 	for (const auto& it : enemys)
 	{
-		if (it->lifeSpan == 0 && it->state == EnemyData::State::TRACKING)
+		if (it->lifeSpan == 0)
 		{
-			data.score += 100;
-		}
-		if (it->lifeSpan == 0 && it->state == EnemyData::State::GETAWAY)
-		{
-			data.score += 50;
+			effects.emplace_back(AddData());
+			effects.at(effects.size() - 1)->color = Float4(1, 1, 1, 1);
+			if (it->state == EnemyData::State::TRACKING)
+			{
+				data.score += 100;
+				effects.at(effects.size() - 1)->score = 100;
+			}
+			if (it->state == EnemyData::State::GETAWAY)
+			{
+				data.score += 50;
+				effects.at(effects.size() - 1)->score = 50;
+			}
 		}
 	}
 }

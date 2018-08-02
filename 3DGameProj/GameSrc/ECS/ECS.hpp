@@ -36,6 +36,8 @@ using GroupBitSet = std::bitset<MaxGroups>;
 
 class Component
 {
+private:
+	bool active = true;
 public:
 	
 	Entity* entity;
@@ -44,6 +46,8 @@ public:
 	virtual void Draw3D() = 0;
 	virtual void Draw2D() = 0;
 	virtual ~Component() {}
+	virtual bool IsActive() const final{ return active; }
+	virtual void DeleteThis() final { active = false; }
 };
 
 class Entity
@@ -55,6 +59,15 @@ private:
 	ComponentArray  componentArray;
 	ComponentBitSet componentBitSet;
 	GroupBitSet groupBitSet;
+	void Deleteomponent()
+	{
+		components.erase(std::remove_if(std::begin(components), std::end(components),
+			[](const std::unique_ptr<Component> &pCom)
+		{
+			return !pCom->IsActive();
+		}),
+			std::end(components));
+	}
 public:
 
 	Entity(EntityManager& manager) : manager_(manager) {}
@@ -65,6 +78,7 @@ public:
 	}
 	void UpDate()
 	{
+		Deleteomponent();
 		for (auto& c : components) c->UpDate();
 	}
 	void Draw3D() 
@@ -115,7 +129,7 @@ public:
 		c->Initialize();
 		return *c;
 	}
-
+	
 	//登録したコンポーネントを取得する
 	template<typename T> T& GetComponent() const
 	{
@@ -123,9 +137,10 @@ public:
 		return *static_cast<T*>(ptr);
 	}
 
+	
 };
 
-//Entity統括クラス。このクラスはUnityで例えるとHierarchyに当たる部分
+//Entity統括クラス
 class EntityManager
 {
 private:

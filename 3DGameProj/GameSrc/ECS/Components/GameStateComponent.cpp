@@ -73,7 +73,3 @@ void GameStateComponent::UpDate()
 	TimerRun();
 }
 
-void GameStateComponent::Draw2D()
-{
-	std::cout << cnt.GetMilliSecond(60) << std::endl;
-}

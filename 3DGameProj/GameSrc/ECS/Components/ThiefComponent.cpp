@@ -39,7 +39,7 @@ void ThiefComponent::Create()
 		data.at(data.size() - 1)->trans.velocity = 0.8f;
 		data.at(data.size() - 1)->trans.scale = RADIUS * 2;
 		Random rand;
-		const float THETA = rand.GetRand(0.f, 360.0f);	//出現角度を決める
+		const float THETA = rand.GetRand(0.f, 45.0f);	//出現角度を決める
 		constexpr float FIELD_RADIUS = 500;		//フィールドの半径
 		data.at(data.size() - 1)->trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
 		data.at(data.size() - 1)->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;

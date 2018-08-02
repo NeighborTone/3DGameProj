@@ -51,6 +51,14 @@ struct ToppingData
 	TransForm trans;
 };
 
+struct ScoreData
+{
+	Easing ease;
+	Float4 color;
+	TransForm trans;
+	int score;
+};
+
 enum class GameState : short
 {
 	TITLE,		//ƒ^ƒCƒgƒ‹
