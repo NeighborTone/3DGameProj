@@ -13,6 +13,7 @@ MiniMapComponent::MiniMapComponent()
 
 const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 {
+	//マップの中心位置
 	const Vec2 mapCenter(Engine::GetWindowSize().x / 2.f - MapRadius, -Engine::GetWindowSize().y / 2.f + MapRadius);
 	if (e.HasComponent<TomatoComponent>())
 	{

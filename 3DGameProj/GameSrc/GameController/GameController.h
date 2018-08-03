@@ -25,9 +25,9 @@ private:
 	Entity& skyBox;
 	Entity& enemy;
 	Entity& field;
-	Entity& titleCanvas;
+	Entity& titleController;
 	Entity& gameCanvas;
-	Entity& pauseCanvas;
+	Entity& pauseController;
 	Entity& topping;
 	const void Title(const GameState& state);
 	const void Play(const GameState& state);

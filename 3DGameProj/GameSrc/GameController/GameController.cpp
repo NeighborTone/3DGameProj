@@ -23,8 +23,8 @@ GameController::GameController() :
 	gameCanvas(entityManager.AddEntity()),
 	topping(entityManager.AddEntity()),
 	gameMaster(entityManager.AddEntity()),
-	pauseCanvas(entityManager.AddEntity()),
-	titleCanvas(entityManager.AddEntity())
+	pauseController(entityManager.AddEntity()),
+	titleController(entityManager.AddEntity())
 {
 	AsetManager::LoadAset();
 	gameMaster.AddComponent<GameStateComponent>();
@@ -39,11 +39,11 @@ GameController::GameController() :
 	enemy.AddComponent<ThiefComponent>();
 	gameCanvas.AddComponent<MiniMapComponent>();
 	gameCanvas.AddComponent<ScoreBoardComponent>();
-	pauseCanvas.AddComponent<PauseComponent>();
+	pauseController.AddComponent<PauseComponent>();
 	topping.AddComponent<TomatoComponent>();
-	titleCanvas.AddComponent<TitleComponent>();
+	titleController.AddComponent<TitleComponent>();
 	//グループに登録
-	titleCanvas.AddGroup(TITLE);
+	titleController.AddGroup(TITLE);
 	gameMaster.AddGroup(ALWAYS);
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
@@ -52,7 +52,7 @@ GameController::GameController() :
 	player.AddGroup(GAME);
 	shot.AddGroup(GAME);
 	enemy.AddGroup(GAME);
-	pauseCanvas.AddGroup(PAUSE);
+	pauseController.AddGroup(PAUSE);
 
 }
 
@@ -71,6 +71,9 @@ const void GameController::Title(const GameState& state)
 		{
 			it->UpDate();
 		}
+		//タイトルからゲームの状態を受け取る
+		gameMaster.GetComponent<GameStateComponent>().SetState(
+			titleController.GetComponent<TitleComponent>().GetState());
 	}
 }
 
@@ -87,16 +90,9 @@ const void GameController::Play(const GameState& state)
 		CollisionEvent();
 		//プレイヤーの位置と向きから発射する
 		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
-		//$Test$振る舞いを動的に付け替えるテスト
-		if (KeyBoard::Down(KeyBoard::Key::KEY_A))
-		{
-			enemy.DeleteComponent<ThiefComponent>();
-		}
-		if (KeyBoard::Down(KeyBoard::Key::KEY_G) &&
-			!enemy.HasComponent<ThiefComponent>())
-		{
-			enemy.AddComponent<ThiefComponent>();
-		}
+		//トマトが0個になるとゲームエンド
+		gameMaster.GetComponent<GameStateComponent>().SetEntity(topping);
+	
 	}
 }
 
@@ -109,6 +105,8 @@ const void GameController::Pause(const GameState& state)
 		{
 			it->UpDate();
 		}
+		gameMaster.GetComponent<GameStateComponent>().SetState(
+			pauseController.GetComponent<PauseComponent>().GetState());
 	}
 }
 
@@ -194,7 +192,6 @@ void GameController::Draw2D()
 	{
 		it->Draw2D();
 	}
-
 	if (state == GameState::TITLE)
 	{
 		auto& title(entityManager.GetGroup(TITLE));
@@ -219,7 +216,6 @@ void GameController::Draw2D()
 			it->Draw2D();
 		}
 	}
-
 }
 
 void GameController::Finalize()

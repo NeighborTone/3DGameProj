@@ -59,6 +59,12 @@ struct ScoreData
 	int score;
 };
 
+struct UIData
+{
+	Easing ease;
+	Float4 color;
+	TransForm trans;
+};
 enum class GameState : short
 {
 	TITLE,		//ƒ^ƒCƒgƒ‹

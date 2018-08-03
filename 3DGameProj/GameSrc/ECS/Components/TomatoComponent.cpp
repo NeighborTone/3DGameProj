@@ -7,7 +7,7 @@ void TomatoComponent::Executioners()
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const ToppingData &data)
 	{
-		constexpr float FieldOut = 430;
+		
 		return data.state == ToppingData::State::DEATH || abs(data.trans.pos.x) >= FieldOut || abs(data.trans.pos.z) >= FieldOut;
 	}),
 		std::end(data));
@@ -58,6 +58,15 @@ void TomatoComponent::Draw3D()
 	{
 		mesh.pos = it.trans.pos;
 		mesh.Draw();
+	}
+}
+
+void TomatoComponent::GameOver(GameState& state) const
+{
+	
+	if (data.empty())
+	{
+		state = GameState::END;
 	}
 }
 

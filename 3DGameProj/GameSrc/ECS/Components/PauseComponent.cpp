@@ -8,25 +8,38 @@ PauseComponent::PauseComponent()
 
 void PauseComponent::Initialize()
 {
-	ease.Reset();
-	trans.pos = 0;
-	trans.scale = 0;
+	data.ease.Reset();
+	data.trans.pos = 0;
+	data.trans.scale = 0;
 }
 
 void PauseComponent::UpDate()
 {
-	ease.Run(Easing::QuadIn, 20);
-	trans.scale = ease.GetVolume(0, 1);
-
+	data.ease.Run(Easing::QuadIn, 20);
+	data.trans.scale = data.ease.GetVolume(0, 1);
 }
 
 void PauseComponent::Draw2D()
 {
-	text.pos = trans.pos;
-	text.scale = trans.scale;
+	text.pos = data.trans.pos;
+	text.scale = data.trans.scale;
 	text.color = Float4(1, 1, 1, 1);
 	text.Draw();
 	
 	sprite.color.a = 0.5f;
 	sprite.Draw();
+}
+
+const GameState PauseComponent::GetState()
+{
+	//$Test$
+	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
+	{
+		return GameState::PLAY;
+	}
+	if (KeyBoard::Down(KeyBoard::Key::KEY_C))
+	{
+		return GameState::RESET;
+	}
+	return GameState::PAUSE;
 }

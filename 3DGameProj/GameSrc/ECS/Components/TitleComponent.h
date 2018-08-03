@@ -7,10 +7,12 @@
 class TitleComponent : public Component
 {
 private:
-	TransForm trans;
-	Easing ease;
+	UIData logodata;
+	UIData textdata;
 	Sprite sprite;
+	Sprite logo;
 	Text text;
+	bool isPlay;
 public:
 
 	TitleComponent();
@@ -22,4 +24,6 @@ public:
 
 	void Draw2D() override;
 
+	//ƒQ[ƒ€‚ğŠJn‚·‚é‚©•Ô‚·
+	const GameState GetState();
 };

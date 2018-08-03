@@ -184,6 +184,9 @@
     <Filter Include="GameSrc\ECS\Components\ComponentSystem\Title">
       <UniqueIdentifier>{e8f7f2dc-58d7-46ff-bdb0-96891111f4c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSrc\ECS\Components\ComponentSystem\End">
+      <UniqueIdentifier>{7bec01fa-29dc-44e4-8a22-00a0ed665744}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Engine.h">

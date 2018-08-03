@@ -1,14 +1,8 @@
 #include "GameStateComponent.h"
+#include "TomatoComponent.h"
 #include <iostream>
-const void GameStateComponent::GamePlay()
-{
-	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
-	{
-		state = GameState::PLAY;
-	}
-}
 
-const void GameStateComponent::GamePause()
+void GameStateComponent::GamePause()
 {
 	if (KeyBoard::Down(KeyBoard::Key::KEY_X) && 
 		state != GameState::TITLE && 
@@ -18,18 +12,7 @@ const void GameStateComponent::GamePause()
 	}
 }
 
-const void GameStateComponent::GameReset()
-{
-	if(KeyBoard::Down(KeyBoard::Key::KEY_C) && 
-		state != GameState::TITLE &&
-		state != GameState::PLAY)
-	{
-		cnt.Reset();
-		state = GameState::RESET;
-	}
-}
-
-const void GameStateComponent::GameEnd()
+void GameStateComponent::GameEnd()
 {
 	if (cnt.GetMilliSecond(60) >= TimeLimit && state == GameState::PLAY)
 	{
@@ -53,9 +36,22 @@ GameStateComponent::GameStateComponent():
 
 }
 
+void GameStateComponent::SetState(const GameState& state_)
+{
+	state = state_;
+}
+
 const GameState GameStateComponent::GetCurrentState() const
 {
 	return state;
+}
+
+void GameStateComponent::SetEntity(const Entity & tomato)
+{
+	if (tomato.GetComponent<TomatoComponent>().GetData().empty())
+	{
+		state = GameState::END;
+	}
 }
 
 void GameStateComponent::Initialize()
@@ -66,10 +62,16 @@ void GameStateComponent::Initialize()
 
 void GameStateComponent::UpDate()
 {
-	GamePlay();
 	GamePause();
-	GameReset();
 	GameEnd();
+	//$Test$
+	if (state == GameState::END)
+	{
+		if (KeyBoard::Down(KeyBoard::Key::KEY_B))
+		{
+			state = GameState::RESET;
+		}
+	}
 	TimerRun();
 }
 

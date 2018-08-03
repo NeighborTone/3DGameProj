@@ -110,7 +110,6 @@ void ThiefComponent::Damaged(Entity& e)
 			exproSound.UpDate3DSound(Pos(it->trans.pos), Vec3(listenerPos));
 			--it->lifeSpan;
 		}
-
 	}
 }
 

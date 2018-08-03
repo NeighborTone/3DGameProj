@@ -6,8 +6,7 @@
 class PauseComponent : public Component
 {
 private:
-	TransForm trans;
-	Easing ease;
+	UIData data;
 	Sprite sprite;
 	Text text;
 public:
@@ -19,5 +18,6 @@ public:
 	void Draw3D() STUB
 
 	void Draw2D() override;
-
+	//ƒQ[ƒ€‚ğŠJn‚·‚é‚©•Ô‚·
+	const GameState GetState();
 };
