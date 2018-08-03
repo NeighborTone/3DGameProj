@@ -119,9 +119,6 @@
     <ClCompile Include="GameSrc\ECS\Components\MiniMapComponent.cpp">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
     </ClCompile>
-    <ClCompile Include="GameSrc\ECS\Components\ThiefComponent.cpp">
-      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
-    </ClCompile>
     <ClCompile Include="GameSrc\ECS\Components\TomatoComponent.cpp">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClCompile>
@@ -133,6 +130,15 @@
     </ClCompile>
     <ClCompile Include="GameSrc\GameController\AsetManager.cpp">
       <Filter>GameSrc\GameController</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\EndComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\End</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\UFOComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\RankingComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\End</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -342,9 +348,6 @@
     <ClInclude Include="GameSrc\ECS\Components\MiniMapComponent.h">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
     </ClInclude>
-    <ClInclude Include="GameSrc\ECS\Components\ThiefComponent.h">
-      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
-    </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\TomatoComponent.h">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
     </ClInclude>
@@ -359,6 +362,15 @@
     </ClInclude>
     <ClInclude Include="GameSrc\GameController\AsetManager.h">
       <Filter>GameSrc\GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\EndComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\End</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\UFOComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\RankingComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\End</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

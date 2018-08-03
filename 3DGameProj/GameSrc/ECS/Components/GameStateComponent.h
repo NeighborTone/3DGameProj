@@ -8,7 +8,7 @@
 class GameStateComponent : public Component
 {
 private:
-	static constexpr int TimeLimit = 6000'000;
+	static constexpr int TimeLimit = 20'000;
 	Counter cnt;
 	GameState state;
 	void GamePause();

@@ -8,7 +8,7 @@
 #include "../../../Engine/Graphics/Model.h"
 #include <vector>
 #include <memory>
-class ThiefComponent : public Component
+class UFOComponent : public Component
 {
 private:
 	static long long id_;
@@ -33,7 +33,7 @@ private:
 public:
 	//効果音のリスナーをセット
 	void SetListenerPos(Pos&& pos);
-	ThiefComponent();
+	UFOComponent();
 	//当たり判定を行いたいEntityをセット
 	void Damaged(Entity& e);
 	//索敵範囲に入ったか
@@ -44,6 +44,6 @@ public:
 	void Draw2D() STUB
 	//追跡したいターゲットをセット
 	void SetTrackingTarget(Entity& target);
-	const std::vector<std::unique_ptr<EnemyData>>& ThiefComponent::GetData() const;
+	const std::vector<std::unique_ptr<EnemyData>>& UFOComponent::GetData() const;
 	
 };

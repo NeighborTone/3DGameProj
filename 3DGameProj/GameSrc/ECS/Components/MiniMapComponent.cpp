@@ -1,5 +1,5 @@
 #include "MiniMapComponent.h"
-#include "ThiefComponent.h"
+#include "UFOComponent.h"
 #include "TomatoComponent.h"
 #include "../../GameController/Helper.hpp"
 #include <cmath>
@@ -8,7 +8,6 @@ MiniMapComponent::MiniMapComponent()
 	map.Load("Resource/Texture/map.png");
 	enemyIcon.Load("Resource/Texture/enemy.png");
 	toppingIcon.Load("Resource/Texture/topping.png");
-	
 }
 
 const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
@@ -31,9 +30,9 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 			toppingIcon.Draw();
 		}
 	}
-	if (e.HasComponent<ThiefComponent>())
+	if (e.HasComponent<UFOComponent>())
 	{
-		for (auto& enemys : e.GetComponent<ThiefComponent>().GetData())
+		for (auto& enemys : e.GetComponent<UFOComponent>().GetData())
 		{
 			const float dy = ComAssist::GetPos(player).z - enemys->trans.pos.z;
 			const float dx = ComAssist::GetPos(player).x - enemys->trans.pos.x;
@@ -48,7 +47,6 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 			enemyIcon.Draw();
 		}
 	}
-	
 }
 
 void MiniMapComponent::Draw2D()

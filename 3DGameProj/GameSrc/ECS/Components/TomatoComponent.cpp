@@ -1,5 +1,5 @@
 #include "TomatoComponent.h"
-#include "ThiefComponent.h"
+#include "UFOComponent.h"
 #include <algorithm>
 #include <iostream>
 void TomatoComponent::Executioners()
@@ -7,7 +7,6 @@ void TomatoComponent::Executioners()
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const ToppingData &data)
 	{
-		
 		return data.state == ToppingData::State::DEATH || abs(data.trans.pos.x) >= FieldOut || abs(data.trans.pos.z) >= FieldOut;
 	}),
 		std::end(data));
@@ -36,7 +35,6 @@ void TomatoComponent::Initialize()
 		it.id = -1;
 		it.state = ToppingData::State::EFFECTIVE;
 	}
-	
 }
 
 void TomatoComponent::UpDate()
@@ -63,7 +61,6 @@ void TomatoComponent::Draw3D()
 
 void TomatoComponent::GameOver(GameState& state) const
 {
-	
 	if (data.empty())
 	{
 		state = GameState::END;
@@ -77,7 +74,7 @@ const std::vector<ToppingData>& TomatoComponent::GetData() const
 
 void TomatoComponent::ToBeKidnapped(Entity& enemy)
 {
-	auto& enemys = enemy.GetComponent<ThiefComponent>().GetData();
+	auto& enemys = enemy.GetComponent<UFOComponent>().GetData();
 	if (data.empty() ||
 		enemys.data() == nullptr ||
 		data.data() == nullptr)
@@ -119,7 +116,7 @@ void TomatoComponent::ToBeKidnapped(Entity& enemy)
 			continue;
 		}
 		//“G‚ÌŽ‹ŠE‚É“ü‚Á‚½‚ç‚³‚ç‚í‚ê‚é
-		if (enemy.GetComponent<ThiefComponent>().IsToBeInRange(targets.sphere.Create(targets.trans.pos, 1),targets.id))
+		if (enemy.GetComponent<UFOComponent>().IsToBeInRange(targets.sphere.Create(targets.trans.pos, 1),targets.id))
 		{
 			targets.state = ToppingData::State::INVALID;
 		}

@@ -4,7 +4,7 @@
 #include "../ECS/Components/InputShotComponent.h"
 #include "../ECS/Components/SkyBoxComponent.h"
 #include "../ECS/Components/FieldComponent.h"
-#include "../ECS/Components/ThiefComponent.h"
+#include "../ECS/Components/UFOComponent.h"
 #include "../ECS/Components/MiniMapComponent.h"
 #include "../ECS/Components/TomatoComponent.h"
 #include "../ECS/Components/CursorComponent.h"
@@ -12,6 +12,8 @@
 #include "../ECS/Components/GameStateComponent.h"
 #include "../ECS/Components/PauseComponent.h"
 #include "../ECS/Components/TitleComponent.h"
+#include "../ECS/Components/EndComponent.h"
+#include "../ECS/Components/RankingComponent.h"
 #include <iostream>
 
 GameController::GameController() :
@@ -24,7 +26,8 @@ GameController::GameController() :
 	topping(entityManager.AddEntity()),
 	gameMaster(entityManager.AddEntity()),
 	pauseController(entityManager.AddEntity()),
-	titleController(entityManager.AddEntity())
+	titleController(entityManager.AddEntity()),
+	endController(entityManager.AddEntity())
 {
 	AsetManager::LoadAset();
 	bgm.Load("Resource/Sounds/spacewar.wav",false);
@@ -39,12 +42,14 @@ GameController::GameController() :
 
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
-	enemy.AddComponent<ThiefComponent>();
+	enemy.AddComponent<UFOComponent>();
 	gameCanvas.AddComponent<MiniMapComponent>();
 	gameCanvas.AddComponent<ScoreBoardComponent>();
 	pauseController.AddComponent<PauseComponent>();
 	topping.AddComponent<TomatoComponent>();
 	titleController.AddComponent<TitleComponent>();
+	endController.AddComponent<EndComponent>();
+	endController.AddComponent<RankingComponent>();
 	//グループに登録
 	titleController.AddGroup(TITLE);
 	gameMaster.AddGroup(ALWAYS);
@@ -56,11 +61,12 @@ GameController::GameController() :
 	shot.AddGroup(GAME);
 	enemy.AddGroup(GAME);
 	pauseController.AddGroup(PAUSE);
+	endController.AddGroup(END);
 }
 
 void GameController::CollisionEvent()
 {
-	enemy.GetComponent<ThiefComponent>().Damaged(shot);
+	enemy.GetComponent<UFOComponent>().Damaged(shot);
 	topping.GetComponent<TomatoComponent>().ToBeKidnapped(enemy);
 }
 
@@ -121,7 +127,10 @@ const void GameController::End(const GameState& state)
 		{
 			it->UpDate();
 		}
+		endController.GetComponent<RankingComponent>().SetScore(
+			gameCanvas.GetComponent<ScoreBoardComponent>().GetScore());
 	}
+	
 }
 
 const void GameController::Always()
@@ -152,14 +161,15 @@ void GameController::UpDate()
 	Title(state);
 	Play(state);
 	Pause(state);
+	End(state);
 	//Entityの状態の監視
 	entityManager.Refresh();
 	//果てが来てしまうのでプレイヤーと一緒に動かす
 	skyBox.GetComponent<SkyBoxComponent>().SetPos(ComAssist::GetPos(player));
 	//効果音のListenerをセットする。正しく聞こえないことがあるのでEntityの更新の後に呼ぶ
-	enemy.GetComponent<ThiefComponent>().SetListenerPos(ComAssist::GetPos(player));
+	enemy.GetComponent<UFOComponent>().SetListenerPos(ComAssist::GetPos(player));
 	//追跡対象をセットし対象を追跡する
-	enemy.GetComponent<ThiefComponent>().SetTrackingTarget(topping);
+	enemy.GetComponent<UFOComponent>().SetTrackingTarget(topping);
 	//ゲームエンドならスコアボードを動かす
 	gameCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
 	//マウスは常に画面中央
@@ -184,6 +194,14 @@ void GameController::Draw2D()
 	auto& always(entityManager.GetGroup(ALWAYS));
 	auto& gameScene(entityManager.GetGroup(GAME));
 	//後に処理したものが手前に描画される
+	if (state == GameState::END)
+	{
+		auto& end(entityManager.GetGroup(END));
+		for (auto& it : end)
+		{
+			it->Draw2D();
+		}
+	}
 	for (auto& it : always)
 	{
 		it->Draw2D();
@@ -210,14 +228,7 @@ void GameController::Draw2D()
 			it->Draw2D();
 		}
 	}
-	if(state == GameState::END)
-	{
-		auto& end(entityManager.GetGroup(END));
-		for (auto& it : end)
-		{
-			it->Draw2D();
-		}
-	}
+	
 }
 
 void GameController::Finalize()

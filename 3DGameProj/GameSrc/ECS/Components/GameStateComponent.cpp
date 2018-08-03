@@ -26,7 +26,6 @@ void GameStateComponent::TimerRun()
 	{
 		cnt.Add();
 	}
-	
 }
 
 GameStateComponent::GameStateComponent():

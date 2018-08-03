@@ -1,4 +1,4 @@
-#include "ThiefComponent.h"
+#include "UFOComponent.h"
 #include "InputShotComponent.h"
 #include "../../GameController/Helper.hpp"
 #include "../Components/TomatoComponent.h"
@@ -7,13 +7,13 @@
 #include <iostream>
 #include <algorithm>
 
-long long ThiefComponent::id_ = 0;
-std::unique_ptr<EnemyData> ThiefComponent::AddEnemy()
+long long UFOComponent::id_ = 0;
+std::unique_ptr<EnemyData> UFOComponent::AddEnemy()
 {
 	return std::make_unique<EnemyData>();
 }
 
-void ThiefComponent::LifeCheck()
+void UFOComponent::LifeCheck()
 {
 	for (auto& it : data)
 	{
@@ -24,7 +24,7 @@ void ThiefComponent::LifeCheck()
 	}
 }
 
-void ThiefComponent::Create()
+void UFOComponent::Create()
 {
 	//$Test$
 	if (isNotFound)
@@ -54,7 +54,7 @@ void ThiefComponent::Create()
 	}
 }
 
-void ThiefComponent::Executioners()
+void UFOComponent::Executioners()
 {
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const std::unique_ptr<EnemyData> &data)
@@ -66,7 +66,7 @@ void ThiefComponent::Executioners()
 }
 
 
-void ThiefComponent::SetListenerPos(Pos&& pos)
+void UFOComponent::SetListenerPos(Pos&& pos)
 {
 	if (!IsActive())
 	{
@@ -79,14 +79,14 @@ void ThiefComponent::SetListenerPos(Pos&& pos)
 	}
 }
 
-ThiefComponent::ThiefComponent() :
+UFOComponent::UFOComponent() :
 	cnt(0, 1, 0, 60)
 {
 	appSound.Load("Resource/Sounds/steam_long.wav", true);
 	exproSound.Load("Resource/Sounds/explo_low.ogg", true);
 }
 
-void ThiefComponent::Damaged(Entity& e)
+void UFOComponent::Damaged(Entity& e)
 {
 	if (!IsActive())
 	{
@@ -113,7 +113,7 @@ void ThiefComponent::Damaged(Entity& e)
 	}
 }
 
-bool ThiefComponent::IsToBeInRange(Sphere& sphere,long long& id_)
+bool UFOComponent::IsToBeInRange(Sphere& sphere,long long& id_)
 {
 	if (data.empty())
 	{
@@ -139,7 +139,7 @@ bool ThiefComponent::IsToBeInRange(Sphere& sphere,long long& id_)
 	return false;
 }
 
-void ThiefComponent::Initialize()
+void UFOComponent::Initialize()
 {
 	isNotFound = false;
 	if (data.empty())
@@ -154,7 +154,7 @@ void ThiefComponent::Initialize()
 	Executioners();
 }
 
-void ThiefComponent::UpDate()
+void UFOComponent::UpDate()
 {
 	if (!IsActive())
 	{
@@ -202,11 +202,10 @@ void ThiefComponent::UpDate()
 			}
 		}
 	}
-
 	Executioners();
 }
 
-void ThiefComponent::Draw3D()
+void UFOComponent::Draw3D()
 {
 	if (data.empty())
 	{
@@ -223,7 +222,7 @@ void ThiefComponent::Draw3D()
 	}
 }
 
-void ThiefComponent::SetTrackingTarget(Entity& target)
+void UFOComponent::SetTrackingTarget(Entity& target)
 {
 	if (!IsActive())
 	{
@@ -284,7 +283,7 @@ void ThiefComponent::SetTrackingTarget(Entity& target)
 		}
 }
 
-const std::vector<std::unique_ptr<EnemyData>>& ThiefComponent::GetData() const
+const std::vector<std::unique_ptr<EnemyData>>& UFOComponent::GetData() const
 {
 	return data;
 }

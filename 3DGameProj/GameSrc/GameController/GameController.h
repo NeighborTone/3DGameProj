@@ -29,6 +29,7 @@ private:
 	Entity& titleController;
 	Entity& gameCanvas;
 	Entity& pauseController;
+	Entity& endController;
 	Entity& topping;
 	const void Title(const GameState& state);
 	const void Play(const GameState& state);

@@ -65,6 +65,7 @@ struct UIData
 	Float4 color;
 	TransForm trans;
 };
+
 enum class GameState : short
 {
 	TITLE,		//ƒ^ƒCƒgƒ‹
