@@ -39,6 +39,7 @@ namespace SoundEngine
 		void PlaySE(int loopNum = 0, float gain = 1.0f, float pitch = 1.0f);	//‘S•”“Ç‚İ‚Ş
 		void Stop() const;
 		void Pause();
+		void SetGain(float gain);
 		void UpDate3DSound(Vec3&& pos, Vec3&& listenerPos);
 		void ExitLoop() const;
 		void Destroy();

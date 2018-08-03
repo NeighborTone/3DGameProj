@@ -70,6 +70,11 @@ namespace SoundEngine
 
 	}
 
+	void SoundSource::SetGain(float gain)
+	{
+		data->pSource->SetVolume(gain);
+	}
+
 	void SoundSource::PlayBGM(int loopNum, float gain, float pitch)
 	{
 		HRESULT hr = 0;

@@ -83,7 +83,7 @@ ThiefComponent::ThiefComponent() :
 	cnt(0, 1, 0, 60)
 {
 	appSound.Load("Resource/Sounds/steam_long.wav", true);
-	exproSound.Load("Resource/Sounds/se.ogg", true);
+	exproSound.Load("Resource/Sounds/explo_low.ogg", true);
 }
 
 void ThiefComponent::Damaged(Entity& e)

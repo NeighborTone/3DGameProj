@@ -10,6 +10,7 @@
 class GameController
 {
 private:
+	SoundEngine::SoundSource bgm;
 	enum GameGroup : std::size_t
 	{
 		ALWAYS,		//ゲームの状態に関わらず常に更新と描画を行うグループ

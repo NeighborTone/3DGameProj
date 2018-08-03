@@ -27,6 +27,9 @@ GameController::GameController() :
 	titleController(entityManager.AddEntity())
 {
 	AsetManager::LoadAset();
+	bgm.Load("Resource/Sounds/spacewar.wav",false);
+	bgm.PlayBGM(255,0.02f);
+
 	gameMaster.AddComponent<GameStateComponent>();
 	player.AddComponent<TransformComponent>(Pos(0, 15, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
 	player.AddComponent<InuputMoveComponent>(0.1f);
@@ -53,7 +56,6 @@ GameController::GameController() :
 	shot.AddGroup(GAME);
 	enemy.AddGroup(GAME);
 	pauseController.AddGroup(PAUSE);
-
 }
 
 void GameController::CollisionEvent()
