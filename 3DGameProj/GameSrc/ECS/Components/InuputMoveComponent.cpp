@@ -96,7 +96,6 @@ void InuputMoveComponent::Initialize()
 	//ŽŸ‰ñˆÈ~‚Ì‰Šú‰»‚É‚Í•Û‘¶‚µ‚½’l‚ð—p‚¢‚é
 	transform->pos = initPos;
 	eyeHeight = transform->pos.y;
-	transform->angle = 0;
 }
 void InuputMoveComponent::UpDate()
 {

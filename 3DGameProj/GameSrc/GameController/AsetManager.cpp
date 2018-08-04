@@ -10,6 +10,7 @@ void AsetManager::LoadModels()
 
 void AsetManager::LoadParticle()
 {
+	GetParticle().AddEffect("field", "Resource/Effect/field.efk");
 	GetParticle().AddEffect("sky", "Resource/Effect/stars.efk");
 	GetParticle().AddEffect("app", "Resource/Effect/Appear.efk");
 	GetParticle().AddEffect("expro", "Resource/Effect/testEf.efk");
