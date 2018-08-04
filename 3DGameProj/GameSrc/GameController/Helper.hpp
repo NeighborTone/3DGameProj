@@ -41,4 +41,15 @@ public:
 	{
 		return e.GetComponent<T>().GetCurrentState();
 	}
+	//色をグラデーションさせる
+	//1,変化させたいもの,2色の変化量
+	static void GradationColor(Float4& color, Float4& colorDelta)
+	{
+		color.r += colorDelta.r;
+		color.g += colorDelta.g;
+		color.b += colorDelta.b;
+		if (color.r <= 0.2f || color.r >= 0.99f) colorDelta.r *= -1;
+		if (color.b <= 0.2f || color.b >= 0.99f) colorDelta.b *= -1;
+		if (color.g <= 0.2f || color.g >= 0.99f) colorDelta.g *= -1;
+	}
 };

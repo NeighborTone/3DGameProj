@@ -1,5 +1,6 @@
 #include "GameStateComponent.h"
 #include "TomatoComponent.h"
+#include "RankingComponent.h"
 #include <iostream>
 
 void GameStateComponent::GamePause()
@@ -45,9 +46,9 @@ const GameState GameStateComponent::GetCurrentState() const
 	return state;
 }
 
-void GameStateComponent::SetEntity(const Entity & tomato)
+void GameStateComponent::SetEntity(const Entity& entity)
 {
-	if (tomato.GetComponent<TomatoComponent>().GetData().empty())
+	if (entity.GetComponent<TomatoComponent>().GetData().empty())
 	{
 		state = GameState::END;
 	}
@@ -63,14 +64,6 @@ void GameStateComponent::UpDate()
 {
 	GamePause();
 	GameEnd();
-	//$Test$
-	if (state == GameState::END)
-	{
-		if (KeyBoard::Down(KeyBoard::Key::KEY_B))
-		{
-			state = GameState::RESET;
-		}
-	}
 	TimerRun();
 }
 

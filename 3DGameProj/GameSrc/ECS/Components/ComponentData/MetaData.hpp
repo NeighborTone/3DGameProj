@@ -10,6 +10,12 @@ struct TransForm
 	Scale scale;			//大きさ
 	Angles angles;			//姿勢
 	Velocity velocity; 		//向きや移動量を格納
+	TransForm():
+		pos(0,0,0),
+		scale(1,1,1),
+		angles(0,0,0),
+		velocity(0,0,0)
+	{}
 };
 
 struct ShotData
@@ -68,9 +74,9 @@ struct UIData
 
 enum class GameState : short
 {
-	TITLE,		//タイトル
-	PLAY,		//ゲーム中
-	PAUSE,		//停止中
-	RESET,		//すべてのEntityの初期化処理を呼ぶ
+	TITLE,	//タイトル
+	PLAY,	//ゲーム中
+	PAUSE,	//停止中
+	RESET,	//すべてのEntityの初期化処理を呼ぶ。更新処理中に1度だけ初期化を行いたいので用意した
 	END,		//ゲーム終了
 };

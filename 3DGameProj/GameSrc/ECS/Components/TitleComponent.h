@@ -9,6 +9,8 @@ class TitleComponent : public Component
 private:
 	UIData logodata;
 	UIData textdata;
+	Float4 backColor;
+	Float4 colorDelta;
 	Sprite sprite;
 	Sprite logo;
 	Text text;

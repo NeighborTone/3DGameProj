@@ -13,7 +13,6 @@
 #include "../ECS/Components/PauseComponent.h"
 #include "../ECS/Components/TitleComponent.h"
 #include "../ECS/Components/EndComponent.h"
-#include "../ECS/Components/RankingComponent.h"
 #include <iostream>
 
 GameController::GameController() :
@@ -30,8 +29,9 @@ GameController::GameController() :
 	endController(entityManager.AddEntity())
 {
 	AsetManager::LoadAset();
+	//$Test$
 	bgm.Load("Resource/Sounds/spacewar.wav",false);
-	bgm.PlayBGM(255,0.02f);
+	bgm.PlayBGM(255,0.15f);
 
 	gameMaster.AddComponent<GameStateComponent>();
 	player.AddComponent<TransformComponent>(Pos(0, 15, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
@@ -127,8 +127,13 @@ const void GameController::End(const GameState& state)
 		{
 			it->UpDate();
 		}
+		//END状態の時にlife0のUFOが残るとスコアが加算され続けるので消しておく
+		enemy.DeleteComponent<UFOComponent>();
+
 		endController.GetComponent<RankingComponent>().SetScore(
 			gameCanvas.GetComponent<ScoreBoardComponent>().GetScore());
+		gameMaster.GetComponent<GameStateComponent>().SetState(
+			endController.GetComponent<EndComponent>().GetState());
 	}
 	
 }
@@ -152,6 +157,8 @@ void GameController::UpDate()
 	const auto&& state = ComAssist::GetGameState(gameMaster);
 	if (state == GameState::RESET)
 	{
+		enemy.DeleteComponent<UFOComponent>();
+		enemy.AddComponent<UFOComponent>();
 		entityManager.Initialize();
 	}
 

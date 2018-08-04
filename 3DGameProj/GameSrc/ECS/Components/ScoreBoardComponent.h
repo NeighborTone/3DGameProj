@@ -17,7 +17,7 @@ private:
 	//引数に入れた値の桁数を返す関数
 	const unsigned GetDigit(unsigned num) const;
 	//不要になったスコアエフェクトを破棄する
-	void RefreshEffedts();
+	void RefreshEffects();
 	//色をグラデーションさせる
 	void GradationColor();
 public:

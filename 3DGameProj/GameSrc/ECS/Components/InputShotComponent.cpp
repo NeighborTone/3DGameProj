@@ -4,7 +4,7 @@
 InputShotComponent::InputShotComponent(const float speed, const int maxNum, const float radius) :
 	speed_(speed)
 {
-	tex.Load("Resource/Texture/a.png");
+	tex.Load("Resource/Texture/shot.png");
 	mesh.GetMaterial().SetTexture(0, &tex);
 	mesh.CreateSphere(radius * 2);
 	shots.resize(maxNum);

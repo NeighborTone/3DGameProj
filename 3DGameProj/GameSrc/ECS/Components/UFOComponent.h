@@ -44,6 +44,7 @@ public:
 	void Draw2D() STUB
 	//追跡したいターゲットをセット
 	void SetTrackingTarget(Entity& target);
+	//データ取得
 	const std::vector<std::unique_ptr<EnemyData>>& UFOComponent::GetData() const;
 	
 };

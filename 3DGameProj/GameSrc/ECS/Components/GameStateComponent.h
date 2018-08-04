@@ -21,8 +21,8 @@ public:
 	void SetState(const GameState& state_);
 	//現在のゲームの状態を返す
 	const GameState GetCurrentState() const;
-	//トマトが0個なら強制的にEND
-	void SetEntity(const Entity& tomato);
+	//Entityの状態から状態遷移
+	void SetEntity(const Entity& entity);
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() STUB

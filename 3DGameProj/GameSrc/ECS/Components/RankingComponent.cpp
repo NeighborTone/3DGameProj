@@ -44,10 +44,13 @@ void RankingComponent::WrightScoreData()
 void RankingComponent::Initialize()
 {
 	isUpDateRanking = false;
+	isReset = false;
+	reduction.Reset();
 	for (size_t i = 0; i < MAX; ++i)
 	{
 		data[i].score = 0;
 		data[i].color = Float4(1, 1, 1, 1);
+		data[i].trans.scale = 1;
 		data[i].trans.pos.x = -Engine::GetWindowSize().x / 2.0f - 150;
 		data[i].ease.Reset();
 	}
@@ -72,6 +75,18 @@ void RankingComponent::UpDate()
 		data[i].ease.Run(Easing::CubicOut,80);
 		data[i].trans.pos.x = data[i].ease.GetVolume(easeStartPos, easeEndPos - easeStartPos);
 	}
+	if (data.back().ease.IsEaseEnd() && KeyBoard::Down(KeyBoard::Key::KEY_Z))
+	{
+		isReset = true;
+	}
+	if (isReset)
+	{
+		for (size_t i = 0; i < MAX; ++i)
+		{
+			reduction.Run(Easing::CubicOut, 60);
+			data[i].trans.scale = reduction.GetVolume(1, 0 - 1);
+		}
+	}
 }
 
 void RankingComponent::Draw2D()
@@ -81,6 +96,7 @@ void RankingComponent::Draw2D()
 		text.Create(std::to_string(it.score), size, font);
 		text.pos.x = it.trans.pos.x;
 		text.pos.y = it.trans.pos.y;
+		text.scale = it.trans.scale;
 		text.color = it.color;
 		text.Draw();
 	}
@@ -109,3 +125,11 @@ void RankingComponent::SetScore(const int& score)
 	WrightScoreData();
 }
 
+bool RankingComponent::IsMoveEnd()
+{
+	if (reduction.IsEaseEnd())
+	{
+		return true;
+	}
+	return false;
+}

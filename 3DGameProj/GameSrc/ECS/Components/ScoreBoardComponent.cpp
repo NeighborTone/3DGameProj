@@ -1,7 +1,7 @@
 #include "ScoreBoardComponent.h"
 #include "UFOComponent.h"
 #include <iostream>
-
+#include "../../GameController/Helper.hpp"
 std::unique_ptr<ScoreData> ScoreBoardComponent::AddData()
 {
 	return std::make_unique<ScoreData>();
@@ -18,7 +18,7 @@ const unsigned ScoreBoardComponent::GetDigit(unsigned num) const
 	return digit;
 }
 
-void ScoreBoardComponent::RefreshEffedts()
+void ScoreBoardComponent::RefreshEffects()
 {
 	effects.erase(std::remove_if(std::begin(effects), std::end(effects),
 		[](const std::unique_ptr<ScoreData> &data)
@@ -31,12 +31,8 @@ void ScoreBoardComponent::RefreshEffedts()
 
 void ScoreBoardComponent::GradationColor()
 {
-	scoreData.color.r += colorDelta.r;
-	scoreData.color.g += colorDelta.g;
-	scoreData.color.b += colorDelta.b;
-	if (scoreData.color.r <= 0.2f || scoreData.color.r >= 0.9f) colorDelta.r *= -1;
-	if (scoreData.color.b <= 0.2f || scoreData.color.b >= 0.9f) colorDelta.b *= -1;
-	if (scoreData.color.g <= 0.2f || scoreData.color.g >= 0.9f) colorDelta.g *= -1;
+	ComAssist::GradationColor(scoreData.color,colorDelta);
+
 }
 
 ScoreBoardComponent::ScoreBoardComponent()
@@ -85,7 +81,7 @@ void ScoreBoardComponent::UpDate()
 		it->color.b = scoreData.color.b;
 	}
 
-	RefreshEffedts();
+	RefreshEffects();
 }
 
 void ScoreBoardComponent::Draw2D()

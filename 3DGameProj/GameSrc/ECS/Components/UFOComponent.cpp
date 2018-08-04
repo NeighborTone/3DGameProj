@@ -49,7 +49,7 @@ void UFOComponent::Create()
 		efHandle = AsetManager::GetParticle().Play("app", Vec3(data.back()->trans.pos));
 		AsetManager::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
 		AsetManager::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
-		appSound.PlaySE();
+		appSound.PlaySE(0,10);
 		++id_;
 	}
 }
@@ -83,7 +83,7 @@ UFOComponent::UFOComponent() :
 	cnt(0, 1, 0, 60)
 {
 	appSound.Load("Resource/Sounds/steam_long.wav", true);
-	exproSound.Load("Resource/Sounds/explo_low.ogg", true);
+	exproSound.Load("Resource/Sounds/expro.wav", true);
 }
 
 void UFOComponent::Damaged(Entity& e)
@@ -106,7 +106,7 @@ void UFOComponent::Damaged(Entity& e)
 		{
 			efHandle = AsetManager::GetParticle().Play("expro", Pos(it->trans.pos));
 			AsetManager::GetParticle().SetScale(efHandle, Vec3(6, 6, 6));
-			exproSound.PlaySE();
+			exproSound.PlaySE(0,15);
 			exproSound.UpDate3DSound(Pos(it->trans.pos), Vec3(listenerPos));
 			--it->lifeSpan;
 		}
