@@ -27,7 +27,7 @@ private:
 	Entity& enemy;
 	Entity& field;
 	Entity& titleController;
-	Entity& gameCanvas;
+	Entity& alwaysCanvas;
 	Entity& pauseController;
 	Entity& endController;
 	Entity& topping;

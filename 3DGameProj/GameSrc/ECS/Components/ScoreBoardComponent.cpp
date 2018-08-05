@@ -60,7 +60,6 @@ void ScoreBoardComponent::UpDate()
 	const Vec2 ComboPos(Engine::GetWindowSize().x / 2.f - 128, (float)(Engine::GetWindowSize().y / 2));
 	comboData.trans.pos.x = ComboPos.x;
 	comboData.trans.pos.y = ScoreBoardPos.y - 100;
-	comboData.color.a -= 0.008f;
 	comboData.color.r = scoreData.color.r;
 	comboData.color.g = scoreData.color.g;
 	comboData.color.b = scoreData.color.b;
@@ -150,6 +149,11 @@ void ScoreBoardComponent::SetEntity(const Entity& enemy)
 
 void ScoreBoardComponent::CheckState(const GameState& state)
 {
+	//ポーズ中は止めておく
+	if (state != GameState::PAUSE)
+	{
+		comboData.color.a -= 0.008f;
+	}
 	if (state == GameState::END)
 	{
 		//画面の中央付近にイージングで移動

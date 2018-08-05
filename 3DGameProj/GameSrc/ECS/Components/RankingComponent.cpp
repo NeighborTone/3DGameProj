@@ -79,6 +79,7 @@ void RankingComponent::UpDate()
 	{
 		isReset = true;
 	}
+	//ï\é¶ÇµÇΩÇ‡ÇÃÇèkè¨Ç∑ÇÈ
 	if (isReset)
 	{
 		for (size_t i = 0; i < MAX; ++i)

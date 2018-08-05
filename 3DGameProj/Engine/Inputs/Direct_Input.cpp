@@ -209,7 +209,7 @@ LPDIRECTINPUTDEVICE8 PadInput::pPad[PadInput::padNum] =
 	nullptr
 };
 
-BOOL CALLBACK PadInput::EnumPadCallback(const DIDEVICEINSTANCE* inst, void* pContext)
+BOOL CALLBACK PadInput::EnumPadCallback(const DIDEVICEINSTANCE* inst, [[maybe_unused]]void* pContext)
 {
 
 	//•Û‘¶
@@ -235,7 +235,7 @@ BOOL CALLBACK PadInput::EnumPadCallback(const DIDEVICEINSTANCE* inst, void* pCon
 
 BOOL CALLBACK PadInput::EnumAxisCallback(
 	const DIDEVICEOBJECTINSTANCE* objInst,
-	void* pContext)
+	[[maybe_unused]]void* pContext)
 {
 	//Ž²”ÍˆÍŽw’è
 	DIPROPRANGE prg;

@@ -12,6 +12,7 @@ void TitleComponent::Initialize()
 {
 	logodata.ease.Reset();
 	textdata.ease.Reset();
+	reduction.Reset();
 	logodata.trans.pos = 0;
 	logodata.trans.scale = 0;
 	textdata.trans.pos = 0;
@@ -33,13 +34,20 @@ void TitleComponent::UpDate()
 		textdata.ease.Run(Easing::QuadIn, 40);
 		textdata.trans.scale = textdata.ease.GetVolume(0, 1);
 	}
-	if (!(backColor.a >= 0.5f))
+	if (!(backColor.a >= 0.5f) && !isPlay)
 	{
 		backColor.a += 0.01f;
 	}
 	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
 	{
 		isPlay = true;
+	}
+	if (isPlay)
+	{
+		reduction.Run(Easing::CubicOut, 60);
+		logodata.trans.scale = reduction.GetVolume(1 , 0 - 1);
+		textdata.trans.scale = reduction.GetVolume(1, 0 - 1);
+		backColor.a -= 0.01f;
 	}
 }
 
@@ -62,7 +70,7 @@ void TitleComponent::Draw2D()
 
 const GameState TitleComponent::GetState()
 {
-	if (isPlay)
+	if (isPlay && backColor.a <= 0 && reduction.IsEaseEnd())
 	{
 		return GameState::PLAY;
 	}

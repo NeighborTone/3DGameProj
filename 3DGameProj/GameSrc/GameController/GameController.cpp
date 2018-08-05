@@ -21,7 +21,7 @@ GameController::GameController() :
 	skyBox(entityManager.AddEntity()),
 	enemy(entityManager.AddEntity()),
 	field(entityManager.AddEntity()),
-	gameCanvas(entityManager.AddEntity()),
+	alwaysCanvas(entityManager.AddEntity()),
 	topping(entityManager.AddEntity()),
 	gameMaster(entityManager.AddEntity()),
 	pauseController(entityManager.AddEntity()),
@@ -43,8 +43,8 @@ GameController::GameController() :
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
 	enemy.AddComponent<UFOComponent>();
-	gameCanvas.AddComponent<MiniMapComponent>();
-	gameCanvas.AddComponent<ScoreBoardComponent>();
+	alwaysCanvas.AddComponent<MiniMapComponent>();
+	alwaysCanvas.AddComponent<ScoreBoardComponent>();
 	pauseController.AddComponent<PauseComponent>();
 	topping.AddComponent<TomatoComponent>();
 	titleController.AddComponent<TitleComponent>();
@@ -55,7 +55,7 @@ GameController::GameController() :
 	gameMaster.AddGroup(ALWAYS);
 	skyBox.AddGroup(ALWAYS);
 	field.AddGroup(ALWAYS);
-	gameCanvas.AddGroup(ALWAYS);
+	alwaysCanvas.AddGroup(ALWAYS);
 	topping.AddGroup(GAME);
 	player.AddGroup(GAME);
 	shot.AddGroup(GAME);
@@ -131,7 +131,7 @@ const void GameController::End(const GameState& state)
 		enemy.DeleteComponent<UFOComponent>();
 
 		endController.GetComponent<RankingComponent>().SetScore(
-			gameCanvas.GetComponent<ScoreBoardComponent>().GetScore());
+			alwaysCanvas.GetComponent<ScoreBoardComponent>().GetScore());
 		gameMaster.GetComponent<GameStateComponent>().SetState(
 			endController.GetComponent<EndComponent>().GetState());
 	}
@@ -163,7 +163,7 @@ void GameController::UpDate()
 	}
 
 	//敵が死んだらスコアを増やす
-	gameCanvas.GetComponent<ScoreBoardComponent>().SetEntity(enemy);
+	alwaysCanvas.GetComponent<ScoreBoardComponent>().SetEntity(enemy);
 	Always();
 	Title(state);
 	Play(state);
@@ -177,8 +177,8 @@ void GameController::UpDate()
 	enemy.GetComponent<UFOComponent>().SetListenerPos(ComAssist::GetPos(player));
 	//追跡対象をセットし対象を追跡する
 	enemy.GetComponent<UFOComponent>().SetTrackingTarget(topping);
-	//ゲームエンドならスコアボードを動かす
-	gameCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
+	//ゲームの状態に応じて処理をする
+	alwaysCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
 
@@ -213,8 +213,8 @@ void GameController::Draw2D()
 	{
 		it->Draw2D();
 	}
-	gameCanvas.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
-	gameCanvas.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
+	alwaysCanvas.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
+	alwaysCanvas.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
 	for (auto& it : gameScene)
 	{
 		it->Draw2D();

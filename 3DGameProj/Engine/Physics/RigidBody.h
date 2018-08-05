@@ -107,7 +107,7 @@ public:
 	* @brief 剛体の形状を描画します(現在Boxのみ)
 	* @param (tex) 描画に使いたいテクスチャー
 	*/
-	virtual void Draw(Texture& tex) = 0;
+	virtual void Draw([[maybe_unused]]Texture& tex) = 0;
 };
 
 
@@ -131,7 +131,7 @@ public:
 	DynamicBox(const DynamicBox& box);
 	DynamicBox();
 	~DynamicBox();
-	void Draw(Texture& tex) override;
+	void Draw([[maybe_unused]]Texture& tex) override;
 
 	//アライメント対策
 	void* operator new(size_t i)
@@ -190,7 +190,7 @@ public:
 	DynamicCylinder();
 	~DynamicCylinder();
 
-	void Draw(Texture& tex) override;
+	void Draw([[maybe_unused]]Texture& tex) override;
 };
  
 /*!

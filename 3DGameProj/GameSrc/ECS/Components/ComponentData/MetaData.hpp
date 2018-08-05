@@ -8,8 +8,8 @@ struct TransForm
 {
 	Pos pos;				//À•W
 	Scale scale;			//‘å‚«‚³
-	Angles angles;			//p¨
-	Velocity velocity; 		//Œü‚«‚âˆÚ“®—Ê‚ğŠi”[
+	Angles angles;		//p¨
+	Velocity velocity; 	//Œü‚«‚âˆÚ“®—Ê‚ğŠi”[
 	TransForm():
 		pos(0,0,0),
 		scale(1,1,1),
@@ -20,7 +20,7 @@ struct TransForm
 
 struct ShotData
 {
-	bool isActive;				//—LŒø‚©
+	bool isActive;			//—LŒø‚©
 	int cnt;					//õ–½
 	TransForm trans;
 };
@@ -30,12 +30,12 @@ struct EnemyData
 	enum class State
 	{
 		TRACKING,	//’ÇÕ’†
-		GETAWAY,	//“¦‘–’†
-		DEATH		//€–S
+		GETAWAY,		//“¦‘–’†
+		DEATH			//€–S
 	};
 	long long id;
 	State state;
-	int lifeSpan;			//õ–½
+	int lifeSpan;				//õ–½
 	AABB aabb;				//ƒRƒŠƒWƒ‡ƒ“‚ÌŒ`ó
 	Pos trackingTarget;		//’ÇÕ‘ÎÛ
 	Easing upMove;
@@ -47,8 +47,8 @@ struct ToppingData
 	enum class State
 	{
 		EFFECTIVE,		//—LŒø(’ÇÕ‰Â”\)
-		INVALID,		//–³Œø(’ÇÕ–³Œø,º‚í‚ê‚Ä‚¢‚é)
-		DEATH			//€–S
+		INVALID,			//–³Œø(’ÇÕ–³Œø,º‚í‚ê‚Ä‚¢‚é)
+		DEATH				//€–S
 	};
 	Easing sucked;
 	long long id;

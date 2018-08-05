@@ -44,7 +44,7 @@ private:
 	//接続されているpadを検知する
 	static BOOL CALLBACK EnumPadCallback(
 		const DIDEVICEINSTANCE* inst,
-		void* pContext
+		[[maybe_unused]]void* pContext
 	);
 	//パッドの設定
 	static BOOL CALLBACK EnumAxisCallback(
