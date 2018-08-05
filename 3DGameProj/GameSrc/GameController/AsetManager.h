@@ -16,7 +16,6 @@ public:
 	void DrawModel(std::string name, TransForm& trans);
 };
 
-
 class AsetManager
 {
 private:

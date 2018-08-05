@@ -1,5 +1,5 @@
 #pragma once
-
+#pragma warning (disable : 4458)	//thisを使うため消す
 template <typename T>
 /*! @class Counter
 *   @brief カウンターです.上限値に達したら下限値、下限値を超えたら上限値になります

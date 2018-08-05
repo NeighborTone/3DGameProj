@@ -15,7 +15,7 @@ void GameStateComponent::GamePause()
 
 void GameStateComponent::GameEnd()
 {
-	if (cnt.GetMilliSecond(60) >= TimeLimit && state == GameState::PLAY)
+	if (timer->IsTimeOver() && state == GameState::PLAY)
 	{
 		state = GameState::END;
 	}
@@ -25,15 +25,8 @@ void GameStateComponent::TimerRun()
 {
 	if (state == GameState::PLAY)
 	{
-		cnt.Add();
+		timer->TimerRun();
 	}
-}
-
-GameStateComponent::GameStateComponent():
-#undef max
-	cnt(0,1,0, std::numeric_limits<int>::max())
-{
-
 }
 
 void GameStateComponent::SetState(const GameState& state_)
@@ -56,7 +49,11 @@ void GameStateComponent::SetEntity(const Entity& entity)
 
 void GameStateComponent::Initialize()
 {
-	cnt.Reset();
+	if (!entity->HasComponent<TimerComponent>())
+	{
+		entity->AddComponent<TimerComponent>();
+	}
+	timer = &entity->GetComponent<TimerComponent>();
 	state = GameState::TITLE;
 }
 
