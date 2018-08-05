@@ -17,7 +17,7 @@ public:
 	//ほかのコンポーネントから状態を受け取る
 	void SetState(const GameState& state_);
 	//現在のゲームの状態を返す
-	const GameState GetCurrentState() const;
+	[[nodiscard]] const GameState GetCurrentState() const;
 	//Entityの状態から状態遷移
 	void SetEntity(const Entity& entity);
 	void Initialize() override;

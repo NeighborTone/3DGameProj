@@ -30,7 +30,7 @@ public:
 		max(std::numeric_limits<T>::max())
 	{};
 	//!‰ÁZ’l‚Ì‚İİ’è
-	TemplateCounter(T add) :
+	explicit TemplateCounter(T add) :
 		isMax(false),
 		isMin(false),
 		now(0),

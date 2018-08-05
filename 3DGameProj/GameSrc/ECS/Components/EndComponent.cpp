@@ -7,12 +7,14 @@ EndComponent::EndComponent()
 
 void EndComponent::Initialize()
 {
+	cnt.Reset();
 	rank = &entity->GetComponent<RankingComponent>();
 	isTitle = false;
 	data.ease.Reset();
 	data.trans.pos = 0;
 	data.color = Float4(1, 1, 1, 0.7f);
 	data.trans.scale = 0;
+	
 }
 
 void EndComponent::UpDate()
@@ -25,6 +27,10 @@ void EndComponent::UpDate()
 	{
 		data.color.a -= 0.1f;
 	}
+	if (data.color.a <= 0)
+	{
+		cnt.Add();
+	}
 }
 
 void EndComponent::Draw2D()
@@ -33,9 +39,9 @@ void EndComponent::Draw2D()
 	sprite.Draw();
 }
 
-const GameState EndComponent::GetState()
+const GameState EndComponent::GetState() const
 {
-	if (data.color.a <= 0)
+	if (cnt.GetCurrentCount() >= 30)
 	{
 		return GameState::RESET;
 	}

@@ -222,7 +222,7 @@ void UFOComponent::Draw3D()
 	}
 }
 
-void UFOComponent::SetTrackingTarget(Entity& target)
+void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 {
 	if (!IsActive())
 	{

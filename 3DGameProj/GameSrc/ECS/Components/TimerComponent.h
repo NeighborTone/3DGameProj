@@ -15,14 +15,10 @@ private:
 	Text text;
 public:
 	void Initialize() override;
-
 	void UpDate() override;
-
 	void Draw3D() STUB
-
 	void Draw2D() override;
-
 	void TimerRun();
+	[[nodiscard]] const bool IsTimeOver();
 
-	bool IsTimeOver();
 };

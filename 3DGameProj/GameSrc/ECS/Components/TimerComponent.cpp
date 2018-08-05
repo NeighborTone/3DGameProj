@@ -25,7 +25,7 @@ void TimerComponent::TimerRun()
 	cnt.Sub();
 }
 
-bool TimerComponent::IsTimeOver()
+const bool TimerComponent::IsTimeOver()
 {
 	return cnt.IsMin();
 }

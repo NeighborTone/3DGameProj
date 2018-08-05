@@ -51,17 +51,17 @@ GameController::GameController() :
 	endController.AddComponent<EndComponent>();
 	endController.AddComponent<RankingComponent>();
 	//グループに登録
-	titleController.AddGroup(TITLE);
-	gameMaster.AddGroup(ALWAYS);
-	skyBox.AddGroup(ALWAYS);
-	field.AddGroup(ALWAYS);
-	alwaysCanvas.AddGroup(ALWAYS);
-	topping.AddGroup(GAME);
-	player.AddGroup(GAME);
-	shot.AddGroup(GAME);
-	enemy.AddGroup(GAME);
-	pauseController.AddGroup(PAUSE);
-	endController.AddGroup(END);
+	titleController.AddGroup(GROUP::TITLE);
+	gameMaster.AddGroup(GROUP::ALWAYS);
+	skyBox.AddGroup(GROUP::ALWAYS);
+	field.AddGroup(GROUP::ALWAYS);
+	alwaysCanvas.AddGroup(GROUP::ALWAYS);
+	topping.AddGroup(GROUP::GAME);
+	player.AddGroup(GROUP::GAME);
+	shot.AddGroup(GROUP::GAME);
+	enemy.AddGroup(GROUP::GAME);
+	pauseController.AddGroup(GROUP::PAUSE);
+	endController.AddGroup(GROUP::END);
 }
 
 void GameController::CollisionEvent()
@@ -74,14 +74,14 @@ const void GameController::Title(const GameState& state)
 {
 	if (state == GameState::TITLE)
 	{
-		auto& titleScene(entityManager.GetGroup(TITLE));
+		auto& titleScene(entityManager.GetGroup(GROUP::TITLE));
 		for (auto& it : titleScene)
 		{
 			it->UpDate();
 		}
-		//タイトルからゲームの状態を受け取る
+		//タイトル制御者からゲームの状態を受け取る
 		gameMaster.GetComponent<GameStateComponent>().SetState(
-			titleController.GetComponent<TitleComponent>().GetState());
+			ComAssist::GetState<TitleComponent>(titleController));
 	}
 }
 
@@ -89,7 +89,7 @@ const void GameController::Play(const GameState& state)
 {
 	if (state == GameState::PLAY)
 	{
-		auto& gameScene(entityManager.GetGroup(GAME));
+		auto& gameScene(entityManager.GetGroup(GROUP::GAME));
 		for (auto& it : gameScene)
 		{
 			it->UpDate();
@@ -108,13 +108,14 @@ const void GameController::Pause(const GameState& state)
 {
 	if (state == GameState::PAUSE)
 	{
-		auto& pause(entityManager.GetGroup(PAUSE));
+		auto& pause(entityManager.GetGroup(GROUP::PAUSE));
 		for (auto& it : pause)
 		{
 			it->UpDate();
 		}
+		//ポーズ制御者からゲームの状態を受け取る
 		gameMaster.GetComponent<GameStateComponent>().SetState(
-			pauseController.GetComponent<PauseComponent>().GetState());
+			ComAssist::GetState<PauseComponent>(pauseController));
 	}
 }
 
@@ -122,25 +123,26 @@ const void GameController::End(const GameState& state)
 {
 	if (state == GameState::END)
 	{
-		auto& end(entityManager.GetGroup(END));
+		auto& end(entityManager.GetGroup(GROUP::END));
 		for (auto& it : end)
 		{
 			it->UpDate();
 		}
 		//END状態の時にlife0のUFOが残るとスコアが加算され続けるので消しておく
 		enemy.DeleteComponent<UFOComponent>();
-
+		//スコア更新
 		endController.GetComponent<RankingComponent>().SetScore(
 			alwaysCanvas.GetComponent<ScoreBoardComponent>().GetScore());
+		//ゲームエンド制御者からゲームの状態を受け取る
 		gameMaster.GetComponent<GameStateComponent>().SetState(
-			endController.GetComponent<EndComponent>().GetState());
+			ComAssist::GetState<EndComponent>(endController));
 	}
 	
 }
 
 const void GameController::Always()
 {
-	auto& always(entityManager.GetGroup(ALWAYS));
+	auto& always(entityManager.GetGroup(GROUP::ALWAYS));
 	for (auto& it : always)
 	{
 		it->UpDate();
@@ -181,7 +183,6 @@ void GameController::UpDate()
 	alwaysCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
-
 }
 
 void GameController::Draw3D()
@@ -198,12 +199,12 @@ void GameController::Draw2D()
 	player.GetComponent<CameraComponent>().Project2D();
 
 	const auto&& state = ComAssist::GetGameState(gameMaster);
-	auto& always(entityManager.GetGroup(ALWAYS));
-	auto& gameScene(entityManager.GetGroup(GAME));
+	auto& always(entityManager.GetGroup(GROUP::ALWAYS));
+	auto& gameScene(entityManager.GetGroup(GROUP::GAME));
 	//後に処理したものが手前に描画される
 	if (state == GameState::END)
 	{
-		auto& end(entityManager.GetGroup(END));
+		auto& end(entityManager.GetGroup(GROUP::END));
 		for (auto& it : end)
 		{
 			it->Draw2D();
@@ -221,7 +222,7 @@ void GameController::Draw2D()
 	}
 	if (state == GameState::TITLE)
 	{
-		auto& title(entityManager.GetGroup(TITLE));
+		auto& title(entityManager.GetGroup(GROUP::TITLE));
 		for (auto& it : title)
 		{
 			it->Draw2D();
@@ -229,7 +230,7 @@ void GameController::Draw2D()
 	}
 	if(state == GameState::PAUSE)
 	{
-		auto& pause(entityManager.GetGroup(PAUSE));
+		auto& pause(entityManager.GetGroup(GROUP::PAUSE));
 		for (auto& it : pause)
 		{
 			it->Draw2D();

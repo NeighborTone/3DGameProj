@@ -23,7 +23,8 @@ public:
 	void Draw2D() STUB
 
 	void GameOver(GameState& state) const;
-	const std::vector<ToppingData>& GetData() const;
+	//ƒf[ƒ^æ“¾
+	[[nodiscard]] const std::vector<ToppingData>& GetData() const;
 	//º‚í‚ê‚Ä‚¢‚é‚Æ‚«‚Ì“®ì
 	void ToBeKidnapped(Entity& enemy);
 };

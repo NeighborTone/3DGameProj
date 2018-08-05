@@ -72,7 +72,7 @@ struct UIData
 	TransForm trans;
 };
 
-enum class GameState : short
+enum class [[nodiscard]] GameState : short
 {
 	TITLE,	//タイトル
 	PLAY,	//ゲーム中

@@ -30,6 +30,6 @@ public:
 	const int GetScore() const;
 	//引数に入れた敵が殺されたらスコアが加算される
 	void SetEntity(const Entity& enemy);
-	//ゲームの状態に応じてアニメーションする
+	//ゲームの状態に応じた処理をする
 	void CheckState(const GameState& state);
 };

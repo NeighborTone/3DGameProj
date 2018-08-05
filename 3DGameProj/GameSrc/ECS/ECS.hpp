@@ -37,17 +37,19 @@ using GroupBitSet = std::bitset<MaxGroups>;
 class Component
 {
 private:
+	friend class Entity;	//Entityによって殺されたいのでこうなった
 	bool active = true;
+	void DeleteThis() { active = false; }
 public:
-	
 	Entity* entity;
 	virtual void Initialize() = 0;
 	virtual void UpDate() = 0;
 	virtual void Draw3D() = 0;
 	virtual void Draw2D() = 0;
 	virtual ~Component() {}
-	virtual bool IsActive() const final{ return active; }
-	virtual void DeleteThis() final { active = false; }
+	//このコンポーネントが生きているか返します
+	virtual bool IsActive() const final { return active; }
+
 };
 
 class Entity
@@ -59,7 +61,7 @@ private:
 	ComponentArray  componentArray;
 	ComponentBitSet componentBitSet;
 	GroupBitSet groupBitSet;
-	void DeleteComponent()
+	 void RefreshComponent()
 	{
 		components.erase(std::remove_if(std::begin(components), std::end(components),
 			[](const std::unique_ptr<Component> &pCom)
@@ -72,46 +74,51 @@ public:
 
 	Entity(EntityManager& manager) : manager_(manager) {}
 
+	//このEntityについているComponentの初期化処理を行います
 	void Initialize()
 	{
 		for (auto& c : components) c->Initialize();
 	}
+	//このEntityについているComponentの更新処理を行います
 	void UpDate()
 	{
-		DeleteComponent();
+		RefreshComponent();
 		for (auto& c : components) c->UpDate();
 	}
+	//このEntityについているComponentの3D描画処理を行います
 	void Draw3D() 
 	{
 		for (auto& c : components) c->Draw3D();
 	}
+	//このEntityについているComponentの2D描画処理を行います
 	void Draw2D()
 	{
 		for (auto& c : components) c->Draw2D();
 	}
+	//Entityの生存状態を返します
 	bool IsActive() const { return active; }
-
+	//Entityを殺します
 	void Destroy() { active = false; }
-
+	//Entityが指定したグループに登録されているか返します
 	bool HasGroup(Group group)
 	{
 		return groupBitSet[group];
 	}
-
+	//Entityをグループに登録します
 	void AddGroup(Group group);
-
+	//Entityをグループから消します
 	void DeleteGroup(Group group)
 	{
 		groupBitSet[group] = false;
 	}
-
+	//Entityに指定したComponentがあるか返します
 	template <typename T> bool HasComponent() const
 	{
 		return componentBitSet[GetComponentTypeID<T>()];
 	}
 
 	//コンポーネントの追加メソッド
-	//追加されたらコンポーネントの初期化メソッドが呼ばれる
+	//追加されたらコンポーネントの初期化メソッドが呼ばれます
 	template <typename T, typename... TArgs> T& AddComponent(TArgs&&... args)
 	{
 		//Tips: std::forward
@@ -129,7 +136,8 @@ public:
 		c->Initialize();
 		return *c;
 	}
-	//指定したコンポーネントを削除する
+
+	//指定したコンポーネントを削除します
 	template<typename T> void DeleteComponent()
 	{
 		if (HasComponent<T>())
@@ -138,14 +146,13 @@ public:
 			componentBitSet[GetComponentTypeID<T>()] = false;
 		}
 	}
-	//登録したコンポーネントを取得する
+
+	//登録したコンポーネントを取得します
 	template<typename T> T& GetComponent() const
 	{
 		auto ptr(componentArray[GetComponentTypeID<T>()]);
 		return *static_cast<T*>(ptr);
 	}
-
-	
 };
 
 //Entity統括クラス
@@ -172,7 +179,7 @@ public:
 	{
 		for (auto& e : entityes) e->Draw2D();
 	}
-	//アクティブでないものを削除する
+	//アクティブでないものを削除します
 	void Refresh()
 	{
 		entityes.erase(std::remove_if(std::begin(entityes), std::end(entityes),
@@ -182,17 +189,16 @@ public:
 		}),
 			std::end(entityes));
 	}
-
+	//指定したグループに登録されているEntity達を返します
 	std::vector<Entity*>& GetGroup(Group group)
 	{
 		return groupedEntities[group];
 	}
-
+	//Entityを指定したグループに登録します
 	void AddGroup(Entity* pEntity, Group group)
 	{
 		groupedEntities[group].emplace_back(pEntity);
 	}
-
 	//Entityを生成しそのポインタを返すファクトリメソッド
 	Entity& AddEntity()
 	{

@@ -41,6 +41,12 @@ public:
 	{
 		return e.GetComponent<T>().GetCurrentState();
 	}
+	//ゲームの状態を取得
+	template<typename T>
+	static GameState GetState(Entity& e)
+	{
+		return e.GetComponent<T>().GetState();
+	}
 	//色をグラデーションさせる
 	//1,変化させたいもの,2色の変化量
 	static void GradationColor(Float4& color, Float4& colorDelta)

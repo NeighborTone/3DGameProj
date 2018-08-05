@@ -4,6 +4,7 @@
 #include <DirectXMath.h>
 #include <math.h>
 #include <stdint.h>
+#include <iostream>
 
 namespace Memory
 {
@@ -82,6 +83,9 @@ public:
 		return false;
 	}
 };
-
-
-
+//デバッグビルドのみ有効にする
+#ifdef _DEBUG
+#define DOUT std::cout
+#else 
+#define DOUT 0 && std::cout
+#endif

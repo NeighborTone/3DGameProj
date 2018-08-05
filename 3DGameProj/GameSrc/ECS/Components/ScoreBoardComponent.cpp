@@ -26,7 +26,6 @@ void ScoreBoardComponent::RefreshEffects()
 		return data->ease.IsEaseEnd();
 	}),
 		std::end(effects));
-
 }
 
 void ScoreBoardComponent::GradationColor()

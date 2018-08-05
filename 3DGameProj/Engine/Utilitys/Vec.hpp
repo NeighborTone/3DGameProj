@@ -565,7 +565,7 @@ public:
 		this->b = z;
 		this->a = w;
 	}
-	Float4(const Float4& f4)
+	explicit Float4(const Float4& f4)
 	{
 		r = f4.r;
 		g = f4.g;

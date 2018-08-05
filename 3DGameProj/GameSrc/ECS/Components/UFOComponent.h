@@ -43,8 +43,8 @@ public:
 	void Draw3D() override;
 	void Draw2D() STUB
 	//追跡したいターゲットをセット
-	void SetTrackingTarget(Entity& target);
+	void SetTrackingTarget(Entity& target) noexcept;
 	//データ取得
-	const std::vector<std::unique_ptr<EnemyData>>& UFOComponent::GetData() const;
+	[[nodiscard]] const std::vector<std::unique_ptr<EnemyData>>& UFOComponent::GetData() const;
 	
 };
