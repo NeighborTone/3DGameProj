@@ -25,6 +25,12 @@ struct [[nodiscard]] ShotData
 	TransForm trans;
 };
 
+struct [[nodiscard]] HomingData
+{
+	ShotData shot;
+	Pos trackingTarget;		//í«ê’ëŒè€
+};
+
 struct [[nodiscard]] EnemyData
 {
 	enum class State

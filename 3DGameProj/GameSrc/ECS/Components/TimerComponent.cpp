@@ -3,6 +3,7 @@
 void TimerComponent::Initialize()
 {
 	data.ease.Reset();
+	data.color = Float4(1, 1, 1, 1);
 	cnt.Reset();
 	cnt.SetCounter(5400, 1, 0, 0);
 }
@@ -16,7 +17,7 @@ void TimerComponent::Draw2D()
 {
 	text.Create("Time\n" + std::to_string(cnt.GetMilliSecond(60) / 1000), size, font);
 	text.pos.y = data.trans.pos.y;
-	text.color = Float4(1, 1, 1, 1);
+	text.color = data.color;
 	text.Draw();
 }
 

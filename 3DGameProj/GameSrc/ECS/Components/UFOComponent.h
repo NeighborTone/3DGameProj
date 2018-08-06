@@ -23,7 +23,7 @@ private:
 	//新しい敵を生成する
 	void Create();
 	//アクティブでないものを処刑する
-	void Executioners();
+	void Refresh();
 	static constexpr float FieldOut = 500;
 	static constexpr float RADIUS = 2.5f;
 	static constexpr float UpMoveMAX = 20;

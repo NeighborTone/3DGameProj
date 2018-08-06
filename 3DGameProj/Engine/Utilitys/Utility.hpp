@@ -68,7 +68,7 @@ public:
 	{
 		MessageBox(NULL, text, category, MB_OK);
 	}
-	static bool SetFullScreen()
+	static bool IsFullScreen()
 	{
 		int flag;
 		flag = MessageBox(

@@ -6,8 +6,7 @@
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	ShowConsole();
-	//ÉGÉìÉWÉìê∂ê¨
-	Engine ge("3DGame!!", 1280, 960, Message::SetFullScreen());
+	Engine ge("3DGame!!", 1280, 960, Message::IsFullScreen());
 	GameMain main(ge);
 	main.Initialize();
 	main.Run();

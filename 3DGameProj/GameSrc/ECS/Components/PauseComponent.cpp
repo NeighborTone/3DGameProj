@@ -32,9 +32,10 @@ void PauseComponent::Draw2D()
 
 const GameState PauseComponent::GetState()
 {
-	//$Test$
-	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
+	if (KeyBoard::Down(KeyBoard::Key::KEY_X))
 	{
+		data.ease.Reset();
+		data.trans.scale = 0;
 		return GameState::PLAY;
 	}
 	if (KeyBoard::Down(KeyBoard::Key::KEY_C))

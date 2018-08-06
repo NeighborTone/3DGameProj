@@ -13,6 +13,7 @@
 #include "../ECS/Components/PauseComponent.h"
 #include "../ECS/Components/TitleComponent.h"
 #include "../ECS/Components/EndComponent.h"
+
 #include <iostream>
 
 GameController::GameController() :
@@ -39,7 +40,6 @@ GameController::GameController() :
 	player.AddComponent<CameraComponent>();
 	player.AddComponent<CursorComponent>();
 	shot.AddComponent<InputShotComponent>(40.0f, 20, 0.3f);
-
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
 	enemy.AddComponent<UFOComponent>();
@@ -100,7 +100,7 @@ void GameController::Play(const GameState& state)
 		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
 		//トマトが0個になるとゲームエンド
 		gameMaster.GetComponent<GameStateComponent>().SetEntity(tomato);
-	
+		
 	}
 }
 

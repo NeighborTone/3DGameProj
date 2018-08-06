@@ -54,7 +54,7 @@ void UFOComponent::Create()
 	}
 }
 
-void UFOComponent::Executioners()
+void UFOComponent::Refresh()
 {
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const std::unique_ptr<EnemyData> &data)
@@ -151,7 +151,7 @@ void UFOComponent::Initialize()
 		it->state = EnemyData::State::DEATH;
 	}
 	id_ = 0;
-	Executioners();
+	Refresh();
 }
 
 void UFOComponent::UpDate()
@@ -166,7 +166,6 @@ void UFOComponent::UpDate()
 		return;
 	}
 	LifeCheck();
-	//$Test$
 	for (auto& it : data)
 	{
 		if (it->state == EnemyData::State::TRACKING)
@@ -196,13 +195,14 @@ void UFOComponent::UpDate()
 				it->upMove.Run(Easing::QuintIn, 60);
 				it->trans.pos.y = it->upMove.GetVolume(HeightMax, UpMoveMAX);
 			}
-			if ((abs(it->trans.pos.x) >= FieldOut || abs(it->trans.pos.z) >= FieldOut && it->state == EnemyData::State::GETAWAY))
+			if ((abs(it->trans.pos.x) >= FieldOut || abs(it->trans.pos.z) >= FieldOut && 
+				it->state == EnemyData::State::GETAWAY))
 			{
 				AsetManager::GetParticle().Play("away", Pos(it->trans.pos));
 			}
 		}
 	}
-	Executioners();
+	Refresh();
 }
 
 void UFOComponent::Draw3D()
@@ -263,7 +263,8 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 				dist[i].second = targets[i].trans.pos;
 			}
 			//自分から見て一番近いものを追う
-			std::sort(std::begin(dist), std::end(dist), [](const  std::pair<float, Pos > &a, const std::pair<float, Pos> &b)
+			std::sort(std::begin(dist), std::end(dist), 
+				[](const  std::pair<float, Pos > &a, const std::pair<float, Pos> &b)
 			{
 				return a.first < b.first;
 			});
@@ -272,7 +273,10 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 	}
 	//有効なターゲットがいない場合出現させない
 	auto count = std::count_if(targets.begin(), targets.end(),
-		[](const TomatoData& state)  { return state.state ==  TomatoData::State::EFFECTIVE; });
+		[](const TomatoData& state) 
+	{
+		return state.state ==  TomatoData::State::EFFECTIVE; 
+	});
 		if (count == 0)
 		{
 			isNotFound = true;
