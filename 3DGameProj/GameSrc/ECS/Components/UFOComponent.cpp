@@ -249,7 +249,7 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 		{
 			for (size_t i = 0; i < targets.size(); ++i)
 			{
-				if (targets[i].state == ToppingData::State::INVALID)
+				if (targets[i].state == TomatoData::State::INVALID)
 				{
 					//$Test$
 					//無効なターゲットも追跡してしまうので無効なものは遠くにしておく	
@@ -272,7 +272,7 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 	}
 	//有効なターゲットがいない場合出現させない
 	auto count = std::count_if(targets.begin(), targets.end(),
-		[](const ToppingData& state)  { return state.state ==  ToppingData::State::EFFECTIVE; });
+		[](const TomatoData& state)  { return state.state ==  TomatoData::State::EFFECTIVE; });
 		if (count == 0)
 		{
 			isNotFound = true;

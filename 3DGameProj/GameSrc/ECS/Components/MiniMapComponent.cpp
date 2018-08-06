@@ -7,7 +7,7 @@ MiniMapComponent::MiniMapComponent()
 {
 	map.Load("Resource/Texture/map.png");
 	enemyIcon.Load("Resource/Texture/enemy.png");
-	toppingIcon.Load("Resource/Texture/topping.png");
+	targetIcon.Load("Resource/Texture/topping.png");
 }
 
 const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
@@ -16,18 +16,18 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 	const Vec2 mapCenter(Engine::GetWindowSize().x / 2.f - MapRadius, -Engine::GetWindowSize().y / 2.f + MapRadius);
 	if (e.HasComponent<TomatoComponent>())
 	{
-		for (auto& toppings : e.GetComponent<TomatoComponent>().GetData())
+		for (auto& tomatos : e.GetComponent<TomatoComponent>().GetData())
 		{
-			const float dy = ComAssist::GetPos(player).z - toppings.trans.pos.z;
-			const float dx = ComAssist::GetPos(player).x - toppings.trans.pos.x;
+			const float dy = ComAssist::GetPos(player).z - tomatos.trans.pos.z;
+			const float dx = ComAssist::GetPos(player).x - tomatos.trans.pos.x;
 			const float rad = atan2(dy, dx);				//角度を決定
 			float distance = hypot(dx, dy) / 4;			//プレイヤーと敵の距離を調べる
 			if (abs(distance) >= MapRadius) { distance = MapRadius; }	//マップの端を超えないようにする
-			toppingIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
-			toppingIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
-			toppingIcon.pos.x += mapCenter.x;
-			toppingIcon.pos.y += mapCenter.y;
-			toppingIcon.Draw();
+			targetIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
+			targetIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
+			targetIcon.pos.x += mapCenter.x;
+			targetIcon.pos.y += mapCenter.y;
+			targetIcon.Draw();
 		}
 	}
 	if (e.HasComponent<UFOComponent>())

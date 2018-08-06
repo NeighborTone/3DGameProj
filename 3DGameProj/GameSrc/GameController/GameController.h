@@ -35,12 +35,12 @@ private:
 	Entity& alwaysCanvas;
 	Entity& pauseController;
 	Entity& endController;
-	Entity& topping;
-	const void Title(const GameState& state);
-	const void Play(const GameState& state);
-	const void Pause(const GameState& state);
-	const void End(const GameState& state);
-	const void Always();
+	Entity& tomato;
+	void Title(const GameState& state);
+	void Play(const GameState& state);
+	void Pause(const GameState& state);
+	void End(const GameState& state);
+	void Always();
 public:
 	GameController();
 	~GameController() = default;

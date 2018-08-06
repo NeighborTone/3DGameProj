@@ -22,7 +22,7 @@ GameController::GameController() :
 	enemy(entityManager.AddEntity()),
 	field(entityManager.AddEntity()),
 	alwaysCanvas(entityManager.AddEntity()),
-	topping(entityManager.AddEntity()),
+	tomato(entityManager.AddEntity()),
 	gameMaster(entityManager.AddEntity()),
 	pauseController(entityManager.AddEntity()),
 	titleController(entityManager.AddEntity()),
@@ -46,7 +46,7 @@ GameController::GameController() :
 	alwaysCanvas.AddComponent<MiniMapComponent>();
 	alwaysCanvas.AddComponent<ScoreBoardComponent>();
 	pauseController.AddComponent<PauseComponent>();
-	topping.AddComponent<TomatoComponent>();
+	tomato.AddComponent<TomatoComponent>();
 	titleController.AddComponent<TitleComponent>();
 	endController.AddComponent<EndComponent>();
 	endController.AddComponent<RankingComponent>();
@@ -56,7 +56,7 @@ GameController::GameController() :
 	skyBox.AddGroup(GROUP::ALWAYS);
 	field.AddGroup(GROUP::ALWAYS);
 	alwaysCanvas.AddGroup(GROUP::ALWAYS);
-	topping.AddGroup(GROUP::GAME);
+	tomato.AddGroup(GROUP::GAME);
 	player.AddGroup(GROUP::GAME);
 	shot.AddGroup(GROUP::GAME);
 	enemy.AddGroup(GROUP::GAME);
@@ -67,10 +67,10 @@ GameController::GameController() :
 void GameController::CollisionEvent()
 {
 	enemy.GetComponent<UFOComponent>().Damaged(shot);
-	topping.GetComponent<TomatoComponent>().ToBeKidnapped(enemy);
+	tomato.GetComponent<TomatoComponent>().ToBeKidnapped(enemy);
 }
 
-const void GameController::Title(const GameState& state)
+void GameController::Title(const GameState& state)
 {
 	if (state == GameState::TITLE)
 	{
@@ -85,7 +85,7 @@ const void GameController::Title(const GameState& state)
 	}
 }
 
-const void GameController::Play(const GameState& state)
+void GameController::Play(const GameState& state)
 {
 	if (state == GameState::PLAY)
 	{
@@ -99,12 +99,12 @@ const void GameController::Play(const GameState& state)
 		//プレイヤーの位置と向きから発射する
 		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
 		//トマトが0個になるとゲームエンド
-		gameMaster.GetComponent<GameStateComponent>().SetEntity(topping);
+		gameMaster.GetComponent<GameStateComponent>().SetEntity(tomato);
 	
 	}
 }
 
-const void GameController::Pause(const GameState& state)
+void GameController::Pause(const GameState& state)
 {
 	if (state == GameState::PAUSE)
 	{
@@ -119,7 +119,7 @@ const void GameController::Pause(const GameState& state)
 	}
 }
 
-const void GameController::End(const GameState& state)
+void GameController::End(const GameState& state)
 {
 	if (state == GameState::END)
 	{
@@ -137,10 +137,9 @@ const void GameController::End(const GameState& state)
 		gameMaster.GetComponent<GameStateComponent>().SetState(
 			ComAssist::GetState<EndComponent>(endController));
 	}
-	
 }
 
-const void GameController::Always()
+void GameController::Always()
 {
 	auto& always(entityManager.GetGroup(GROUP::ALWAYS));
 	for (auto& it : always)
@@ -178,7 +177,7 @@ void GameController::UpDate()
 	//効果音のListenerをセットする。正しく聞こえないことがあるのでEntityの更新の後に呼ぶ
 	enemy.GetComponent<UFOComponent>().SetListenerPos(ComAssist::GetPos(player));
 	//追跡対象をセットし対象を追跡する
-	enemy.GetComponent<UFOComponent>().SetTrackingTarget(topping);
+	enemy.GetComponent<UFOComponent>().SetTrackingTarget(tomato);
 	//ゲームの状態に応じて処理をする
 	alwaysCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
 	//マウスは常に画面中央
@@ -214,7 +213,7 @@ void GameController::Draw2D()
 	{
 		it->Draw2D();
 	}
-	alwaysCanvas.GetComponent<MiniMapComponent>().DrawEntityes(topping, player);
+	alwaysCanvas.GetComponent<MiniMapComponent>().DrawEntityes(tomato, player);
 	alwaysCanvas.GetComponent<MiniMapComponent>().DrawEntityes(enemy, player);
 	for (auto& it : gameScene)
 	{

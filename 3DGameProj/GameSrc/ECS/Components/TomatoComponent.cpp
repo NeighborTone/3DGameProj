@@ -5,9 +5,9 @@
 void TomatoComponent::Executioners()
 {
 	data.erase(std::remove_if(std::begin(data), std::end(data),
-		[](const ToppingData &data)
+		[](const TomatoData &data)
 	{
-		return data.state == ToppingData::State::DEATH || abs(data.trans.pos.x) >= FieldOut || abs(data.trans.pos.z) >= FieldOut;
+		return data.state == TomatoData::State::DEATH || abs(data.trans.pos.x) >= FieldOut || abs(data.trans.pos.z) >= FieldOut;
 	}),
 		std::end(data));
 	data.shrink_to_fit();
@@ -33,7 +33,7 @@ void TomatoComponent::Initialize()
 		it.trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
 		it.trans.pos.y = OnGround;
 		it.id = -1;
-		it.state = ToppingData::State::EFFECTIVE;
+		it.state = TomatoData::State::EFFECTIVE;
 	}
 }
 
@@ -67,7 +67,7 @@ void TomatoComponent::GameOver(GameState& state) const
 	}
 }
 
-const std::vector<ToppingData>& TomatoComponent::GetData() const
+const std::vector<TomatoData>& TomatoComponent::GetData() const
 {
 	return data;
 }
@@ -91,7 +91,7 @@ void TomatoComponent::ToBeKidnapped(Entity& enemy)
 			{
 				enemyIsFind = true;
 				//無効状態のターゲットを動かす
-				if (targets.state == ToppingData::State::INVALID && enemysIt->state == EnemyData::State::GETAWAY)
+				if (targets.state == TomatoData::State::INVALID && enemysIt->state == EnemyData::State::GETAWAY)
 				{
 					//敵と距離が近い物を一緒に動かす
 					if (abs(enemysIt->trans.pos.GetDistance(Pos(targets.trans.pos)) <= 15))
@@ -105,21 +105,20 @@ void TomatoComponent::ToBeKidnapped(Entity& enemy)
 		}
 		if (!enemyIsFind)
 		{
-			targets.state = ToppingData::State::EFFECTIVE;
+			targets.state = TomatoData::State::EFFECTIVE;
 			targets.sucked.Reset();
 			targets.trans.pos.y = OnGround;
 			targets.id = -1;
 		}
 		//すでに無効になっているものや、死んでいるものはスキップ
-		if (targets.state != ToppingData::State::EFFECTIVE)
+		if (targets.state != TomatoData::State::EFFECTIVE)
 		{
 			continue;
 		}
 		//敵の視界に入ったらさらわれる
 		if (enemy.GetComponent<UFOComponent>().IsToBeInRange(targets.sphere.Create(targets.trans.pos, 1),targets.id))
 		{
-			targets.state = ToppingData::State::INVALID;
+			targets.state = TomatoData::State::INVALID;
 		}
-		
 	}
 }

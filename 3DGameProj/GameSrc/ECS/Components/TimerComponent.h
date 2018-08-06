@@ -8,7 +8,7 @@ class TimerComponent : public Component
 {
 private:
 	const std::string font = "Segoe Print";
-	static constexpr float size = 30;
+	static constexpr float size = 35;
 	static constexpr int TimeLimit = 20'000;
 	UIData data;
 	Counter cnt;

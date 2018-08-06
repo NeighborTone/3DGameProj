@@ -2,6 +2,7 @@
 #include "../ECS.hpp"
 #include "../../Engine.h"
 
+//このクラスは確実に失敗だった(配列を作れない)。データは別枠で作ることにする
 class TransformComponent : public Component
 {
 public:

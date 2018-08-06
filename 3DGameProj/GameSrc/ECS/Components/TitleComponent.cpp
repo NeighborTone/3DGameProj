@@ -5,7 +5,7 @@ TitleComponent::TitleComponent()
 {
 	sprite.Load("Resource/Texture/pause.png");
 	logo.Load("Resource/Texture/logo.png");
-	text.Create("Press Z key", 40);
+	text.Create("Press Z key", 40, font);
 }
 
 void TitleComponent::Initialize()
@@ -16,10 +16,11 @@ void TitleComponent::Initialize()
 	logodata.trans.pos = 0;
 	logodata.trans.scale = 0;
 	textdata.trans.pos = 0;
+	textdata.trans.pos.y = -100;
 	textdata.trans.scale = 0;
 	backColor = Float4(1, 1, 1, 0.f);
 	textdata.color = Float4(0.5f, 0.5f, 0.5f, 1);
-	colorDelta = Float4(0.002f, 0.005f, 0.009f, 1);
+	textdata.colorDelta = Float4(0.002f, 0.005f, 0.009f, 1);
 	isPlay = false;
 }
 
@@ -28,7 +29,7 @@ void TitleComponent::UpDate()
 	logodata.ease.Run(Easing::QuadIn, 40);
 	logodata.trans.pos.y = logodata.ease.GetVolume(490,100 - 490);
 	logodata.trans.scale = logodata.ease.GetVolume(0, 1);
-	ComAssist::GradationColor(textdata.color,colorDelta);
+	ComAssist::GradationColor(textdata.color, textdata.colorDelta);
 	if (logodata.ease.IsEaseEnd())
 	{
 		textdata.ease.Run(Easing::QuadIn, 40);
@@ -38,7 +39,7 @@ void TitleComponent::UpDate()
 	{
 		backColor.a += 0.01f;
 	}
-	if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
+	if (textdata.ease.IsEaseEnd() && KeyBoard::Down(KeyBoard::Key::KEY_Z))
 	{
 		isPlay = true;
 	}

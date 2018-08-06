@@ -13,7 +13,7 @@ private:
 	static constexpr float OnGround = 4;
 	Mesh mesh;
 	Texture tex;
-	std::vector<ToppingData> data;
+	std::vector<TomatoData> data;
 	void Executioners();
 public:
 	TomatoComponent();
@@ -24,7 +24,7 @@ public:
 
 	void GameOver(GameState& state) const;
 	//ƒf[ƒ^æ“¾
-	[[nodiscard]] const std::vector<ToppingData>& GetData() const;
+	[[nodiscard]] const std::vector<TomatoData>& GetData() const;
 	//º‚í‚ê‚Ä‚¢‚é‚Æ‚«‚Ì“®ì
 	void ToBeKidnapped(Entity& enemy);
 };

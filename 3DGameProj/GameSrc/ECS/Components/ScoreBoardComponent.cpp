@@ -7,10 +7,10 @@ std::unique_ptr<ScoreData> ScoreBoardComponent::AddData()
 	return std::make_unique<ScoreData>();
 }
 
-const unsigned ScoreBoardComponent::GetDigit(unsigned num) const
+const unsigned ScoreBoardComponent::GetDigit(long long num) const
 {
 	unsigned digit = 0;
-	while (num != 0) 
+	while (num != 0)
 	{
 		num /= 10;
 		digit++;
@@ -30,8 +30,8 @@ void ScoreBoardComponent::RefreshEffects()
 
 void ScoreBoardComponent::GradationColor()
 {
-	ComAssist::GradationColor(scoreData.color,colorDelta);
-
+	ComAssist::GradationColor(scoreData.color, scoreData.colorDelta);
+	ComAssist::GradationColor(comboData.color, comboData.colorDelta);
 }
 
 ScoreBoardComponent::ScoreBoardComponent()
@@ -41,42 +41,57 @@ ScoreBoardComponent::ScoreBoardComponent()
 
 void ScoreBoardComponent::Initialize()
 {
-	scoreData.ease.Reset();
-	scoreData.score = 0;
-	scoreData.color = Float4(0.5f, 0.5f, 0.5f,1);
-	colorDelta = Float4(0.002f, 0.005f, 0.009f,1);
+	{
+		scoreData.ease.Reset();
+		scoreData.score = 0;
+		scoreData.color = Float4(0.5f, 0.5f, 0.5f, 1);
+		scoreData.colorDelta = Float4(0.002f, 0.005f, 0.009f, 1);
+	}
+
+	{
+		comboData.score = 0;
+		comboData.color = Float4(0.5f, 0.5f, 0.5f, 0);
+		comboData.colorDelta = Float4(0.002f, 0.005f, 0.009f, 1);
+	}
+
 }
 
 void ScoreBoardComponent::UpDate()
 {
 	GradationColor();
-	const Vec2 ScoreBoardPos(
-		(float)(Engine::GetWindowSize().x / 2) - (size / 2) - (GetDigit(scoreData.score) * size / 3), 
-		(float)(Engine::GetWindowSize().y / 2) - (size * 0.8f));
-	scoreData.trans.pos.x = ScoreBoardPos.x;
-	scoreData.trans.pos.y = ScoreBoardPos.y;
 
-	const Vec2 ComboPos(Engine::GetWindowSize().x / 2.f - 128, (float)(Engine::GetWindowSize().y / 2));
-	comboData.trans.pos.x = ComboPos.x;
-	comboData.trans.pos.y = ScoreBoardPos.y - 100;
-	comboData.color.r = scoreData.color.r;
-	comboData.color.g = scoreData.color.g;
-	comboData.color.b = scoreData.color.b;
-	if (comboData.color.a <= 0)
+	const Vec2 ScoreBoardPos(
+		(Engine::GetWindowSize().x / 2.f) - (size / 2) - (GetDigit(scoreData.score) * size / 3),
+		(Engine::GetWindowSize().y / 2.f) - (size * 0.8f));
 	{
-		comboData.score = 0;
+		scoreData.trans.pos.x = ScoreBoardPos.x;
+		scoreData.trans.pos.y = ScoreBoardPos.y;
+	}
+
+	{
+		comboData.trans.pos.x = 0;
+		comboData.trans.pos.y = -100;
+		comboData.color.r = comboData.color.r;
+		comboData.color.g = comboData.color.g;
+		comboData.color.b = comboData.color.b;
+		if (comboData.color.a <= 0)
+		{
+			comboData.score = 0;
+		}
 	}
 
 	for (auto& it : effects)
 	{
-		const Vec2 ScoreEffectPos(Engine::GetWindowSize().x / 2.f - 128,(float)(Engine::GetWindowSize().y / 2));
-		it->ease.Run(Easing::ExpoIn,80);
+		const Vec2 ScoreEffectPos(
+			0,
+			-(Engine::GetWindowSize().y / 2.f));
+		it->ease.Run(Easing::QuintIn, 80);
 		it->trans.pos.x = ScoreEffectPos.x;
-		it->trans.pos.y = it->ease.GetVolume(0, ScoreEffectPos.y);
+		it->trans.pos.y = it->ease.GetVolume(-50,ScoreEffectPos.y - (-50));
 		it->color.a -= 0.008f;
-		it->color.r = scoreData.color.r;
-		it->color.g = scoreData.color.g;
-		it->color.b = scoreData.color.b;
+		it->color.r = comboData.color.r;
+		it->color.g = comboData.color.g;
+		it->color.b = comboData.color.b;
 	}
 
 	RefreshEffects();
@@ -84,28 +99,37 @@ void ScoreBoardComponent::UpDate()
 
 void ScoreBoardComponent::Draw2D()
 {
-	scoreText.Create(std::to_string(scoreData.score), size, font);
-	scoreText.pos.x = scoreData.trans.pos.x;
-	scoreText.pos.y = scoreData.trans.pos.y;
-	scoreText.color = scoreData.color;
-	scoreText.Draw();
+	{
+		scoreText.Create(std::to_string(scoreData.score), size, font);
+		scoreText.pos = scoreData.trans.pos;
+		scoreText.scale = scoreData.trans.scale;
+		scoreText.angle = scoreData.trans.angles;
+		scoreText.color = scoreData.color;
+		scoreText.Draw();
+	}
 
-	scoreText.Create(std::to_string(comboData.score) + "Combo!!", size, font);
-	scoreText.pos.x = comboData.trans.pos.x;
-	scoreText.pos.y = comboData.trans.pos.y;
-	scoreText.color = comboData.color;
-	scoreText.Draw();
-	
+
+	{
+		scoreText.Create(std::to_string(comboData.score) + "Combo!!", size -10, font);
+		scoreText.pos = comboData.trans.pos;
+		scoreText.scale = comboData.trans.scale;
+		scoreText.angle = comboData.trans.angles;
+		scoreText.color = comboData.color;
+		scoreText.Draw();
+	}
+
 	for (auto& it : effects)
 	{
 		scoreText.Create("+" + std::to_string(it->score), size, font);
 		scoreText.pos = it->trans.pos;
+		scoreText.scale = it->trans.scale;
+		scoreText.angle = it->trans.angles;
 		scoreText.color = it->color;
 		scoreText.Draw();
 	}
 }
 
-const int ScoreBoardComponent::GetScore() const
+const long long ScoreBoardComponent::GetScore() const
 {
 	return scoreData.score;
 }
@@ -128,19 +152,19 @@ void ScoreBoardComponent::SetEntity(const Entity& enemy)
 			//スコアエフェクトを新規追加
 			effects.emplace_back(AddData());
 			effects.back()->color = Float4(1, 1, 1, 1);
-			//コンボテキストを新規追加
-			comboData.color = Float4(1, 1, 1, 1);
+			comboData.color.a = 1;
+			comboData.trans.scale = 1.5f;
 			++comboData.score;
 
 			if (it->state == EnemyData::State::TRACKING)
 			{
-				scoreData.score += 100 * (comboData.score);
-				effects.back()->score = 100 * (comboData.score);
+				scoreData.score += 50 * (comboData.score);
+				effects.back()->score = 50 * (comboData.score);
 			}
 			if (it->state == EnemyData::State::GETAWAY)
 			{
-				scoreData.score += 50 * (comboData.score);
-				effects.back()->score = 50 * (comboData.score);
+				scoreData.score += 25 * (comboData.score);
+				effects.back()->score = 25 * (comboData.score);
 			}
 		}
 	}
@@ -152,14 +176,15 @@ void ScoreBoardComponent::CheckState(const GameState& state)
 	if (state != GameState::PAUSE)
 	{
 		comboData.color.a -= 0.008f;
+		comboData.trans.scale -= 0.008f;
 	}
 	if (state == GameState::END)
 	{
 		//画面の中央付近にイージングで移動
 		const float posX = (float)(Engine::GetWindowSize().x / 2) - (size / 2) - (GetDigit(scoreData.score) * size / 3);
 		const float posY = (float)(Engine::GetWindowSize().y / 2) - (size * 0.8f);
-		scoreData.ease.Run(Easing::CubicOut,60);
+		scoreData.ease.Run(Easing::CubicOut, 60);
 		scoreData.trans.pos.x = scoreData.ease.GetVolume(posX, 0 - posX);
-		scoreData.trans.pos.y = scoreData.ease.GetVolume(posY,100 - posY);
+		scoreData.trans.pos.y = scoreData.ease.GetVolume(posY, 100 - posY);
 	}
 }

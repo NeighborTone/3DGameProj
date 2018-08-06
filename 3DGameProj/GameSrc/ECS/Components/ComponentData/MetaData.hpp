@@ -4,7 +4,7 @@
 #include "Sphere.hpp"
 #include "../../Utilitys/Easing.hpp"
 
-struct TransForm
+struct [[nodiscard]] TransForm
 {
 	Pos pos;				//À•W
 	Scale scale;			//‘å‚«‚³
@@ -18,14 +18,14 @@ struct TransForm
 	{}
 };
 
-struct ShotData
+struct [[nodiscard]] ShotData
 {
 	bool isActive;			//—LŒø‚©
 	int cnt;					//õ–½
 	TransForm trans;
 };
 
-struct EnemyData
+struct [[nodiscard]] EnemyData
 {
 	enum class State
 	{
@@ -42,7 +42,7 @@ struct EnemyData
 	TransForm trans;
 };
 
-struct ToppingData
+struct [[nodiscard]] TomatoData
 {
 	enum class State
 	{
@@ -57,16 +57,24 @@ struct ToppingData
 	TransForm trans;
 };
 
-struct ScoreData
+struct[[nodiscard]] ScoreData
 {
 	Easing ease;
+	Float4 colorDelta;	//F‚Ì•Ï‰»—Ê
 	Float4 color;
 	TransForm trans;
-	int score;
+	long long score;
 };
 
-struct UIData
+struct RankData
 {
+	ScoreData scoreData;
+	bool isHighScore;
+};
+
+struct [[nodiscard]] UIData
+{
+	Float4 colorDelta;
 	Easing ease;
 	Float4 color;
 	TransForm trans;

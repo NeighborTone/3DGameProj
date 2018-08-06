@@ -9,7 +9,7 @@ class MiniMapComponent : public Component
 private:
 	static constexpr float MapRadius = 128;
 	Sprite map;
-	Sprite toppingIcon;
+	Sprite targetIcon;
 	Sprite enemyIcon;
 public:
 

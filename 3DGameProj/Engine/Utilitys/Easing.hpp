@@ -17,7 +17,7 @@ public:
 
 	//イージングの実行
 	//引数：イージング動作の関数ポインタ, 継続時間(float)
-	void Run(Ease em, float durationTime)
+	void Run(const Ease em, const float durationTime)
 	{
 		time.SetEndTime(durationTime);
 		time.Add();
@@ -26,13 +26,13 @@ public:
 
 	//値を取得
 	//引数：始点(float), 終点(float)-始点(float)
-	float GetVolume(float startPoint, float endPoint)
+	const float GetVolume(const float startPoint, const float endPoint)
 	{
 		return startPoint + (vol * endPoint);
 	}
 
 	//イージングが終了したらtrueが返る
-	bool IsEaseEnd()
+	const bool IsEaseEnd()
 	{
 		return time.IsMax();
 	}
@@ -75,7 +75,6 @@ public:
 		return 1.f / 2.f * ((postFix)*time*(((s *= (1.525f)) + 1)*time + s) + 2);
 	}
 
-
 	static float BounceIn(float time, float duration)
 	{
 		return 1.f - BounceOut(duration - time, duration);
@@ -107,8 +106,6 @@ public:
 		if (time < duration / 2) return BounceIn(time * 2, duration) * 0.5f;
 		else return BounceOut(time * 2 - duration, duration) * 0.5f + 0.5f;
 	}
-
-
 
 	static float CircIn(float time, float duration)
 	{

@@ -7,11 +7,11 @@
 class TitleComponent : public Component
 {
 private:
+	const std::string font = "Segoe Print";
 	UIData logodata;
 	UIData textdata;
 	Easing reduction;
 	Float4 backColor;
-	Float4 colorDelta;
 	Sprite sprite;
 	Sprite logo;
 	Text text;

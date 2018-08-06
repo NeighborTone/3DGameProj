@@ -4,7 +4,7 @@ void TimerComponent::Initialize()
 {
 	data.ease.Reset();
 	cnt.Reset();
-	cnt.SetCounter(1200, 1, 0, 0);
+	cnt.SetCounter(5000, 1, 0, 0);
 }
 
 void TimerComponent::UpDate()
