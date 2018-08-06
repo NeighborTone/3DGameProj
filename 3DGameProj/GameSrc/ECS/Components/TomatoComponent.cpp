@@ -22,13 +22,12 @@ TomatoComponent::TomatoComponent()
 
 void TomatoComponent::Initialize()
 {
-	//$Test$
 	data.resize(10);
 	for (auto& it : data)
 	{
 		Random rand;
 		const float THETA = rand.GetRand(0.f, 360.0f);	//èoåªäpìxÇåàÇﬂÇÈ
-		const float APP_RADIUS = rand.GetRand(100.f,300.f);		//îºåa
+		const float APP_RADIUS =150;		//îºåa
 		it.trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
 		it.trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
 		it.trans.pos.y = OnGround;

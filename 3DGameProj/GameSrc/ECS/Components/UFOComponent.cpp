@@ -26,32 +26,24 @@ void UFOComponent::LifeCheck()
 
 void UFOComponent::Create()
 {
-	//$Test$
-	if (isNotFound)
-	{
-		return;
-	}
-	if (++cnt >= 60)
-	{
-		data.emplace_back(AddEnemy());
-		data.back()->state = EnemyData::State::TRACKING;
-		data.back()->lifeSpan = 3;
-		data.back()->trans.velocity = 0.8f;
-		data.back()->trans.scale = RADIUS * 2;
-		Random rand;
-		const float THETA = rand.GetRand(0.f, 45.0f);	//出現角度を決める
-		constexpr float FIELD_RADIUS = 500;		//フィールドの半径
-		data.back()->trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
-		data.back()->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
-		data.back()->trans.pos.y = rand.GetRand(20.0f, 100.0f);
-		data.back()->trackingTarget = Pos(0, 0, 0);
-		data.back()->id = id_;
-		efHandle = AsetManager::GetParticle().Play("app", Vec3(data.back()->trans.pos));
-		AsetManager::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
-		AsetManager::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
-		appSound.PlaySE(0,10);
-		++id_;
-	}
+	data.emplace_back(AddEnemy());
+	data.back()->state = EnemyData::State::TRACKING;
+	data.back()->lifeSpan = 3;
+	data.back()->trans.velocity = 0.8f;
+	data.back()->trans.scale = RADIUS * 2;
+	Random rand;
+	const float THETA = rand.GetRand(0.f, 45.0f);	//出現角度を決める
+	constexpr float FIELD_RADIUS = 500;		//フィールドの半径
+	data.back()->trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
+	data.back()->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
+	data.back()->trans.pos.y = rand.GetRand(20.0f, 100.0f);
+	data.back()->trackingTarget = Pos(0, 0, 0);
+	data.back()->id = id_;
+	efHandle = AsetManager::GetParticle().Play("app", Vec3(data.back()->trans.pos));
+	AsetManager::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
+	AsetManager::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
+	appSound.PlaySE(0, 10);
+	++id_;
 }
 
 void UFOComponent::Refresh()
@@ -106,14 +98,14 @@ void UFOComponent::Damaged(Entity& e)
 		{
 			efHandle = AsetManager::GetParticle().Play("expro", Pos(it->trans.pos));
 			AsetManager::GetParticle().SetScale(efHandle, Vec3(6, 6, 6));
-			exproSound.PlaySE(0,15);
+			exproSound.PlaySE(0, 15);
 			exproSound.UpDate3DSound(Pos(it->trans.pos), Vec3(listenerPos));
 			--it->lifeSpan;
 		}
 	}
 }
 
-bool UFOComponent::IsToBeInRange(Sphere& sphere,long long& id_)
+bool UFOComponent::IsToBeInRange(Sphere& sphere, long long& id_)
 {
 	if (data.empty())
 	{
@@ -160,7 +152,15 @@ void UFOComponent::UpDate()
 	{
 		return;
 	}
-	Create();
+	//$Test$
+	if (isNotFound)
+	{
+		return;
+	}
+	if (++cnt >= 60)
+	{
+		Create();
+	}
 	if (data.empty())
 	{
 		return;
@@ -184,7 +184,7 @@ void UFOComponent::UpDate()
 		if (it->state == EnemyData::State::GETAWAY)
 		{
 			//$Test$
-			if(it->trans.pos.y >= UpMoveMAX)
+			if (it->trans.pos.y >= UpMoveMAX)
 			{
 				it->upMove.Reset();
 				it->trans.pos.z += it->trans.velocity.z * -1;
@@ -195,7 +195,7 @@ void UFOComponent::UpDate()
 				it->upMove.Run(Easing::QuintIn, 60);
 				it->trans.pos.y = it->upMove.GetVolume(HeightMax, UpMoveMAX);
 			}
-			if ((abs(it->trans.pos.x) >= FieldOut || abs(it->trans.pos.z) >= FieldOut && 
+			if ((abs(it->trans.pos.x) >= FieldOut || abs(it->trans.pos.z) >= FieldOut &&
 				it->state == EnemyData::State::GETAWAY))
 			{
 				AsetManager::GetParticle().Play("away", Pos(it->trans.pos));
@@ -263,7 +263,7 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 				dist[i].second = targets[i].trans.pos;
 			}
 			//自分から見て一番近いものを追う
-			std::sort(std::begin(dist), std::end(dist), 
+			std::sort(std::begin(dist), std::end(dist),
 				[](const  std::pair<float, Pos > &a, const std::pair<float, Pos> &b)
 			{
 				return a.first < b.first;
@@ -273,18 +273,18 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 	}
 	//有効なターゲットがいない場合出現させない
 	auto count = std::count_if(targets.begin(), targets.end(),
-		[](const TomatoData& state) 
+		[](const TomatoData& state)
 	{
-		return state.state ==  TomatoData::State::EFFECTIVE; 
+		return state.state == TomatoData::State::EFFECTIVE;
 	});
-		if (count == 0)
-		{
-			isNotFound = true;
-		}
-		else
-		{
-			isNotFound = false;
-		}
+	if (count == 0)
+	{
+		isNotFound = true;
+	}
+	else
+	{
+		isNotFound = false;
+	}
 }
 
 const std::vector<std::unique_ptr<EnemyData>>& UFOComponent::GetData() const
