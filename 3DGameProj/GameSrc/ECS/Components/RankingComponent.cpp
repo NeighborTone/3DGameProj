@@ -50,7 +50,6 @@ void RankingComponent::Initialize()
 	reduction.Reset();
 	for (size_t i = 0; i < MAX; ++i)
 	{
-		data[i].scoreData.score = 0;
 		data[i].scoreData.color = Float4(0.9f, 0.9f, 0.9f, 1);
 		data[i].scoreData.trans.scale = 1;
 		data[i].isHighScore = false;
@@ -115,6 +114,10 @@ void RankingComponent::Draw2D()
 
 void RankingComponent::SetScore(const long long& score)
 {
+	if (isUpDateRanking)
+	{
+		return;
+	}
 	//スコアが大きい順にソート
 	std::sort(data.begin(), data.end(),
 		[](const RankData& left, const RankData& right)
@@ -124,7 +127,7 @@ void RankingComponent::SetScore(const long long& score)
 	
 	for (size_t i = 0; i < MAX; ++i)
 	{
-		if (!isUpDateRanking && score >= data[i].scoreData.score)
+		if (!isUpDateRanking && score > data[i].scoreData.score)
 		{
 			data.back().scoreData.score = score;
 			data.back().isHighScore = true;
