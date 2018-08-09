@@ -31,8 +31,11 @@ GameController::GameController() :
 {
 	AsetManager::LoadAset();
 	//$Test$
-	bgm.Load("Resource/Sounds/spacewar.wav",false);
-	bgm.PlayBGM(255,0.15f);
+	bgm.Load("Resource/Sounds/test.wav",false);
+	bgm.SetLoopPoint(0u, 302400u);
+	bgm.PlayBGM();
+	bgm.SetGain(0.3f);
+	
 
 	gameMaster.AddComponent<GameStateComponent>();
 	player.AddComponent<TransformComponent>(Pos(0, 15, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
@@ -82,6 +85,10 @@ void GameController::Title(const GameState& state)
 		//タイトル制御者からゲームの状態を受け取る
 		gameMaster.GetComponent<GameStateComponent>().SetState(
 			ComAssist::GetState<TitleComponent>(titleController));
+		if (KeyBoard::Down(KeyBoard::Key::KEY_Z))
+		{
+			
+		}
 	}
 }
 
@@ -89,6 +96,9 @@ void GameController::Play(const GameState& state)
 {
 	if (state == GameState::PLAY)
 	{
+		//$Testこれでうまくいった$
+		bgm.ExitLoop();
+		bgm.SetLoopPoint(1360794u, 1965600u);
 		auto& gameScene(entityManager.GetGroup(GROUP::GAME));
 		for (auto& it : gameScene)
 		{
@@ -123,6 +133,15 @@ void GameController::End(const GameState& state)
 {
 	if (state == GameState::END)
 	{
+		//一度だけ呼ぶ
+		static bool i = false;
+		if (!i)
+		{
+			bgm.ExitLoop();
+			i = true;
+		}
+		//$Test$
+		bgm.SetLoopPoint(0u, 302400u);
 		auto& end(entityManager.GetGroup(GROUP::END));
 		for (auto& it : end)
 		{

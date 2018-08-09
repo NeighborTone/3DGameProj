@@ -67,27 +67,29 @@ namespace SoundEngine
 		{
 			std::cerr << e << std::endl;
 		}
-
+		data->buf = { 0 };
 	}
 
 	void SoundSource::SetGain(float gain)
 	{
 		data->pSource->SetVolume(gain);
+		data->pSource->SubmitSourceBuffer(&data->buf, nullptr);	//Sourceに音源の情報を送る
 	}
 
 	void SoundSource::PlayBGM(int loopNum, float gain, float pitch)
 	{
 		HRESULT hr = 0;
-		data->buf = { 0 };
 		try {
 			data->buf.AudioBytes = (UINT32)pcm->GetWaveByteSize();
 			data->buf.pAudioData = pcm->GetWaveData();
 			data->buf.pContext = this;
 			data->buf.Flags = XAUDIO2_END_OF_STREAM;	//このバッファの後にデータがないことをソースボイスに伝える
+			data->buf.PlayBegin = 0;	//ループされる領域の最初のサンプル
+			data->buf.PlayLength = 0;
 			data->buf.LoopCount = loopNum;	//ループ回数を指定。デフォルトで無限ループにしておく
-			data->buf.LoopBegin = 0;
 			data->pSource->SetFrequencyRatio(pitch);	//ピッチ
 			data->pSource->SetVolume(gain);				//ゲイン
+			data->pSource->FlushSourceBuffers();
 			hr = data->pSource->SubmitSourceBuffer(&data->buf, nullptr);	//Sourceに音源の情報を送る
 			if (FAILED(hr))
 			{
@@ -114,7 +116,6 @@ namespace SoundEngine
 	void SoundSource::PlaySE(int loopNum, float gain, float pitch)
 	{
 		HRESULT hr = 0;
-		data->buf = { 0 };
 		try {
 			data->buf.AudioBytes = (UINT)pcm->GetWaveByteSize();
 			data->buf.pAudioData = pcm->GetWaveData();
@@ -244,6 +245,25 @@ namespace SoundEngine
 	void SoundSource::ExitLoop() const
 	{
 		data->pSource->ExitLoop();
+	}
+
+	void SoundSource::SetLoopPoint(UINT32 begine, UINT32 end)
+	{
+		data->buf.AudioBytes = (UINT32)pcm->GetWaveByteSize();
+		data->buf.pAudioData = pcm->GetWaveData();
+		data->buf.pContext = this;
+		data->buf.Flags = XAUDIO2_END_OF_STREAM;	//このバッファの後にデータがないことをソースボイスに伝える
+		data->buf.PlayBegin = begine;	//ループされる領域の最初のサンプル
+		data->buf.LoopLength = end;
+		data->buf.LoopCount = XAUDIO2_LOOP_INFINITE;
+		data->pSource->FlushSourceBuffers();				//ボイスキューを削除(再生位置を戻すため)
+		data->pSource->SubmitSourceBuffer(&data->buf, nullptr);	//Sourceに音源の情報を送る
+	}
+
+	void SoundSource::SetLoopNum(int num)
+	{
+		data->buf.LoopCount = num;
+		data->pSource->SubmitSourceBuffer(&data->buf, nullptr);	//Sourceに音源の情報を送る
 	}
 
 	void SoundSource::Destroy()
