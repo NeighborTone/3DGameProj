@@ -13,7 +13,7 @@
 class GameController
 {
 private:
-	SoundEngine::SoundSource bgm;
+	//SoundEngine::SoundSource bgm;
 	
 	enum class GameGroup : Group
 	{

@@ -198,7 +198,7 @@ namespace SoundEngine
 		data->emitter.pLPFDirectCurve = NULL;			//ローパスフィルター(LPF)ダイレクト パス係数距離カーブNULLで規定値
 		data->emitter.pLPFReverbCurve = NULL;			//LPFリバーブパス係数距離カーブ
 		data->emitter.pReverbCurve = NULL;				//リバーブセンドレベル距離カーブ。
-		data->emitter.CurveDistanceScaler = 2.0f;		//リスナーに聞こえる範囲
+		data->emitter.CurveDistanceScaler = 7.0f;		//減衰
 																			//ほかの計算に影響しない。この値はFLT_MIN～FLT_MAXの範囲にする必要がある
 		data->emitter.DopplerScaler = 1.0f;				//ドップラー偏移効果を強調するために使用するドップラー偏移スケーラー。0.0f ～ FLT_MAX の範囲内にする必要がある
 

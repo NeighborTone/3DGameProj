@@ -13,6 +13,7 @@
 #include "../ECS/Components/PauseComponent.h"
 #include "../ECS/Components/TitleComponent.h"
 #include "../ECS/Components/EndComponent.h"
+#include "../ECS/Components/BGMComponent.h"
 
 #include <iostream>
 
@@ -31,13 +32,14 @@ GameController::GameController() :
 {
 	AsetManager::LoadAset();
 	//$Test$
-	bgm.Load("Resource/Sounds/test.wav",false);
-	bgm.SetLoopPoint(0u, 302400u);
-	bgm.PlayBGM();
-	bgm.SetGain(0.3f);
+	//bgm.Load("Resource/Sounds/test.wav",false);
+	//bgm.SetLoopPoint(0u, 302400u);
+	//bgm.PlayBGM();
+	//bgm.SetGain(0.3f);
 	
 
 	gameMaster.AddComponent<GameStateComponent>();
+	gameMaster.AddComponent<BGMComponent>();
 	player.AddComponent<TransformComponent>(Pos(0, 15, 0), Velocity(0.6f, 0.6f, 0.6f), Angles(0, 0, 0), Scale(1, 1, 1));
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
@@ -53,6 +55,7 @@ GameController::GameController() :
 	titleController.AddComponent<TitleComponent>();
 	endController.AddComponent<EndComponent>();
 	endController.AddComponent<RankingComponent>();
+	
 	//グループに登録
 	titleController.AddGroup(GROUP::TITLE);
 	gameMaster.AddGroup(GROUP::ALWAYS);
@@ -97,8 +100,8 @@ void GameController::Play(const GameState& state)
 	if (state == GameState::PLAY)
 	{
 		//$Testこれでうまくいった$
-		bgm.ExitLoop();
-		bgm.SetLoopPoint(1360794u, 1965600u);
+		//bgm.ExitLoop();
+		//bgm.SetLoopPoint(1360794u, 1965600u);
 		auto& gameScene(entityManager.GetGroup(GROUP::GAME));
 		for (auto& it : gameScene)
 		{
@@ -133,15 +136,15 @@ void GameController::End(const GameState& state)
 {
 	if (state == GameState::END)
 	{
-		//一度だけ呼ぶ
-		static bool i = false;
-		if (!i)
-		{
-			bgm.ExitLoop();
-			i = true;
-		}
-		//$Test$
-		bgm.SetLoopPoint(0u, 302400u);
+		////一度だけ呼ぶ
+		//static bool i = false;
+		//if (!i)
+		//{
+		//	bgm.ExitLoop();
+		//	i = true;
+		//}
+		////$Test$
+		//bgm.SetLoopPoint(0u, 302400u);
 		auto& end(entityManager.GetGroup(GROUP::END));
 		for (auto& it : end)
 		{

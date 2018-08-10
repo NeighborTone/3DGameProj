@@ -143,6 +143,9 @@
     <ClCompile Include="GameSrc\ECS\Components\TimerComponent.cpp">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
     </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\BGMComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -376,6 +379,9 @@
       <Filter>GameSrc\ECS\Components\ComponentSystem\End</Filter>
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\TimerComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\BGMComponent.h">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
     </ClInclude>
   </ItemGroup>
