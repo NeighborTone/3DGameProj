@@ -26,8 +26,12 @@ void UFOComponent::LifeCheck()
 
 void UFOComponent::Create()
 {
+	if (isNotFound)
+	{
+		return;
+	}
 	//$Test$
-	addedValue += 0.05f;
+	addedValue += 0.04f;
 	data.emplace_back(AddEnemy());
 	data.back()->state = EnemyData::State::TRACKING;
 	if (pTimelimit->GetCurrentCount() <= 600)
@@ -43,13 +47,17 @@ void UFOComponent::Create()
 	Random rand;
 	//$Test$
 	float THETA = 0;	//oŒ»Šp“x‚ğŒˆ‚ß‚é
-	if (pTimelimit->GetCurrentCount() <= 900 && pTimelimit->GetCurrentCount() >= 600)
+	if (pTimelimit->GetCurrentCount() <= 1500 && pTimelimit->GetCurrentCount() >= 1200)
 	{
 		THETA = rand.GetRand(125.0f, 160.0f);
 	}
-	else if (pTimelimit->GetCurrentCount() <= 600)
+	else if (pTimelimit->GetCurrentCount() <= 1200 && pTimelimit->GetCurrentCount() >= 900)
 	{
 		THETA = rand.GetRand(45.0f, 90.0f);
+	}
+	else if (pTimelimit->GetCurrentCount() <= 900)
+	{
+		THETA = rand.GetRand(0.0f, 180.0f);
 	}
 	else
 	{
@@ -172,12 +180,7 @@ void UFOComponent::Initialize()
 
 void UFOComponent::UpDate()
 {
-	if (!IsActive())
-	{
-		return;
-	}
-
-	if (isNotFound)
+	if (&entity->GetComponent<UFOComponent>() == nullptr)
 	{
 		return;
 	}

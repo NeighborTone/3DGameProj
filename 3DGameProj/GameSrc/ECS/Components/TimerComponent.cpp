@@ -5,7 +5,7 @@ void TimerComponent::Initialize()
 	data.ease.Reset();
 	data.color = Float4(1, 1, 1, 1);
 	cnt.Reset();
-	cnt.SetCounter(1800, 1, 0, 0);
+	cnt.SetCounter(2700, 1, 0, 0);
 }
 
 void TimerComponent::UpDate()
