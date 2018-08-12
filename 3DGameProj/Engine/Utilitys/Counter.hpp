@@ -123,9 +123,13 @@ public:
 		isMin = false;
 		now = 0;
 	}
-
+	//!上限値を返します
+	const T GetMax() const
+	{
+		return max;
+	}
 	//!現在のカウンターの値をミリ秒で返します
-	T GetMilliSecond(T frameRate)
+	T GetMilliSecond(const T frameRate)
 	{
 		return (now / frameRate) * 1000;
 	}

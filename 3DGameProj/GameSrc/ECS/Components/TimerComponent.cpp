@@ -5,11 +5,15 @@ void TimerComponent::Initialize()
 	data.ease.Reset();
 	data.color = Float4(1, 1, 1, 1);
 	cnt.Reset();
-	cnt.SetCounter(600, 1, 0, 0);
+	cnt.SetCounter(1800, 1, 0, 0);
 }
 
 void TimerComponent::UpDate()
 {
+	if ((cnt.GetMilliSecond(60) / 1000) <= 10)
+	{
+		data.color = Float4(1, 0, 0, 1);
+	}
 	data.trans.pos.y = (Engine::GetWindowSize().y / 2.0f) - (size * 2);
 }
 
@@ -29,4 +33,9 @@ void TimerComponent::TimerRun()
 const bool TimerComponent::IsTimeOver()
 {
 	return cnt.IsMin();
+}
+
+const Counter& TimerComponent::GetTimeLimit() const
+{
+	return cnt;
 }

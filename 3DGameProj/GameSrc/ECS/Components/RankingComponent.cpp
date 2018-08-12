@@ -74,7 +74,7 @@ void RankingComponent::UpDate()
 	{
 		const float easeStartPos(-Engine::GetWindowSize().x / 2.0f - (i * 150));
 		const float easeEndPos(-200);
-		data[i].scoreData.trans.pos.y = (float)i * 100;
+		data[i].scoreData.trans.pos.y = (float)i * 80;
 		data[i].scoreData.ease.Run(Easing::CubicOut,80);
 		data[i].scoreData.trans.pos.x = data[i].scoreData.ease.GetVolume(easeStartPos, easeEndPos - easeStartPos);
 		if (!isSetColor && data[i].isHighScore)

@@ -3,77 +3,87 @@
 
 TitleComponent::TitleComponent()
 {
-	number[0].Load("Resource/Texture/3.png");
-	number[1].Load("Resource/Texture/2.png");
-	number[2].Load("Resource/Texture/1.png");
+	number[0].Create("3", size,font);
+	number[1].Create("2", size, font);
+	number[2].Create("1", size, font);
+	destoryLogo.Create("DESTROY UFO", size,font);
 	sprite.Load("Resource/Texture/pause.png");
 	logo.Load("Resource/Texture/logo.png");
-	text.Create("Press Z key", 40, font);
+	text.Create("Press Z key", size, font);
 }
 
 void TitleComponent::Initialize()
 {
-	for (auto& it : numEasings)
+	for (auto& it : numData)
 	{
 		it.ease.Reset();
 		it.trans.scale = 0;
 		it.trans.pos.y = 100;
 		it.color = Float4(1,1,1,1);
 	}
-	logodata.ease.Reset();
-	textdata.ease.Reset();
+	destroyData.trans.scale = 0;
+	destroyData.trans.pos.y = 100;
+	destroyData.color = Float4(1,1,1,1);
+	destroyData.ease.Reset();
+	logoData.ease.Reset();
+	textData.ease.Reset();
 	reduction.Reset();
-	logodata.trans.pos = 0;
-	logodata.trans.scale = 0;
-	textdata.trans.pos = 0;
-	textdata.trans.pos.y = -100;
-	textdata.trans.scale = 0;
+	logoData.trans.pos = 0;
+	logoData.trans.scale = 0;
+	textData.trans.pos = 0;
+	textData.trans.pos.y = -100;
+	textData.trans.scale = 0;
 	backColor = Float4(1, 1, 1, 0.f);
-	textdata.color = Float4(0.5f, 0.5f, 0.5f, 1);
-	textdata.colorDelta = Float4(0.002f, 0.005f, 0.009f, 1);
+	textData.color = Float4(0.5f, 0.5f, 0.5f, 1);
+	textData.colorDelta = Float4(0.002f, 0.005f, 0.009f, 1);
 	isPlay = false;
 }
 
 void TitleComponent::UpDate()
 {
-	logodata.ease.Run(Easing::QuadIn, 40);
-	logodata.trans.pos.y = logodata.ease.GetVolume(490,100 - 490);
-	logodata.trans.scale = logodata.ease.GetVolume(0, 1);
-	ComAssist::GradationColor(textdata.color, textdata.colorDelta);
-	if (logodata.ease.IsEaseEnd())
+	logoData.ease.Run(Easing::QuadIn, 40);
+	logoData.trans.pos.y = logoData.ease.GetVolume(490,100 - 490);
+	logoData.trans.scale = logoData.ease.GetVolume(0, 1);
+	ComAssist::GradationColor(textData.color, textData.colorDelta);
+	if (logoData.ease.IsEaseEnd())
 	{
-		textdata.ease.Run(Easing::QuadIn, 40);
-		textdata.trans.scale = textdata.ease.GetVolume(0, 1);
+		textData.ease.Run(Easing::QuadIn, 40);
+		textData.trans.scale = textData.ease.GetVolume(0, 1);
 	}
 	if (!(backColor.a >= 0.5f) && !isPlay)
 	{
 		backColor.a += 0.01f;
 	}
-	if (textdata.ease.IsEaseEnd() && KeyBoard::Down(KeyBoard::Key::KEY_Z))
+	if (textData.ease.IsEaseEnd() && KeyBoard::Down(KeyBoard::Key::KEY_Z))
 	{
 		isPlay = true;
 	}
 	if (isPlay)
 	{
 		reduction.Run(Easing::CubicOut, 60);
-		logodata.trans.scale = reduction.GetVolume(1 , 0 - 1);
-		textdata.trans.scale = reduction.GetVolume(1, 0 - 1);
+		logoData.trans.scale = reduction.GetVolume(1 , 0 - 1);
+		textData.trans.scale = reduction.GetVolume(1, 0 - 1);
 		backColor.a -= 0.01f;
 	}
 	if (reduction.IsEaseEnd())
 	{
-		numEasings[0].ease.Run(Easing::QuadIn, 80);
-		numEasings[0].trans.scale = numEasings[0].ease.GetVolume(0,2);
+		numData[0].ease.Run(Easing::QuadIn, 80);
+		numData[0].trans.scale = numData[0].ease.GetVolume(0,2);
 	}
-	if (numEasings[0].ease.IsEaseEnd())
+	if (numData[0].ease.IsEaseEnd())
 	{
-		numEasings[1].ease.Run(Easing::QuadIn, 80);
-		numEasings[1].trans.scale = numEasings[1].ease.GetVolume(0, 2);
+		numData[1].ease.Run(Easing::QuadIn, 80);
+		numData[1].trans.scale = numData[1].ease.GetVolume(0, 2);
 	}
-	if (numEasings[1].ease.IsEaseEnd())
+	if (numData[1].ease.IsEaseEnd())
 	{
-		numEasings[2].ease.Run(Easing::QuadIn, 80);
-		numEasings[2].trans.scale = numEasings[2].ease.GetVolume(0, 2);
+		numData[2].ease.Run(Easing::QuadIn, 80);
+		numData[2].trans.scale = numData[2].ease.GetVolume(0, 2);
+	}
+	if (numData[2].ease.IsEaseEnd())
+	{
+		destroyData.ease.Run(Easing::QuadIn, 80);
+		destroyData.trans.scale = destroyData.ease.GetVolume(0, 2);
 	}
 }
 
@@ -82,25 +92,33 @@ void TitleComponent::Draw2D()
 	sprite.color = backColor;
 
 	sprite.Draw();
-	logo.pos = logodata.trans.pos;
-	logo.scale = logodata.trans.scale;
+	logo.pos = logoData.trans.pos;
+	logo.scale = logoData.trans.scale;
 	logo.Draw();
-	if (logodata.ease.IsEaseEnd())
+	if (logoData.ease.IsEaseEnd())
 	{
-		text.pos = textdata.trans.pos;
-		text.scale = textdata.trans.scale;
-		text.color = textdata.color;
+		text.pos = textData.trans.pos;
+		text.scale = textData.trans.scale;
+		text.color = textData.color;
 		text.Draw();
 	}
 	for (int i = 0; i < 3; ++i)
 	{
-		number[i].color = numEasings[i].color;
-		number[i].scale = numEasings[i].trans.scale;
-		number[i].pos = numEasings[i].trans.pos;
-		if (!numEasings[i].ease.IsEaseEnd())
+		number[i].color = textData.color;
+		number[i].scale = numData[i].trans.scale;
+		number[i].pos = numData[i].trans.pos;
+		if (!numData[i].ease.IsEaseEnd())
 		{
 			number[i].Draw();
 		}
+	}
+
+	destoryLogo.pos = destroyData.trans.pos;
+	destoryLogo.scale = destroyData.trans.scale;
+	destoryLogo.color = textData.color;
+	if (!destroyData.ease.IsEaseEnd())
+	{
+		destoryLogo.Draw();
 	}
 }
 
@@ -111,7 +129,7 @@ const bool TitleComponent::IsPlay() const
 
 const GameState TitleComponent::GetState()
 {
-	if (isPlay && backColor.a <= 0 && numEasings[2].ease.IsEaseEnd())
+	if (isPlay && backColor.a <= 0 && destroyData.ease.IsEaseEnd())
 	{
 		return GameState::PLAY;
 	}

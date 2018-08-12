@@ -12,8 +12,11 @@
 class UFOComponent : public Component
 {
 private:
+	//$Test$
+	float addedValue;
 	static long long id_;
 	Counter cnt;
+	const Counter* pTimelimit;
 	Pos listenerPos;
 	SoundEngine::SoundSource appSound;
 	SoundEngine::SoundSource exproSound;
@@ -47,5 +50,8 @@ public:
 	void SetTrackingTarget(Entity& target) noexcept;
 	//データ取得
 	[[nodiscard]] const std::vector<std::unique_ptr<EnemyData>>& UFOComponent::GetData() const;
+	//残り時間をセットする
+	void SetTimeLimit(const Counter& limit);
+
 	
 };

@@ -19,5 +19,5 @@ public:
 	void Draw2D() override;
 	void TimerRun();
 	[[nodiscard]] const bool IsTimeOver();
-
+	const Counter& GetTimeLimit() const;
 };

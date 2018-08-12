@@ -8,15 +8,18 @@ class TitleComponent : public Component
 {
 private:
 	const std::string font = "Segoe Print";
-	UIData logodata;
-	UIData textdata;
+	static constexpr float size = 40;
+	UIData logoData;
+	UIData textData;
 	Easing reduction;
 	Float4 backColor;
 	Sprite sprite;
 	Sprite logo;
 
-	UIData numEasings[3];
-	Sprite number[3];
+	UIData numData[3];
+	Text number[3];
+	UIData destroyData;
+	Text destoryLogo;
 	Text text;
 	bool isPlay;
 public:

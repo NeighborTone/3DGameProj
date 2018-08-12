@@ -104,7 +104,9 @@ void GameController::Play(const GameState& state)
 		shot.GetComponent<InputShotComponent>().Shot(ComAssist::GetTransform(player));
 		//トマトが0個になるとゲームエンド
 		gameMaster.GetComponent<GameStateComponent>().SetEntity(tomato);
-		
+		//残り時間に応じて出現方法が変化する
+		enemy.GetComponent<UFOComponent>().SetTimeLimit(
+		gameMaster.GetComponent<TimerComponent>().GetTimeLimit());
 	}
 }
 

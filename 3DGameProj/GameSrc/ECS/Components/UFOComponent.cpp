@@ -26,13 +26,35 @@ void UFOComponent::LifeCheck()
 
 void UFOComponent::Create()
 {
+	//$Test$
+	addedValue += 0.05f;
 	data.emplace_back(AddEnemy());
 	data.back()->state = EnemyData::State::TRACKING;
-	data.back()->lifeSpan = 3;
-	data.back()->trans.velocity = 0.8f;
+	if (pTimelimit->GetCurrentCount() <= 600)
+	{
+		data.back()->lifeSpan = 1;
+	}
+	else
+	{
+		data.back()->lifeSpan = 3;
+	}
+	data.back()->trans.velocity = 0.8f + addedValue;
 	data.back()->trans.scale = RADIUS * 2;
 	Random rand;
-	const float THETA = rand.GetRand(0.f, 45.0f);	//出現角度を決める
+	//$Test$
+	float THETA = 0;	//出現角度を決める
+	if (pTimelimit->GetCurrentCount() <= 900 && pTimelimit->GetCurrentCount() >= 600)
+	{
+		THETA = rand.GetRand(125.0f, 160.0f);
+	}
+	else if (pTimelimit->GetCurrentCount() <= 600)
+	{
+		THETA = rand.GetRand(45.0f, 90.0f);
+	}
+	else
+	{
+		THETA = rand.GetRand(0.f, 45.0f);
+	}
 	constexpr float FIELD_RADIUS = 500;		//フィールドの半径
 	data.back()->trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
 	data.back()->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
@@ -133,7 +155,9 @@ bool UFOComponent::IsToBeInRange(Sphere& sphere, long long& id_)
 
 void UFOComponent::Initialize()
 {
+	addedValue = 0;
 	isNotFound = false;
+	pTimelimit = nullptr;
 	if (data.empty())
 	{
 		return;
@@ -152,15 +176,21 @@ void UFOComponent::UpDate()
 	{
 		return;
 	}
-	//$Test$
+
 	if (isNotFound)
 	{
 		return;
 	}
-	if (++cnt >= 60)
+	//$Test$
+	if (pTimelimit != nullptr && pTimelimit->GetCurrentCount() <= 600)
+	{
+		cnt.SetEndTime(30, -1);
+	}
+	if (++cnt >= cnt.GetMax())
 	{
 		Create();
 	}
+
 	if (data.empty())
 	{
 		return;
@@ -290,4 +320,9 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 const std::vector<std::unique_ptr<EnemyData>>& UFOComponent::GetData() const
 {
 	return data;
+}
+
+void UFOComponent::SetTimeLimit(const Counter& limit)
+{
+	pTimelimit = &limit;
 }
