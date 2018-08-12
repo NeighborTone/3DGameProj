@@ -19,7 +19,7 @@
 class Particle
 {
 private:
-	static constexpr int MAX_SPRITS = 2000;
+	static constexpr int MAX_SPRITS = 4000;
 	EffekseerRenderer::Renderer* renderer;
 	Effekseer::Manager* manager;
 	Effekseer::Effect* effect;

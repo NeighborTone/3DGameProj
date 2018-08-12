@@ -8,48 +8,36 @@ BGMComponent::BGMComponent()
 	bgm.SetGain(0.3f);
 }
 
-void BGMComponent::CheckState(const GameState& state)
+void BGMComponent::StartMain(const bool isPlay)
 {
-	if (state == GameState::PLAY)
-	{
-		
-	}
-
-	if (state == GameState::END)
-	{
-		
-		
-	}
+	isMainPlay = isPlay;
 }
 
 void BGMComponent::Initialize()
 {
 	pState = &entity->GetComponent<GameStateComponent>();
-	IsIntroPlay = false;
-	IsMainPlay = false;
+	bgm.SetLoopPoint(0u, 302400u);
+	isIntroPlay = false;
+	isMainPlay = false;
 }
 
 void BGMComponent::UpDate()
 {
-	if (pState->GetCurrentState() == GameState::PLAY ||
-		pState->GetCurrentState() == GameState::PAUSE)
+	if ((isMainPlay ||
+		pState->GetCurrentState() == GameState::PLAY ||
+		pState->GetCurrentState() == GameState::PAUSE) &&
+		pState->GetCurrentState() != GameState::END)
 	{
-		//$Test$
-		//if (!IsMainPlay)
-		//{
-			bgm.ExitLoop();
-			IsMainPlay = true;
-		//}
-		
+		bgm.ExitLoop();
 		bgm.SetLoopPoint(1360794u, 1965600u);
 	}
 	else if (pState->GetCurrentState() == GameState::END)
 	{
 		//ˆê“x‚¾‚¯ŒÄ‚Ô
-		if (!IsIntroPlay)
+		if (!isIntroPlay)
 		{
 			bgm.ExitLoop();
-			IsIntroPlay = true;
+			isIntroPlay = true;
 		}
 		//$Test$
 		bgm.SetLoopPoint(0u, 302400u);

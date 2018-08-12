@@ -9,11 +9,11 @@ class BGMComponent : public Component
 private:
 	GameStateComponent* pState;
 	SoundEngine::SoundSource bgm;
-	bool IsMainPlay;
-	bool IsIntroPlay;
-	void CheckState(const GameState& state);
+	bool isMainPlay;
+	bool isIntroPlay;
 public:
 	BGMComponent();
+	void StartMain(const bool isPlay);
 	void Initialize() override;
 	void UpDate() override;
 	void Draw3D() STUB

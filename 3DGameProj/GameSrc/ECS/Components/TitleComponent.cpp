@@ -3,6 +3,9 @@
 
 TitleComponent::TitleComponent()
 {
+	number[0].Load("Resource/Texture/3.png");
+	number[1].Load("Resource/Texture/2.png");
+	number[2].Load("Resource/Texture/1.png");
 	sprite.Load("Resource/Texture/pause.png");
 	logo.Load("Resource/Texture/logo.png");
 	text.Create("Press Z key", 40, font);
@@ -10,6 +13,13 @@ TitleComponent::TitleComponent()
 
 void TitleComponent::Initialize()
 {
+	for (auto& it : numEasings)
+	{
+		it.ease.Reset();
+		it.trans.scale = 0;
+		it.trans.pos.y = 100;
+		it.color = Float4(1,1,1,1);
+	}
 	logodata.ease.Reset();
 	textdata.ease.Reset();
 	reduction.Reset();
@@ -50,6 +60,21 @@ void TitleComponent::UpDate()
 		textdata.trans.scale = reduction.GetVolume(1, 0 - 1);
 		backColor.a -= 0.01f;
 	}
+	if (reduction.IsEaseEnd())
+	{
+		numEasings[0].ease.Run(Easing::QuadIn, 80);
+		numEasings[0].trans.scale = numEasings[0].ease.GetVolume(0,2);
+	}
+	if (numEasings[0].ease.IsEaseEnd())
+	{
+		numEasings[1].ease.Run(Easing::QuadIn, 80);
+		numEasings[1].trans.scale = numEasings[1].ease.GetVolume(0, 2);
+	}
+	if (numEasings[1].ease.IsEaseEnd())
+	{
+		numEasings[2].ease.Run(Easing::QuadIn, 80);
+		numEasings[2].trans.scale = numEasings[2].ease.GetVolume(0, 2);
+	}
 }
 
 void TitleComponent::Draw2D()
@@ -67,11 +92,26 @@ void TitleComponent::Draw2D()
 		text.color = textdata.color;
 		text.Draw();
 	}
+	for (int i = 0; i < 3; ++i)
+	{
+		number[i].color = numEasings[i].color;
+		number[i].scale = numEasings[i].trans.scale;
+		number[i].pos = numEasings[i].trans.pos;
+		if (!numEasings[i].ease.IsEaseEnd())
+		{
+			number[i].Draw();
+		}
+	}
+}
+
+const bool TitleComponent::IsPlay() const
+{
+	return isPlay;
 }
 
 const GameState TitleComponent::GetState()
 {
-	if (isPlay && backColor.a <= 0 && reduction.IsEaseEnd())
+	if (isPlay && backColor.a <= 0 && numEasings[2].ease.IsEaseEnd())
 	{
 		return GameState::PLAY;
 	}

@@ -14,6 +14,9 @@ private:
 	Float4 backColor;
 	Sprite sprite;
 	Sprite logo;
+
+	UIData numEasings[3];
+	Sprite number[3];
 	Text text;
 	bool isPlay;
 public:
@@ -27,6 +30,7 @@ public:
 
 	void Draw2D() override;
 
+	const bool IsPlay() const;
 	//ƒQ[ƒ€‚ğŠJn‚·‚é‚©•Ô‚·
 	const GameState GetState();
 };
