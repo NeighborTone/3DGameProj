@@ -56,7 +56,7 @@ struct [[nodiscard]] TomatoData
 		INVALID,			//–³Œø(’ÇÕ–³Œø,º‚í‚ê‚Ä‚¢‚é)
 		DEATH				//€–S
 	};
-	Easing sucked;
+	Easing easeSucked;
 	long long id;
 	State state;
 	Sphere sphere;

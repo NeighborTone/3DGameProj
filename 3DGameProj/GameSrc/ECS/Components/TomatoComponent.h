@@ -14,7 +14,7 @@ private:
 	Mesh mesh;
 	Texture tex;
 	std::vector<TomatoData> data;
-	void Executioners();
+	void Refresh();
 public:
 	TomatoComponent();
 	void Initialize() override;

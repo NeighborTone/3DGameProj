@@ -216,7 +216,6 @@ void UFOComponent::UpDate()
 		}
 		if (it->state == EnemyData::State::GETAWAY)
 		{
-			//$Test$
 			if (it->trans.pos.y >= UpMoveMAX)
 			{
 				it->upMove.Reset();
@@ -284,7 +283,6 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 			{
 				if (targets[i].state == TomatoData::State::INVALID)
 				{
-					//$Test$
 					//無効なターゲットも追跡してしまうので無効なものは遠くにしておく	
 					dist[i].first = Max;
 					dist[i].second = Pos(Max, Max, Max);

@@ -2,7 +2,7 @@
 #include "UFOComponent.h"
 #include <algorithm>
 #include <iostream>
-void TomatoComponent::Executioners()
+void TomatoComponent::Refresh()
 {
 	data.erase(std::remove_if(std::begin(data), std::end(data),
 		[](const TomatoData &data)
@@ -27,7 +27,7 @@ void TomatoComponent::Initialize()
 	{
 		Random rand;
 		const float THETA = rand.GetRand(0.f, 360.0f);	//oŒ»Šp“x‚ðŒˆ‚ß‚é
-		const float APP_RADIUS =150;		//”¼Œa
+		const float APP_RADIUS =160;		//”¼Œa
 		it.trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
 		it.trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
 		it.trans.pos.y = OnGround;
@@ -42,7 +42,7 @@ void TomatoComponent::UpDate()
 	{
 		return;
 	}
-	Executioners();
+	Refresh();
 }
 
 void TomatoComponent::Draw3D()
@@ -96,8 +96,8 @@ void TomatoComponent::ToBeKidnapped(Entity& enemy)
 					if (abs(enemysIt->trans.pos.GetDistance(Pos(targets.trans.pos)) <= 15))
 					{
 						targets.trans.pos = enemysIt->trans.pos;
-						targets.sucked.Run(Easing::QuadIn,50);
-						targets.trans.pos.y = targets.sucked.GetVolume(OnGround, enemysIt->trans.pos.y - 4);
+						targets.easeSucked.Run(Easing::QuadIn,50);
+						targets.trans.pos.y = targets.easeSucked.GetVolume(OnGround, enemysIt->trans.pos.y - 4);
 					}
 				}
 			}
@@ -105,7 +105,7 @@ void TomatoComponent::ToBeKidnapped(Entity& enemy)
 		if (!enemyIsFind)
 		{
 			targets.state = TomatoData::State::EFFECTIVE;
-			targets.sucked.Reset();
+			targets.easeSucked.Reset();
 			targets.trans.pos.y = OnGround;
 			targets.id = -1;
 		}
