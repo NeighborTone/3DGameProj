@@ -41,6 +41,8 @@ ScoreBoardComponent::ScoreBoardComponent()
 
 void ScoreBoardComponent::Initialize()
 {
+	isAddTomatoesScore = false;
+	tomatoNum = 0u;
 	{
 		scoreData.ease.Reset();
 		scoreData.score = 0;
@@ -54,6 +56,10 @@ void ScoreBoardComponent::Initialize()
 		comboData.colorDelta = Float4(0.002f, 0.005f, 0.009f, 1);
 	}
 
+	{
+		tomatoScoreData.ease.Reset();
+		tomatoScoreData.score = 0;
+	}
 }
 
 void ScoreBoardComponent::UpDate()
@@ -127,6 +133,18 @@ void ScoreBoardComponent::Draw2D()
 		scoreText.color = it->color;
 		scoreText.Draw();
 	}
+
+	if(isAddTomatoesScore)
+	{
+		scoreText.Create("The Remaining Tomatoes : " + std::to_string(tomatoNum) + "\n" + 
+			"AddBonus : " + std::to_string(tomatoNum * 1000) + " Points!!", size, font);
+		scoreText.pos = tomatoScoreData.trans.pos;
+		scoreText.scale = tomatoScoreData.trans.scale;
+		scoreText.angle = tomatoScoreData.trans.angles;
+		scoreText.color = scoreData.color;
+		scoreText.Draw();
+	}
+	
 }
 
 const long long ScoreBoardComponent::GetScore() const
@@ -170,7 +188,19 @@ void ScoreBoardComponent::SetEntity(const Entity& enemy)
 	}
 }
 
-void ScoreBoardComponent::CheckState(const GameState& state)
+void ScoreBoardComponent::CheckTomatoes(const std::vector<TomatoData>& tomats)
+{
+	if (!isAddTomatoesScore)
+	{
+		isAddTomatoesScore = true;
+		tomatoScoreData.score = scoreData.score;
+		tomatoNum = tomats.size();
+		scoreData.score += tomatoNum * 1000u;
+	}
+	
+}
+
+void ScoreBoardComponent::SetState(const GameState& state)
 {
 	//ポーズ中は止めておく
 	if (state != GameState::PAUSE)
@@ -186,5 +216,11 @@ void ScoreBoardComponent::CheckState(const GameState& state)
 		scoreData.ease.Run(Easing::CubicOut, 60);
 		scoreData.trans.pos.x = scoreData.ease.GetVolume(posX, 0 - posX);
 		scoreData.trans.pos.y = scoreData.ease.GetVolume(posY, 100 - posY);
+
+		//トマトのボーナス表示
+		const float TomatoposY = (float)(-Engine::GetWindowSize().y / 2) - (size * 0.8f);
+		tomatoScoreData.ease.Run(Easing::CubicOut, 60);
+		tomatoScoreData.trans.pos.x = 0;
+		tomatoScoreData.trans.pos.y = tomatoScoreData.ease.GetVolume(TomatoposY, -100 - TomatoposY);
 	}
 }

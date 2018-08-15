@@ -136,12 +136,16 @@ void GameController::End(const GameState& state)
 		}
 		//END状態の時にlife0のUFOが残るとスコアが加算され続けるので消しておく
 		enemy.DeleteComponent<UFOComponent>();
-		//スコア更新
+		//トマトの残り個数によってボーナスを追加する
+		alwaysCanvas.GetComponent<ScoreBoardComponent>().CheckTomatoes(
+			tomato.GetComponent<TomatoComponent>().GetData());
+		//ランキング更新
 		endController.GetComponent<RankingComponent>().SetScore(
 			alwaysCanvas.GetComponent<ScoreBoardComponent>().GetScore());
 		//ゲームエンド制御者からゲームの状態を受け取る
 		gameMaster.GetComponent<GameStateComponent>().SetState(
 			ComAssist::GetState<EndComponent>(endController));
+		
 	}
 }
 
@@ -161,7 +165,7 @@ void GameController::Initialize()
 
 void GameController::UpDate()
 {
-	const auto&& state = ComAssist::GetGameState(gameMaster);
+	const auto& state = ComAssist::GetGameState(gameMaster);
 	if (state == GameState::RESET)
 	{
 		enemy.DeleteComponent<UFOComponent>();
@@ -184,8 +188,8 @@ void GameController::UpDate()
 	enemy.GetComponent<UFOComponent>().SetListenerPos(ComAssist::GetPos(player));
 	//追跡対象をセットし対象を追跡する
 	enemy.GetComponent<UFOComponent>().SetTrackingTarget(tomato);
-	//ゲームの状態に応じて処理をする
-	alwaysCanvas.GetComponent<ScoreBoardComponent>().CheckState(state);
+	//ゲームの状態に応じてスコアUIを処理をする
+	alwaysCanvas.GetComponent<ScoreBoardComponent>().SetState(state);
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
 }

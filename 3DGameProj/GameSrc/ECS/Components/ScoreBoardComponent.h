@@ -8,9 +8,12 @@ class ScoreBoardComponent : public Component
 private:
 	const std::string font = "Segoe Print";
 	static constexpr float size = 40;
+	bool isAddTomatoesScore;
+	size_t tomatoNum;
 	Text scoreText;
 	ScoreData scoreData;		//スコア格納用
-	ScoreData comboData;	//コンボ表示用
+	ScoreData comboData;		//コンボ表示用
+	ScoreData tomatoScoreData;	//トマト分のスコア加算演出用
 	std::vector<std::unique_ptr<ScoreData>> effects;	//加算した値表示用
 	std::unique_ptr<ScoreData> AddData();
 	//引数に入れた値の桁数を返す関数
@@ -29,6 +32,8 @@ public:
 	const long long GetScore() const;
 	//引数に入れた敵が殺されたらスコアが加算される
 	void SetEntity(const Entity& enemy);
+	//トマトの個数に応じて得点を加算
+	void CheckTomatoes(const std::vector<TomatoData>& tomats);
 	//ゲームの状態に応じた処理をする
-	void CheckState(const GameState& state);
+	void SetState(const GameState& state);
 };
