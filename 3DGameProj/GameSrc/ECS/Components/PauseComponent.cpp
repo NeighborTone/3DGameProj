@@ -3,7 +3,7 @@
 PauseComponent::PauseComponent()
 {
 	sprite.Load("Resource/Texture/pause.png");
-	text.Create("PAUSE", 40);
+	text.Create("PAUSE\n'X'Key:Return to Game\n'C'Key:Return to Title", size,font);
 }
 
 void PauseComponent::Initialize()

@@ -6,7 +6,7 @@ TitleComponent::TitleComponent()
 	number[0].Create("3", size,font);
 	number[1].Create("2", size, font);
 	number[2].Create("1", size, font);
-	destoryLogo.Create("DESTROY UFO", size,font);
+	destoryLogo.Create("DESTROY THE UFO!!!", size,font);
 	sprite.Load("Resource/Texture/pause.png");
 	logo.Load("Resource/Texture/logo.png");
 	text.Create("Press Z key", size, font);
@@ -102,6 +102,7 @@ void TitleComponent::Draw2D()
 		text.color = textData.color;
 		text.Draw();
 	}
+	
 	for (int i = 0; i < 3; ++i)
 	{
 		number[i].color = textData.color;

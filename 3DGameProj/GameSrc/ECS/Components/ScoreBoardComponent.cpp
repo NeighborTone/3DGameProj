@@ -36,7 +36,8 @@ void ScoreBoardComponent::GradationColor()
 
 ScoreBoardComponent::ScoreBoardComponent()
 {
-	scoreText.Create(std::to_string(0), size, font);
+	scoreText = std::make_unique<Text>();
+	scoreText->Create(std::to_string(0), size, font);
 }
 
 void ScoreBoardComponent::Initialize()
@@ -106,43 +107,43 @@ void ScoreBoardComponent::UpDate()
 void ScoreBoardComponent::Draw2D()
 {
 	{
-		scoreText.Create(std::to_string(scoreData.score), size, font);
-		scoreText.pos = scoreData.trans.pos;
-		scoreText.scale = scoreData.trans.scale;
-		scoreText.angle = scoreData.trans.angles;
-		scoreText.color = scoreData.color;
-		scoreText.Draw();
+		scoreText->Create(std::to_string(scoreData.score), size, font);
+		scoreText->pos = scoreData.trans.pos;
+		scoreText->scale = scoreData.trans.scale;
+		scoreText->angle = scoreData.trans.angles;
+		scoreText->color = scoreData.color;
+		scoreText->Draw();
 	}
 
 
 	{
-		scoreText.Create(std::to_string(comboData.score) + "Combo!!", size -10, font);
-		scoreText.pos = comboData.trans.pos;
-		scoreText.scale = comboData.trans.scale;
-		scoreText.angle = comboData.trans.angles;
-		scoreText.color = comboData.color;
-		scoreText.Draw();
+		scoreText->Create(std::to_string(comboData.score) + "Combo!!", size -10, font);
+		scoreText->pos = comboData.trans.pos;
+		scoreText->scale = comboData.trans.scale;
+		scoreText->angle = comboData.trans.angles;
+		scoreText->color = comboData.color;
+		scoreText->Draw();
 	}
 
 	for (auto& it : effects)
 	{
-		scoreText.Create("+" + std::to_string(it->score), size, font);
-		scoreText.pos = it->trans.pos;
-		scoreText.scale = it->trans.scale;
-		scoreText.angle = it->trans.angles;
-		scoreText.color = it->color;
-		scoreText.Draw();
+		scoreText->Create("+" + std::to_string(it->score), size, font);
+		scoreText->pos = it->trans.pos;
+		scoreText->scale = it->trans.scale;
+		scoreText->angle = it->trans.angles;
+		scoreText->color = it->color;
+		scoreText->Draw();
 	}
 
 	if(isAddTomatoesScore)
 	{
-		scoreText.Create("The Remaining Tomatoes : " + std::to_string(tomatoNum) + "\n" + 
+		scoreText->Create("The Remaining Tomatoes : " + std::to_string(tomatoNum) + "\n" + 
 			"AddBonus : " + std::to_string(tomatoNum * 1000) + " Points!!", size, font);
-		scoreText.pos = tomatoScoreData.trans.pos;
-		scoreText.scale = tomatoScoreData.trans.scale;
-		scoreText.angle = tomatoScoreData.trans.angles;
-		scoreText.color = scoreData.color;
-		scoreText.Draw();
+		scoreText->pos = tomatoScoreData.trans.pos;
+		scoreText->scale = tomatoScoreData.trans.scale;
+		scoreText->angle = tomatoScoreData.trans.angles;
+		scoreText->color = scoreData.color;
+		scoreText->Draw();
 	}
 	
 }

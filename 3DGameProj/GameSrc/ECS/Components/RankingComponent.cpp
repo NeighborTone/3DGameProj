@@ -42,6 +42,11 @@ void RankingComponent::WrightScoreData()
 	ofs.close();
 }
 
+RankingComponent::RankingComponent()
+{
+	text = std::make_unique<Text>();
+}
+
 void RankingComponent::Initialize()
 {
 	isUpDateRanking = false;
@@ -103,12 +108,12 @@ void RankingComponent::Draw2D()
 {
 	for (const auto& it : data)
 	{
-		text.Create(std::to_string(it.scoreData.score), size, font);
-		text.pos.x = it.scoreData.trans.pos.x;
-		text.pos.y = it.scoreData.trans.pos.y;
-		text.scale = it.scoreData.trans.scale;
-		text.color = it.scoreData.color;
-		text.Draw();
+		text->Create(std::to_string(it.scoreData.score), size, font);
+		text->pos.x = it.scoreData.trans.pos.x;
+		text->pos.y = it.scoreData.trans.pos.y;
+		text->scale = it.scoreData.trans.scale;
+		text->color = it.scoreData.color;
+		text->Draw();
 	}
 }
 

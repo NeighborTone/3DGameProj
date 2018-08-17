@@ -23,16 +23,18 @@ TomatoComponent::TomatoComponent()
 void TomatoComponent::Initialize()
 {
 	data.resize(10);
+	float i = 0;
 	for (auto& it : data)
 	{
 		Random rand;
-		const float THETA = rand.GetRand(0.f, 360.0f);	//èoåªäpìxÇåàÇﬂÇÈ
-		const float APP_RADIUS =160;		//îºåa
+		const float THETA = 36 * i;	//èoåªäpìxÇåàÇﬂÇÈ
+		const float APP_RADIUS = 160;		//îºåa
 		it.trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
 		it.trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * APP_RADIUS;
 		it.trans.pos.y = OnGround;
 		it.id = -1;
 		it.state = TomatoData::State::EFFECTIVE;
+		++i;
 	}
 }
 

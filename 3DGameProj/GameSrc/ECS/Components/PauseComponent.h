@@ -6,6 +6,8 @@
 class PauseComponent : public Component
 {
 private:
+	const std::string font = "Segoe Print";
+	static constexpr float size = 40;
 	UIData data;
 	Sprite sprite;
 	Text text;

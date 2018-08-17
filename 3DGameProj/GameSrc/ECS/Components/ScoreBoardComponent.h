@@ -10,7 +10,7 @@ private:
 	static constexpr float size = 40;
 	bool isAddTomatoesScore;
 	size_t tomatoNum;
-	Text scoreText;
+	std::unique_ptr<Text> scoreText;
 	ScoreData scoreData;		//スコア格納用
 	ScoreData comboData;		//コンボ表示用
 	ScoreData tomatoScoreData;	//トマト分のスコア加算演出用

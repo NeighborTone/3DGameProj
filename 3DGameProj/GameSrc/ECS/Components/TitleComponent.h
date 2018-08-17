@@ -32,7 +32,7 @@ public:
 	void Draw3D() STUB
 
 	void Draw2D() override;
-
+	//ゲームを開始したか返す
 	const bool IsPlay() const;
 	//ゲームを開始するか返す
 	const GameState GetState();

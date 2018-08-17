@@ -2,8 +2,8 @@
 
 BGMComponent::BGMComponent()
 {
-	bgm.Load("Resource/Sounds/test.wav", false);
-	bgm.SetLoopPoint(0u, 302400u);
+	bgm.Load("Resource/Sounds/test2.wav", false);
+	bgm.SetLoopPoint(0u, 75600u);
 	bgm.PlayBGM();
 	bgm.SetGain(0.3f);
 }
@@ -16,7 +16,7 @@ void BGMComponent::StartMain(const bool isPlay)
 void BGMComponent::Initialize()
 {
 	pState = &entity->GetComponent<GameStateComponent>();
-	bgm.SetLoopPoint(0u, 302400u);
+	bgm.SetLoopPoint(0u, 75600u);
 	isIntroPlay = false;
 	isMainPlay = false;
 }
@@ -29,7 +29,7 @@ void BGMComponent::UpDate()
 		pState->GetCurrentState() != GameState::END)
 	{
 		bgm.ExitLoop();
-		bgm.SetLoopPoint(1360794u, 1965600u);
+		bgm.SetLoopPoint(1134000u, 1436400u);
 	}
 	else if (pState->GetCurrentState() == GameState::END)
 	{
@@ -39,8 +39,7 @@ void BGMComponent::UpDate()
 			bgm.ExitLoop();
 			isIntroPlay = true;
 		}
-		//$Test$
-		bgm.SetLoopPoint(0u, 302400u);
+		bgm.SetLoopPoint(0u, 75600u);
 	}
 }
 

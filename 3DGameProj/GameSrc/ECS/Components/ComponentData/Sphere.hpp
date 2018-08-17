@@ -19,6 +19,4 @@ public:
 		pos = pos_;
 		return *this;
 	}
-
-	
 };
