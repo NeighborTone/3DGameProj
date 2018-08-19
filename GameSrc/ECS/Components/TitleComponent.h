@@ -3,12 +3,13 @@
 #include "../../Engine.h"
 #include "../../Utilitys/Easing.hpp"
 #include "ComponentData/MetaData.hpp"
-
+#include "HowToPlayComponent.h"
 class TitleComponent : public Component
 {
 private:
 	const std::string font = "Segoe Print";
 	static constexpr float size = 40;
+	HowToPlayComponent* howto;
 	UIData logoData;
 	UIData textData;
 	Easing reduction;

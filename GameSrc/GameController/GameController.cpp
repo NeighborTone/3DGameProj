@@ -38,7 +38,7 @@ GameController::GameController() :
 	player.AddComponent<InuputMoveComponent>(0.1f);
 	player.AddComponent<CameraComponent>();
 	player.AddComponent<CursorComponent>();
-	shot.AddComponent<InputShotComponent>(40.0f, 20, 0.3f);
+	shot.AddComponent<InputShotComponent>(50.0f, 20, 0.3f);
 	skyBox.AddComponent<SkyBoxComponent>("Resource/Texture/sky2.png");
 	field.AddComponent<FieldComponent>();
 	enemy.AddComponent<UFOComponent>();
@@ -47,6 +47,7 @@ GameController::GameController() :
 	pauseController.AddComponent<PauseComponent>();
 	tomato.AddComponent<TomatoComponent>();
 	titleController.AddComponent<TitleComponent>();
+	titleController.AddComponent<HowToPlayComponent>();
 	endController.AddComponent<EndComponent>();
 	endController.AddComponent<RankingComponent>();
 	

@@ -24,16 +24,18 @@ void UFOComponent::LifeCheck()
 	}
 }
 
-void UFOComponent::Create()
+void UFOComponent::Create(const float& theta)
 {
+	//有効なトマトがない場合は出現させない
 	if (isNotFound)
 	{
 		return;
 	}
-	//$Test$
-	addedValue += 0.04f;
+	//生成されるたび移動力を増やす
+	addedSpeed += 0.04f;
 	data.emplace_back(AddEnemy());
 	data.back()->state = EnemyData::State::TRACKING;
+	//制限時間10秒前くらいからは体力を1にする
 	if (pTimelimit->GetCurrentCount() <= 700)
 	{
 		data.back()->lifeSpan = 1;
@@ -42,11 +44,39 @@ void UFOComponent::Create()
 	{
 		data.back()->lifeSpan = 3;
 	}
-	data.back()->trans.velocity = 0.8f + addedValue;
+	data.back()->trans.velocity = 0.8f + addedSpeed;
 	data.back()->trans.scale = RADIUS * 2;
 	Random rand;
-	//$Test$
-	float THETA = 0;	//出現角度を決める
+	constexpr float FIELD_RADIUS = 500;		//フィールドの半径
+	data.back()->trans.pos.x = cosf(DirectX::XMConvertToRadians(theta)) * FIELD_RADIUS;
+	data.back()->trans.pos.z = sinf(DirectX::XMConvertToRadians(theta)) * FIELD_RADIUS;
+	data.back()->trans.pos.y = rand.GetRand(20.0f, 100.0f);
+	data.back()->trackingTarget = Pos(0, 0, 0);
+	data.back()->id = id_;
+	efHandle = AsetManager::GetParticle().Play("app", Vec3(data.back()->trans.pos));
+	AsetManager::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
+	AsetManager::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
+	appSound.PlaySE(0, 10);
+	++id_;
+}
+
+void UFOComponent::Refresh()
+{
+	//死亡かフィールド範囲外なら消滅
+	data.erase(std::remove_if(std::begin(data), std::end(data),
+		[](const std::unique_ptr<EnemyData> &data)
+	{
+		return data->state == EnemyData::State::DEATH ||
+			(abs(data->trans.pos.x) >= FieldOut || abs(data->trans.pos.z) >= FieldOut && data->state == EnemyData::State::GETAWAY);
+	}),
+		std::end(data));
+}
+
+const float UFOComponent::GetTheta() const
+{
+	//制限時間によって出現位置を変更する
+	float THETA = 0;
+	Random rand;
 	if (pTimelimit->GetCurrentCount() <= 2200 && pTimelimit->GetCurrentCount() >= 1500)
 	{
 		THETA = rand.GetRand(125.0f, 160.0f);
@@ -63,28 +93,7 @@ void UFOComponent::Create()
 	{
 		THETA = rand.GetRand(0.f, 45.0f);
 	}
-	constexpr float FIELD_RADIUS = 500;		//フィールドの半径
-	data.back()->trans.pos.x = cosf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
-	data.back()->trans.pos.z = sinf(DirectX::XMConvertToRadians(THETA)) * FIELD_RADIUS;
-	data.back()->trans.pos.y = rand.GetRand(20.0f, 100.0f);
-	data.back()->trackingTarget = Pos(0, 0, 0);
-	data.back()->id = id_;
-	efHandle = AsetManager::GetParticle().Play("app", Vec3(data.back()->trans.pos));
-	AsetManager::GetParticle().SetAngles(efHandle, Vec3(90, 0, 0));
-	AsetManager::GetParticle().SetScale(efHandle, Vec3(3, 3, 3));
-	appSound.PlaySE(0, 10);
-	++id_;
-}
-
-void UFOComponent::Refresh()
-{
-	data.erase(std::remove_if(std::begin(data), std::end(data),
-		[](const std::unique_ptr<EnemyData> &data)
-	{
-		return data->state == EnemyData::State::DEATH ||
-			(abs(data->trans.pos.x) >= FieldOut || abs(data->trans.pos.z) >= FieldOut && data->state == EnemyData::State::GETAWAY);
-	}),
-		std::end(data));
+	return THETA;
 }
 
 
@@ -163,7 +172,7 @@ bool UFOComponent::IsToBeInRange(Sphere& sphere, long long& id_)
 
 void UFOComponent::Initialize()
 {
-	addedValue = 0;
+	addedSpeed = 0;
 	isNotFound = false;
 	pTimelimit = nullptr;
 	if (data.empty())
@@ -191,7 +200,7 @@ void UFOComponent::UpDate()
 	}
 	if (++cnt >= cnt.GetMax())
 	{
-		Create();
+		Create(GetTheta());
 	}
 
 	if (data.empty())
@@ -295,7 +304,7 @@ void UFOComponent::SetTrackingTarget(Entity& target) noexcept
 			}
 			//自分から見て一番近いものを追う
 			std::sort(std::begin(dist), std::end(dist),
-				[](const  std::pair<float, Pos > &a, const std::pair<float, Pos> &b)
+				[](const std::pair<float, Pos> &a, const std::pair<float, Pos> &b)
 			{
 				return a.first < b.first;
 			});

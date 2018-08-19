@@ -146,6 +146,9 @@
     <ClCompile Include="GameSrc\ECS\Components\BGMComponent.cpp">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
     </ClCompile>
+    <ClCompile Include="GameSrc\ECS\Components\HowToPlayComponent.cpp">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -383,6 +386,9 @@
     </ClInclude>
     <ClInclude Include="GameSrc\ECS\Components\BGMComponent.h">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Always</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSrc\ECS\Components\HowToPlayComponent.h">
+      <Filter>GameSrc\ECS\Components\ComponentSystem\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

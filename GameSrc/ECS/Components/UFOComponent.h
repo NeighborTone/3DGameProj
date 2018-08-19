@@ -12,8 +12,7 @@
 class UFOComponent : public Component
 {
 private:
-	//$Test$
-	float addedValue;
+	float addedSpeed;
 	static long long id_;
 	Counter cnt;
 	const Counter* pTimelimit;
@@ -25,9 +24,11 @@ private:
 	//体力を監視する
 	void LifeCheck();
 	//新しい敵を生成する
-	void Create();
+	void Create(const float& theta);
 	//アクティブでないものを処刑する
 	void Refresh();
+	//出現角度を決めてその値を返す
+	const float GetTheta() const;
 	static constexpr float FieldOut = 500;
 	static constexpr float RADIUS = 2.5f;
 	static constexpr float UpMoveMAX = 20;

@@ -14,6 +14,7 @@ TitleComponent::TitleComponent()
 
 void TitleComponent::Initialize()
 {
+	howto = &entity->GetComponent<HowToPlayComponent>();
 	for (auto& it : numData)
 	{
 		it.ease.Reset();
@@ -35,7 +36,7 @@ void TitleComponent::Initialize()
 	textData.trans.scale.Zero();
 	backColor = Float4(1, 1, 1, 0.f);
 	textData.color = Float4(0.5f, 0.5f, 0.5f, 1);
-	textData.colorDelta = Float4(0.002f, 0.005f, 0.009f, 1);
+	textData.colorDelta = Float4(0.002f, 0.005f, 0.009f, 1); 
 	isPlay = false;
 }
 
@@ -64,6 +65,7 @@ void TitleComponent::UpDate()
 		reduction.Run(Easing::CubicOut, 60);
 		logoData.trans.scale = reduction.GetVolume(1 , 0 - 1);
 		textData.trans.scale = reduction.GetVolume(1, 0 - 1);
+		howto->Reduction(reduction);
 		backColor.a -= 0.01f;
 	}
 	//3
@@ -87,8 +89,8 @@ void TitleComponent::UpDate()
 	//Destroy
 	if (numData[2].ease.IsEaseEnd())
 	{
-		destroyData.ease.Run(Easing::QuadIn, 80);
-		destroyData.trans.scale = destroyData.ease.GetVolume(0, 2);
+		destroyData.ease.Run(Easing::QuadIn, 120);
+		destroyData.trans.scale = destroyData.ease.GetVolume(0, 2.5f);
 	}
 }
 
