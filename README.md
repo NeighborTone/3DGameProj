@@ -1,5 +1,5 @@
 # UFOSHOOTER
-![default](https://user-images.githubusercontent.com/30017323/44370302-97d44500-a514-11e8-94ce-86d2db96abfa.jpg)
+![default](https://user-images.githubusercontent.com/30017323/44370641-0a91f000-a516-11e8-96a8-f1c15e8cf701.png)
 # 概要
 + DirectX11とXAudio2を用いてフルスクラッチで開発した3Dシューティングゲームです。また、効果音とBGMの作曲、パーティクルエフェクトの製作も行いました。
 
