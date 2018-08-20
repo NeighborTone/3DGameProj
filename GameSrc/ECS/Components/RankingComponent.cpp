@@ -55,6 +55,7 @@ void RankingComponent::Initialize()
 	reduction.Reset();
 	for (size_t i = 0; i < MAX; ++i)
 	{
+		data[i].scoreData.score = 0;
 		data[i].scoreData.color = Float4(0.9f, 0.9f, 0.9f, 1);
 		data[i].scoreData.trans.scale = 1;
 		data[i].isHighScore = false;
