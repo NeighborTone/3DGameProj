@@ -3,7 +3,7 @@
 SkyBoxComponent::SkyBoxComponent(std::string texturePath)
 {
 	tex.Load(texturePath);
-	skyHandle = AsetManager::GetParticle().Play("sky", Vec3(0, 0, 0));
+	
 }
 
 void SkyBoxComponent::SetPos(Pos&& pos)
@@ -24,6 +24,8 @@ void SkyBoxComponent::Initialize()
 	sky.GetMaterial().SetTexture(0, &tex);
 	sky.CreateSphere(1,24);
 	sky.scale = 10000;
+	AsetManager::GetParticle().Stop(skyHandle);
+	skyHandle = AsetManager::GetParticle().Play("sky", Vec3(0, 0, 0));
 }
 
 void SkyBoxComponent::UpDate()
