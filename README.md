@@ -1,7 +1,7 @@
 # UFOSHOOTER
 ![default](https://user-images.githubusercontent.com/30017323/44370641-0a91f000-a516-11e8-96a8-f1c15e8cf701.png)
 # 概要
-+ DirectX11とXAudio2を用いてフルスクラッチで開発した3Dシューティングゲームです。また、効果音とBGMの作曲、パーティクルエフェクトの製作も行いました。
++ DirectX11とXAudio2を用いてフルスクラッチで開発した3Dシューティングゲームです。また、効果音とBGMの作曲、一部パーティクルエフェクトの製作も行いました。
  + フリーゲーム夢現に投稿しました https://freegame-mugen.jp/shooting/game_7379.html
 ## ゲーム内容
 + UFOがフィールド内にあるトマトを奪いに来ます。
