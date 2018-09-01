@@ -199,7 +199,7 @@ public:
 	{
 		groupedEntities[group].emplace_back(pEntity);
 	}
-	//Entityを生成しそのポインタを返すファクトリメソッド
+	//Entityを生成しそのポインタを返す
 	Entity& AddEntity()
 	{
 		Entity* e = new Entity(*this);

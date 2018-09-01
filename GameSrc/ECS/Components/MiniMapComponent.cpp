@@ -13,7 +13,7 @@ MiniMapComponent::MiniMapComponent()
 const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 {
 	//マップの中心位置
-	const Vec2 mapCenter(Engine::GetWindowSize().x / 2.f - MapRadius, -Engine::GetWindowSize().y / 2.f + MapRadius);
+	const Vec2 mapCenter(Engine::GetWindowSize().x / 3.f - MapRadius, /*Engine::GetWindowSize().y / 3.f +*/-MapRadius -100);
 	if (e.HasComponent<TomatoComponent>())
 	{
 		for (auto& tomatos : e.GetComponent<TomatoComponent>().GetData())
@@ -51,7 +51,7 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 
 void MiniMapComponent::Draw2D()
 {
-	map.pos.x = Engine::GetWindowSize().x / 2.f - MapRadius;
-	map.pos.y = -Engine::GetWindowSize().y / 2.f + MapRadius;
+	map.pos.x = Engine::GetWindowSize().x / 3.f - MapRadius;
+	map.pos.y = /*Engine::GetWindowSize().y / 3.f +*/ -MapRadius - 100;
 	map.Draw();
 }
