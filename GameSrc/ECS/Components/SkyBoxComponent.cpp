@@ -19,8 +19,7 @@ void SkyBoxComponent::Initialize()
 		entity->AddComponent<TransformComponent>();
 	}
 	trans = &entity->GetComponent<TransformComponent>();
-	
-	sky.GetMaterial().Load("Resource/Shader/Sky.hlsl");
+
 	sky.GetMaterial().SetTexture(0, &tex);
 	sky.CreateSphere(1,24);
 	sky.scale = 10000;

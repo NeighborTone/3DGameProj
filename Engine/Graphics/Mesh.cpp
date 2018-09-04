@@ -2,17 +2,17 @@
 #include "../Engine.h"
 using namespace DirectX;
 
-Mesh::Mesh():
+Mesh::Mesh() :
 	vertexBuffer(nullptr),
 	indexBuffer(nullptr),
 	rasterizerState(nullptr),
-	pos(0,0,0),
-	angle(0,0,0),
-	scale(1,1,1)
+	pos(0, 0, 0),
+	angle(0, 0, 0),
+	scale(1, 1, 1)
 {
 	Engine::COMInitialize();
 	material.Load("Resource/Shader/mesh.hlsl");
-	SetDrawMode(D3D11_CULL_NONE,D3D11_FILL_SOLID);
+	SetDrawMode(D3D11_CULL_NONE, D3D11_FILL_SOLID);
 
 }
 
@@ -21,19 +21,19 @@ Mesh::~Mesh()
 
 }
 
-void Mesh::CreatePoint(Vec3 p1, Vec3 offset, Vec3 forwardDirection,bool shouldClear)
+void Mesh::CreatePoint(Vec3 p1, Vec3 offset, Vec3 forwardDirection, bool shouldClear)
 {
 	if (shouldClear)
 	{
 		vertices.clear();
 		indices.clear();
 	}
-	
+
 	forwardDirection.Normalize();
 
 	//1å¬ñ⁄ÇÃì_
 	vertices.push_back(Vertex(
-		p1  + offset,
+		p1 + offset,
 		-forwardDirection,
 		Vec2(0.0f, 1.0f)));
 
@@ -60,19 +60,19 @@ void Mesh::CreatePlane(Vec2 size, Vec3 offset, bool shouldClear, Vec3 leftDirect
 	//dÇÕå¥ì_Ç©ÇÁÇÃïÑçÜïtãóó£
 	vertices.push_back(Vertex(
 		leftDirection * -size.x + upDirection * size.y + offset,
-		-forwardDirection, 
+		-forwardDirection,
 		Vec2(0.0f, 0.0f)));
 	vertices.push_back(Vertex(
-		leftDirection * size.x + upDirection * size.y + offset, 
-		-forwardDirection, 
+		leftDirection * size.x + upDirection * size.y + offset,
+		-forwardDirection,
 		Vec2(1.0f, 0.0f)));
 	vertices.push_back(Vertex(
 		leftDirection * -size.x + upDirection * -size.y + offset,
-		-forwardDirection, 
+		-forwardDirection,
 		Vec2(0.0f, 1.0f)));
 	vertices.push_back(Vertex(
-		leftDirection * size.x + upDirection * -size.y + offset, 
-		-forwardDirection, 
+		leftDirection * size.x + upDirection * -size.y + offset,
+		-forwardDirection,
 		Vec2(1.0f, 1.0f)));
 
 	size_t indexOffset = vertices.size() - 4;
@@ -94,12 +94,12 @@ void Mesh::CreateCube(bool shouldClear)
 		indices.clear();
 	}
 
-	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.0f, 0.0f, -0.5f), false, Vec3(1.0f, 0.0f, 0.0f),  Vec3(0.0f, 1.0f, 0.0f),  Vec3(0.0f, 0.0f, 1.0f));	// front
-	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.0f, 0.0f, 0.5f),  false, Vec3(-1.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f),  Vec3(0.0f, 0.0f, -1.0f));	// back
-	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.5f, 0.0f, 0.0f),  false, Vec3(0.0f, 0.0f, 1.0f),  Vec3(0.0f, 1.0f, 0.0f),  Vec3(-1.0f, 0.0f, 0.0f));	// left
-	CreatePlane(Vec2(0.5f, 0.5f), Vec3(-0.5f, 0.0f, 0.0f), false, Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f),  Vec3(1.0f, 0.0f, 0.0f));	// right
-	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.0f, 0.5f, 0.0f),  false, Vec3(1.0f, 0.0f, 0.0f),  Vec3(0.0f, 0.0f, 1.0f),  Vec3(0.0f, -1.0f, 0.0f));	// up
-	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.0f, -0.5f, 0.0f), false, Vec3(1.0f, 0.0f, 0.0f),  Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f));	// down
+	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.0f, 0.0f, -0.5f), false, Vec3(1.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f));	// front
+	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.0f, 0.0f, 0.5f), false, Vec3(-1.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), Vec3(0.0f, 0.0f, -1.0f));	// back
+	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.5f, 0.0f, 0.0f), false, Vec3(0.0f, 0.0f, 1.0f), Vec3(0.0f, 1.0f, 0.0f), Vec3(-1.0f, 0.0f, 0.0f));	// left
+	CreatePlane(Vec2(0.5f, 0.5f), Vec3(-0.5f, 0.0f, 0.0f), false, Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f), Vec3(1.0f, 0.0f, 0.0f));	// right
+	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.0f, 0.5f, 0.0f), false, Vec3(1.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec3(0.0f, -1.0f, 0.0f));	// up
+	CreatePlane(Vec2(0.5f, 0.5f), Vec3(0.0f, -0.5f, 0.0f), false, Vec3(1.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f));	// down
 
 }
 
@@ -142,7 +142,7 @@ void Mesh::CreateSphere(float diameter, int tessellation, bool shouldClear)
 			XMFLOAT3 ntmp = { dx, dy, dz };
 			XMVECTOR Nvec = XMLoadFloat3(&ntmp);
 			XMVECTOR Xvec = XMVectorScale(-Nvec, radius);
-			
+
 			Vec3 nval;
 			nval.x = ntmp.x;
 			nval.y = ntmp.y;
@@ -220,7 +220,7 @@ void Mesh::Apply()
 		Engine::GetDXDevice3D().CreateBuffer(&indexBufferDesc, &indexSubresourceData, &indexBuffer);
 	}
 
-	material.SetBuffer(1, &constant, sizeof(Constant));
+	material.SetBuffer(5, &constant, sizeof(Constant));
 }
 
 void Mesh::Draw()
@@ -238,6 +238,7 @@ void Mesh::Draw()
 		XMMatrixTranslation(pos.x, pos.y, pos.z)
 	);
 
+	//ShaderÇ…èÓïÒÇëóÇÈ
 	material.Attach();
 
 	Engine::GetDXContext3D().RSSetState(rasterizerState);
@@ -320,4 +321,3 @@ void Mesh::DrawPoint()
 		Engine::GetDXContext3D().DrawIndexed(indices.size(), 0, 0);
 	}
 }
-

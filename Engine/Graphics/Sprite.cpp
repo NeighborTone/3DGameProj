@@ -11,8 +11,8 @@ void Sprite::Initialize()
 	color = Float4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	mesh.GetMaterial().Load("Resource/Shader/sprite.hlsl");
-	mesh.GetMaterial().SetBuffer(2, &color, sizeof(Float4));
-	mesh.SetDrawMode(D3D11_CULL_NONE,D3D11_FILL_SOLID);
+	mesh.GetMaterial().SetBuffer(6, &color, sizeof(Float4));
+	mesh.SetDrawMode(D3D11_CULL_NONE, D3D11_FILL_SOLID);
 }
 
 Sprite::Sprite()
@@ -29,7 +29,7 @@ Sprite::Sprite(const char* const filePath)
 Sprite::Sprite(const BYTE* const buffer, int width, int height)
 {
 	Initialize();
-	Create(buffer,width,height);
+	Create(buffer, width, height);
 }
 
 
@@ -44,7 +44,7 @@ void Sprite::Load(const char* const filePath)
 
 	mesh.GetMaterial().SetTexture(0, &texture);
 
-	SetPivot(Vec2(0,0));
+	SetPivot(Vec2(0, 0));
 }
 
 void Sprite::Create(const BYTE* const buffer, int width, int height)
@@ -53,7 +53,7 @@ void Sprite::Create(const BYTE* const buffer, int width, int height)
 
 	mesh.GetMaterial().SetTexture(0, &texture);
 
-	SetPivot(Vec2(0,0));
+	SetPivot(Vec2(0, 0));
 }
 
 DirectX::XMINT2 Sprite::GetSize() const
@@ -65,9 +65,9 @@ void Sprite::SetPivot(Vec2 pivot)
 {
 	Vec2 textureSize(static_cast<float>(texture.GetSize().x), static_cast<float>(texture.GetSize().y));
 	Vec2 offset = textureSize / 2.0f * -pivot;
-	
+
 	mesh.CreatePlane(textureSize / 2.0f, Vec3(offset.x, offset.y, 0.0f));
-	
+
 }
 
 Material& Sprite::GetMaterial()

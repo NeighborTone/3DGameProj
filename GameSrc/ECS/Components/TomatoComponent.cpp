@@ -16,7 +16,7 @@ void TomatoComponent::Refresh()
 TomatoComponent::TomatoComponent()
 {
 	tex.Load("Resource/Texture/t.png");
-	mesh.CreateSphere(2);
+	mesh.CreateSphere(4);
 	mesh.GetMaterial().SetTexture(0,&tex);
 }
 
