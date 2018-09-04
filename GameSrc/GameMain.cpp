@@ -39,6 +39,8 @@ void GameMain::Initialize()
 
 void GameMain::Run()
 {
+	
+
 	while (pEngine.Run() && !PushEscape())
 	{
 		UpDate();

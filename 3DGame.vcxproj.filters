@@ -390,6 +390,9 @@
     <ClInclude Include="GameSrc\ECS\Components\HowToPlayComponent.h">
       <Filter>GameSrc\ECS\Components\ComponentSystem\Title</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Graphics\Light.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MyIcon.rc" />

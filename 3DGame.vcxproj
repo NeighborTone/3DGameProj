@@ -74,6 +74,7 @@
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\Graphics\Camera.h" />
     <ClInclude Include="Engine\Graphics\Direct3D.h" />
+    <ClInclude Include="Engine\Graphics\Light.h" />
     <ClInclude Include="Engine\Graphics\Material.h" />
     <ClInclude Include="Engine\Graphics\Mesh.h" />
     <ClInclude Include="Engine\Graphics\Model.h" />
