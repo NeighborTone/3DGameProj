@@ -13,7 +13,7 @@ MiniMapComponent::MiniMapComponent()
 const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 {
 	//マップの中心位置
-	const Vec2 mapCenter(MapRadius* 2.5f, -MapRadius * 2.5f);
+	const Vec2 mapCenter(MapRadius* 2.2f, -MapRadius * 2.2f);
 	if (e.HasComponent<TomatoComponent>())
 	{
 		for (auto& tomatos : e.GetComponent<TomatoComponent>().GetData())
@@ -27,7 +27,6 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 			targetIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance * ExpansionRate;
 			targetIcon.pos.x += mapCenter.x;
 			targetIcon.pos.y += mapCenter.y;
-			targetIcon.scale = 1.2f;
 			targetIcon.Draw();
 		}
 	}
@@ -45,7 +44,6 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 			enemyIcon.pos.x += mapCenter.x;
 			enemyIcon.pos.y += mapCenter.y;
 			enemyIcon.color.a = 0.8f;
-			enemyIcon.scale = ExpansionRate;
 			enemyIcon.Draw();
 		}
 	}
@@ -53,8 +51,7 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 
 void MiniMapComponent::Draw2D()
 {
-	map.pos.x = MapRadius * 2.5f;
-	map.pos.y = -MapRadius * 2.5f;
-	map.scale = ExpansionRate;
+	map.pos.x = MapRadius * 2.2f;
+	map.pos.y = -MapRadius * 2.2f;
 	map.Draw();
 }
