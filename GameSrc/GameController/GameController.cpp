@@ -63,7 +63,7 @@ GameController::GameController() :
 	enemy.AddGroup(GROUP::GAME);
 	pauseController.AddGroup(GROUP::PAUSE);
 	endController.AddGroup(GROUP::END);
-	directionalLight.type = Light::Type::Directional;
+	
 }
 
 void GameController::CollisionEvent()
@@ -200,14 +200,7 @@ void GameController::Draw3D()
 {
 	player.GetComponent<CameraComponent>().Project3D();
 	entityManager.Draw3D();
-	directionalLight.pos = Vec3(0.0f, 100.0f, -500.0f);
-	static float y = 0;
-	++y;
-	directionalLight.color = Float4(0,0,1,1);
-	directionalLight.angles = Vec3(-15.0f, y, 0.0f);
-	directionalLight.intensity = 5.f;
-	directionalLight.range = 10;
-	directionalLight.Draw();
+	
 	//すべてのparticleにカメラのビューとプロジェクションを渡す
 	AsetManager::GetParticle().UpDate(Camera(player.GetComponent<CameraComponent>().GetCamera3D()));
 }

@@ -6,7 +6,7 @@
 #include "../ECS/Components/ComponentData/Sphere.hpp"
 #include "../ECS/Components/ComponentData/Collision.h"
 #include "AsetManager.h"
-#include "../../Graphics/Light.h"
+
 //キャストが面倒なので
 #define GROUP (Group)GameGroup	
 
@@ -24,7 +24,6 @@ private:
 		PAUSE,		//一時停止中に更新を行うグループ
 		END			//ゲーム終了時に更新を行うグループ
 	};
-	Light directionalLight;
 	EntityManager entityManager;
 	Entity& gameMaster;
 	Entity& player;

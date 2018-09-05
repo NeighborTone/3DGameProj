@@ -2,9 +2,11 @@
 #include "../../Engine.h"
 #include "../ECS.hpp"
 #include "../../GameController/AsetManager.h"
+#include "../../Graphics/Light.h"
 class FieldComponent : public Component
 {
 private:
+	Light directionalLight;
 	Texture tex;
 	Mesh mesh;
 	int efHandle;

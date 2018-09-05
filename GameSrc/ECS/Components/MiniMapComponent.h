@@ -8,6 +8,7 @@ class MiniMapComponent : public Component
 {
 private:
 	static constexpr float MapRadius = 128;
+	static constexpr float ExpansionRate = 1.2f;
 	Sprite map;
 	Sprite targetIcon;
 	Sprite enemyIcon;

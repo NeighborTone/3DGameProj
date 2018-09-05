@@ -13,7 +13,7 @@ MiniMapComponent::MiniMapComponent()
 const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 {
 	//マップの中心位置
-	const Vec2 mapCenter(Engine::GetWindowSize().x / 3.f - MapRadius, /*Engine::GetWindowSize().y / 3.f +*/-MapRadius -100);
+	const Vec2 mapCenter(MapRadius* 2.5f, -MapRadius * 2.5f);
 	if (e.HasComponent<TomatoComponent>())
 	{
 		for (auto& tomatos : e.GetComponent<TomatoComponent>().GetData())
@@ -23,10 +23,11 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 			const float rad = atan2(dy, dx);				//角度を決定
 			float distance = hypot(dx, dy) / 4;			//プレイヤーと敵の距離を調べる
 			if (abs(distance) >= MapRadius) { distance = MapRadius; }	//マップの端を超えないようにする
-			targetIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
-			targetIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
+			targetIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance * ExpansionRate;
+			targetIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance * ExpansionRate;
 			targetIcon.pos.x += mapCenter.x;
 			targetIcon.pos.y += mapCenter.y;
+			targetIcon.scale = 1.2f;
 			targetIcon.Draw();
 		}
 	}
@@ -39,11 +40,12 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 			const float rad = atan2(dy, dx);				//角度を決定
 			float distance = hypot(dx, dy) / 4;	//プレイヤーとの距離を調べる
 			if (abs(distance) >= MapRadius) { distance = MapRadius; }	//マップの端を超えないようにする
-			enemyIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
-			enemyIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance;
+			enemyIcon.pos.x = -cosf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance * ExpansionRate;
+			enemyIcon.pos.y = -sinf(rad + DirectX::XMConvertToRadians(ComAssist::GetAngles(player).y)) * distance * ExpansionRate;
 			enemyIcon.pos.x += mapCenter.x;
 			enemyIcon.pos.y += mapCenter.y;
 			enemyIcon.color.a = 0.8f;
+			enemyIcon.scale = ExpansionRate;
 			enemyIcon.Draw();
 		}
 	}
@@ -51,7 +53,8 @@ const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 
 void MiniMapComponent::Draw2D()
 {
-	map.pos.x = Engine::GetWindowSize().x / 3.f - MapRadius;
-	map.pos.y = /*Engine::GetWindowSize().y / 3.f +*/ -MapRadius - 100;
+	map.pos.x = MapRadius * 2.5f;
+	map.pos.y = -MapRadius * 2.5f;
+	map.scale = ExpansionRate;
 	map.Draw();
 }
