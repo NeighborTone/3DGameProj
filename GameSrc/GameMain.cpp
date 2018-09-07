@@ -45,6 +45,7 @@ void GameMain::Run()
 	{
 		UpDate();
 		Draw();
+		Engine::GetFps().Wait();
 		DOUT << Engine::GetFps().GetFrameRate() << std::endl;
 	}
 }

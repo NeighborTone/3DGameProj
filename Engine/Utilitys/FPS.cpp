@@ -35,21 +35,46 @@ FPS::~FPS()
 
 void FPS::UpDate()
 {
+	if (frameCont2 == 0)
+	{
+		startTime = GetTime();
+	}
+	if (frameCont2 == AVG)
+	{
+		float t = GetTime();
+		fps = 1000.f / ((t - startTime) / AVG);
+		frameCont2 = 0;
+		startTime = t;
+	}
+	++frameCont2;
+
 	LARGE_INTEGER count = GetCounter();
 	deltaTime = static_cast<float>(count.QuadPart - preCount.QuadPart) / frequency.QuadPart;
 	preCount = GetCounter();
 
 	time += deltaTime;
 
-	frameCount++;
+	++frameCount;
 	second += deltaTime;
 	if (second >= 1.0f)
 	{
-		frameRate = frameCount;
+		frameRate = static_cast<int>(frameCount);
 		frameCount = 0;
 		second -= 1.0f;
 	}
 
+
+	
+}
+
+void FPS::Wait()
+{
+	int tookTime = static_cast<int>(GetTime() - startTime);	//‚©‚©‚Á‚½ŽžŠÔ
+	int waitTime = frameCont2 * 1000 / Rate - tookTime;	//‘Ò‚Â‚×‚«ŽžŠÔ
+	if (waitTime > 0) 
+	{
+		Sleep(waitTime);
+	}
 }
 
 float FPS::GetTime() const
