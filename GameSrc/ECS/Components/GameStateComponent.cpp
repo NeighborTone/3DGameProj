@@ -45,6 +45,7 @@ void GameStateComponent::SetEntity(const Entity& entity)
 	{
 		state = GameState::END;
 	}
+	
 }
 
 void GameStateComponent::Initialize()

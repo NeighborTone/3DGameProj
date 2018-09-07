@@ -21,8 +21,8 @@ public:
 	void UpDate() override;
 	void Draw3D() override;
 	void Draw2D() STUB
-
-	void GameOver(GameState& state) const;
+	//ゲームが終了したらクリアする
+	void EndRefresh(const GameState& state);
 	//データ取得
 	[[nodiscard]] const std::vector<TomatoData>& GetData() const;
 	//攫われているときの動作

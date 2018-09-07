@@ -60,11 +60,11 @@ void TomatoComponent::Draw3D()
 	}
 }
 
-void TomatoComponent::GameOver(GameState& state) const
+void TomatoComponent::EndRefresh(const GameState& state)
 {
-	if (data.empty())
+	if (state == GameState::END && !data.empty())
 	{
-		state = GameState::END;
+		data.clear();
 	}
 }
 

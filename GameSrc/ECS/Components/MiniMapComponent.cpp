@@ -10,7 +10,7 @@ MiniMapComponent::MiniMapComponent()
 	targetIcon.Load("Resource/Texture/topping.png");
 }
 
-const void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
+void MiniMapComponent::DrawEntityes(const Entity& e, Entity& player)
 {
 	//マップの中心位置
 	const Vec2 mapCenter(MapRadius* 2.2f, -MapRadius * 2.2f);

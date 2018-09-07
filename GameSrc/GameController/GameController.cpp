@@ -158,6 +158,7 @@ void GameController::Always()
 	{
 		it->UpDate();
 	}
+	
 }
 
 void GameController::Initialize()
@@ -192,6 +193,8 @@ void GameController::UpDate()
 	enemy.GetComponent<UFOComponent>().SetTrackingTarget(tomato);
 	//ゲームの状態に応じてスコアUIを処理をする
 	alwaysCanvas.GetComponent<ScoreBoardComponent>().SetState(state);
+	//ゲーム終了時に全消去
+	tomato.GetComponent<TomatoComponent>().EndRefresh(state);
 	//マウスは常に画面中央
 	Mouse::SetMousePos(0, 0);
 }

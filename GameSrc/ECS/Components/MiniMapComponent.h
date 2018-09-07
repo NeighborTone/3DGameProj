@@ -15,7 +15,7 @@ private:
 public:
 
 	MiniMapComponent();
-	const void DrawEntityes(const Entity& entity, Entity& player);
+	void DrawEntityes(const Entity& entity, Entity& player);
 	void Initialize() STUB
 
 	void UpDate() STUB
