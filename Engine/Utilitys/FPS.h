@@ -1,22 +1,22 @@
 #pragma once
 #include <atlbase.h>
 /*! @class FPS
-*   @brief æ™‚é–“ã‚’è¨ˆæ¸¬ã™ã‚‹ãŸã‚ã®ã‚¯ãƒ©ã‚¹ã§ã™
+*   @brief ŠÔ‚ğŒv‘ª‚·‚é‚½‚ß‚ÌƒNƒ‰ƒX‚Å‚·
 */
 class FPS
 {
 private:
-	float time;						//ç¾åœ¨æ™‚åˆ»
-	float deltaTime;				//å·®åˆ†
-	int frameRate;					//ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®å€¤
-	float second;					//ç§’æ•°ã‚’æ¸¬ã‚‹
-	float frameCount;				//ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ã‚¿
-	float startTime;				//æ¸¬å®šé–‹å§‹æ™‚åˆ»
-	int frameCont2;					//å›ºå®šç”¨ã‚«ã‚¦ãƒ³ã‚¿
+	float time;						//Œ»İ
+	float deltaTime;				//·•ª
+	int frameRate;					//Œ»İ‚ÌƒtƒŒ[ƒ€‚Ì’l
+	float second;					//•b”‚ğ‘ª‚é
+	float frameCount;				//ƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^
+	float startTime;				//‘ª’èŠJn
+	int frameCont2;					//ŒÅ’è—pƒJƒEƒ“ƒ^
 	float fps;						//fps
 	static constexpr int AVG = 60;	//60Hz
-	static constexpr int Rate = 60;	//è¨­å®šã™ã‚‹FPS
-	LARGE_INTEGER preCount;			//ç¬¦å·ä»˜æ•°å€¤å‹ long long
+	static constexpr int Rate = 60;	//İ’è‚·‚éFPS
+	LARGE_INTEGER preCount;			//•„†•t”’lŒ^ long long
 	LARGE_INTEGER frequency;
 	LARGE_INTEGER GetCounter() const;
 	LARGE_INTEGER GetCountFrequency() const;
@@ -24,25 +24,25 @@ public:
 	FPS();
 	~FPS();
 	/*!
-	* @brief  æ™‚é–“ã®è¨ˆæ¸¬ã‚’ã—ã¾ã™
+	* @brief  ŠÔ‚ÌŒv‘ª‚ğ‚µ‚Ü‚·
 	*/
 	void UpDate();
 	/*!
-	* @brief  ç‰¹å®šã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¾ã§å‡¦ç†ã‚’æ­¢ã‚ã¾ã™
+	* @brief  “Á’è‚ÌƒtƒŒ[ƒ€‚Ü‚Åˆ—‚ğ~‚ß‚Ü‚·
 	*/
 	void Wait();
 	/*!
-	* @brief  ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•æ™‚ã‹ã‚‰ã®æ™‚é–“ã‚’è¿”ã—ã¾ã™
+	* @brief  ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®‚©‚ç‚ÌŠÔ‚ğ•Ô‚µ‚Ü‚·
 	* @retrun [float] time
 	*/
 	float GetTime() const;
 	/*!
-	* @brief  å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¨ä»Šã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ™‚é–“å·®ã‚’è¿”ã—ã¾ã™
+	* @brief  ‘O‚ÌƒtƒŒ[ƒ€‚Æ¡‚ÌƒtƒŒ[ƒ€‚ÌŠÔ·‚ğ•Ô‚µ‚Ü‚·
 	* @retrun [float] deltaTime
 	*/
 	float GetDeltaTime() const;
 	/*!
-	* @brief  ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆã‚’è¿”ã—ã¾ã™
+	* @brief  Œ»İ‚ÌƒtƒŒ[ƒ€ƒŒ[ƒg‚ğ•Ô‚µ‚Ü‚·
 	* @retrun [int] frameRate
 	*/
 	int GetFrameRate() const;
