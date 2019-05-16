@@ -5,7 +5,7 @@ bool Collison::AABBCollision(AABB&& a, AABB&& b)
 	Vec3 Min, Min2;
 	Vec3 Max, Max2;
 	Min = a.pos - a.radius;
-	Min2 = a.pos - b.radius;
+	Min2 = a.pos - a.radius;
 	Max = a.pos + a.radius;
 	Max2 = b.pos + b.radius;
 	if (Min.x < Max2.x && Max.x > Min2.x
@@ -22,7 +22,7 @@ bool Collison::AABBCollision(AABB&& a, AABB&& b)
 
 bool Collison::SphereCollision(Sphere&& s1, Sphere&& s2)
 {
-	// a‚Æb‚Ì’†S“_‚Ì‹——£‚Ì•½•û‚ğ‹‚ß‚é
+	// aã¨bã®ä¸­å¿ƒç‚¹ã®è·é›¢ã®å¹³æ–¹ã‚’æ±‚ã‚ã‚‹
 	Vec3 d =s1.pos - s2.pos;
 	float square = d.Dot(Vec3(d));
 
